@@ -21,8 +21,8 @@ interface LocaleContextValue {
 const LocaleContext = createContext<LocaleContextValue | null>(null);
 
 export function LocaleProvider({ children }: { children: ReactNode }) {
-	const [locale, setLocale] = useState<Locale>("ko");
-	const localeRef = useRef<Locale>("ko");
+	const [locale, setLocale] = useState<Locale>("en");
+	const localeRef = useRef<Locale>("en");
 
 	// On mount: restore persisted locale from localStorage
 	useEffect(() => {

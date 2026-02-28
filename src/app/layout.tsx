@@ -69,11 +69,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ko" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning>
       <head>
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){try{var t=localStorage.getItem('theme');if(!t)t='light';document.documentElement.dataset.theme=t;var l=localStorage.getItem('locale');if(!l)l='ko';document.documentElement.dataset.locale=l;document.documentElement.lang=l}catch(e){}})()`,
+            __html: `(function(){try{var t=localStorage.getItem('theme');if(!t)t='light';document.documentElement.dataset.theme=t;var l=localStorage.getItem('locale');if(!l)l='en';document.documentElement.dataset.locale=l;document.documentElement.lang=l}catch(e){}})()`,
           }}
         />
         <script
