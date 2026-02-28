@@ -26,7 +26,7 @@ export function Lightbox() {
       plugins={[Zoom, Counter, Captions, Thumbnails]}
       carousel={{ finite: slides.length <= 5 }}
       zoom={{ maxZoomPixelRatio: 3 }}
-      counter={{ container: { style: { top: 0, bottom: "unset" } } }}
+      counter={{ container: { style: { top: "unset", bottom: 0 } } }}
       captions={{ descriptionTextAlign: "center" }}
       thumbnails={{ border: 0, borderRadius: 8, gap: 8 }}
       styles={{
