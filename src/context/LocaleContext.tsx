@@ -4,6 +4,7 @@ import {
 	createContext,
 	useContext,
 	useEffect,
+	useRef,
 	useState,
 	useCallback,
 	type ReactNode,
@@ -21,25 +22,30 @@ const LocaleContext = createContext<LocaleContextValue | null>(null);
 
 export function LocaleProvider({ children }: { children: ReactNode }) {
 	const [locale, setLocale] = useState<Locale>("ko");
+	const localeRef = useRef<Locale>("ko");
 
-	// Sync with actual DOM state (set by FOUC prevention script in layout.tsx)
+	// On mount: restore persisted locale from localStorage
 	useEffect(() => {
-		const current = document.documentElement.dataset.locale as
-			| Locale
-			| undefined;
-		if (current === "ko" || current === "en") {
-			setLocale(current);
-		}
+		try {
+			const stored = localStorage.getItem("locale");
+			if (stored === "ko" || stored === "en") {
+				localeRef.current = stored;
+				setLocale(stored);
+				document.documentElement.dataset.locale = stored;
+				document.documentElement.lang = stored;
+			}
+		} catch {}
 	}, []);
 
 	const toggleLocale = useCallback(() => {
-		setLocale((prev) => {
-			const next = prev === "ko" ? "en" : "ko";
-			document.documentElement.dataset.locale = next;
-			document.documentElement.lang = next;
+		const next: Locale = localeRef.current === "ko" ? "en" : "ko";
+		localeRef.current = next;
+		setLocale(next);
+		document.documentElement.dataset.locale = next;
+		document.documentElement.lang = next;
+		try {
 			localStorage.setItem("locale", next);
-			return next;
-		});
+		} catch {}
 	}, []);
 
 	return (
