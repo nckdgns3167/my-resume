@@ -6,7 +6,6 @@ export const sideProjects: SideProject[] = [
     name: "(가제) Project 'Sage'",
     client: "1인 개발",
     period: "2025.02 ~ 진행 중",
-    progressTag: "MVP",
     role: "기획 · 설계 · 프론트엔드 개발 · 인프라 전체",
     stack: [
       "React",
@@ -22,10 +21,7 @@ export const sideProjects: SideProject[] = [
       "driver.js",
     ],
     description:
-      "React 19 + Vite 6 + Zustand + Vercel 기반 AI 대화형 풀스택 웹 플랫폼. 기획·설계·프론트엔드·서버리스 백엔드·배포까지 1인 풀사이클 개발.",
-    notice:
-      "현재 개발 진행 중인 개인 프로젝트로, MVP 배포 후 상세 내용을 공개할 예정입니다.",
-    hint: "프로젝트 주제 관련 키워드: AI 대화형 분석, 실시간 시나리오 시각화, 데이터 기반 의사결정",
+      "실시간 암호화폐 차트 위에 사용자가 직접 드로잉(추세선, 수평선, 피보나치 등)을 그리고, AI가 차트 데이터와 드로잉 컨텍스트를 함께 분석하여 시나리오를 시각화해주는 대화형 분석 플랫폼. 기획·설계·프론트엔드·서버리스 백엔드·배포까지 1인 풀사이클 개발.",
     achievements: [
       "조코딩 x OpenAI x Primer AI 해커톤 참여 및 MVP 제출 (2026.02)",
       "Feature-based Zustand 설계 — chart·drawing·session·analysis·onboarding 5개 독립 스토어로 관심사 분리, devtools 미들웨어로 상태 추적",
