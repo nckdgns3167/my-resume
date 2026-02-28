@@ -142,7 +142,7 @@ interface GalleryItemCardProps {
 function GalleryItemCard({ item, layout, onImageClick }: GalleryItemCardProps) {
   if (isGalleryImageGroup(item)) {
     return (
-      <div className="rounded-lg border border-border bg-bg-secondary p-3">
+      <div className="min-w-0 overflow-hidden rounded-lg border border-border bg-bg-secondary p-3">
         <div className="mb-2 grid grid-cols-2 gap-2">
           {item.images.map((img, i) => (
             <button
@@ -160,8 +160,8 @@ function GalleryItemCard({ item, layout, onImageClick }: GalleryItemCardProps) {
             </button>
           ))}
         </div>
-        <p className="text-xs font-medium text-text">{item.caption}</p>
-        {item.subCaption && <p className="mt-0.5 text-xs text-text-secondary">{item.subCaption}</p>}
+        <p className="break-words text-xs font-medium text-text">{item.caption}</p>
+        {item.subCaption && <p className="mt-0.5 break-words text-xs text-text-secondary">{item.subCaption}</p>}
       </div>
     );
   }
@@ -169,7 +169,7 @@ function GalleryItemCard({ item, layout, onImageClick }: GalleryItemCardProps) {
   const isPortrait = layout === "portrait";
 
   return (
-    <div className="group rounded-lg border border-border bg-bg-secondary p-2">
+    <div className="group min-w-0 overflow-hidden rounded-lg border border-border bg-bg-secondary p-2">
       <button
         onClick={() => onImageClick(item.src)}
         className={`relative w-full cursor-zoom-in overflow-hidden rounded ${
@@ -188,8 +188,8 @@ function GalleryItemCard({ item, layout, onImageClick }: GalleryItemCardProps) {
           }
         />
       </button>
-      <p className="mt-2 text-xs font-medium text-text">{item.caption}</p>
-      {item.subCaption && <p className="mt-0.5 text-xs text-text-secondary">{item.subCaption}</p>}
+      <p className="mt-2 break-words text-xs font-medium text-text">{item.caption}</p>
+      {item.subCaption && <p className="mt-0.5 break-words text-xs text-text-secondary">{item.subCaption}</p>}
     </div>
   );
 }
