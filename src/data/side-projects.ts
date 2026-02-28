@@ -20,6 +20,10 @@ export const sideProjects: SideProject[] = [
       "Vercel",
       "driver.js",
     ],
+    links: [
+      { label: "Live Demo", url: "https://chartsage.vercel.app/" },
+      { label: "해커톤 지원", url: "https://hack.primer.kr/rounds/8/ideas/1601" },
+    ],
     description:
       `"그려서 물어보고, 시나리오로 답한다." ` +
       "바이비트 수준의 차트 드로잉·기술 지표 모듈과 Claude Code/ChatGPT 스타일의 세션별 대화 관리를 결합한 AI 암호화폐 분석 플랫폼. " +
@@ -33,6 +37,38 @@ export const sideProjects: SideProject[] = [
       "Vercel API Routes + OpenAI GPT-4o 서버리스 백엔드 — 차트 OHLC + 사용자 드로잉 컨텍스트를 프롬프트에 자동 주입하여 AI 분석 정확도 향상",
       "Multi-session 아키텍처 — 세션별 드로잉·대화·예측 상태 격리, 세션 전환 시 스토어 간 단방향 동기화",
       "driver.js 27단계 인터랙티브 온보딩 — 데모 액션 시스템(드로잉 자동 주입·패널 열기·예측 애니메이션) + 스텝 간 상태 복원",
+    ],
+    gallery: [
+      {
+        layout: "default",
+        items: [
+          {
+            src: "/images/projects/00-chartsage/실제화면캡처.png",
+            alt: "ChartSage MVP 실제 구현 화면",
+            caption: "MVP 실제 구현 화면",
+            subCaption: "BTC/USDT 차트 + AI 분석 패널",
+          },
+        ],
+      },
+      {
+        layout: "group",
+        items: [
+          {
+            images: [
+              {
+                src: "/images/projects/00-chartsage/해커톤 아이디어 지원 페이지 (1).png",
+                alt: "해커톤 아이디어 지원 페이지 - 상세설명",
+              },
+              {
+                src: "/images/projects/00-chartsage/해커톤 아이디어 지원 페이지 (2).png",
+                alt: "해커톤 아이디어 지원 페이지 - 비즈니스 모델 캔버스",
+              },
+            ],
+            caption: "조코딩 x OpenAI x Primer AI 해커톤 지원 페이지",
+            subCaption: "상세설명 · 비즈니스 모델 캔버스",
+          },
+        ],
+      },
     ],
   },
 ];

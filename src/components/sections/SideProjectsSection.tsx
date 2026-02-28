@@ -1,4 +1,5 @@
 import { Section } from "@/components/ui/Section";
+import { ProjectGallery } from "@/components/experience/ProjectGallery";
 import { sideProjects } from "@/data/side-projects";
 
 export function SideProjectsSection() {
@@ -27,6 +28,24 @@ export function SideProjectsSection() {
               <dd className="text-text">{project.role}</dd>
               <dt className="text-text-secondary">규모</dt>
               <dd className="text-text">{project.client}</dd>
+              {project.links && project.links.length > 0 && (
+                <>
+                  <dt className="text-text-secondary">링크</dt>
+                  <dd className="flex flex-wrap gap-3">
+                    {project.links.map((link) => (
+                      <a
+                        key={link.url}
+                        href={link.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-accent-primary underline underline-offset-2 transition-colors hover:text-accent-primary/70"
+                      >
+                        {link.label}
+                      </a>
+                    ))}
+                  </dd>
+                </>
+              )}
             </dl>
 
             <p className="mb-3 text-sm leading-6 text-text-secondary">{project.description}</p>
@@ -59,6 +78,13 @@ export function SideProjectsSection() {
                   </li>
                 ))}
               </ul>
+            )}
+
+            {/* 갤러리 */}
+            {project.gallery && project.gallery.length > 0 && (
+              <div className="mt-5 border-t border-border pt-4 print:hidden">
+                <ProjectGallery grids={project.gallery} projectName={project.name} />
+              </div>
             )}
           </div>
         ))}

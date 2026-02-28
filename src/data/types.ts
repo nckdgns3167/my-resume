@@ -46,6 +46,11 @@ export interface SkillGroup {
 }
 
 // --- Side Projects ---
+export interface SideProjectLink {
+  label: string;
+  url: string;
+}
+
 export interface SideProject {
   id: string;
   name: string;
@@ -55,9 +60,11 @@ export interface SideProject {
   role: string;
   stack: string[];
   description: string;
+  links?: SideProjectLink[];
   notice?: string;
   hint?: string;
   achievements: string[];
+  gallery?: GalleryGrid[];
 }
 
 // --- Experience ---
