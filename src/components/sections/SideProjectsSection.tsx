@@ -1,8 +1,14 @@
 import { Section } from "@/components/ui/Section";
 import { ProjectGallery } from "@/components/experience/ProjectGallery";
-import { sideProjects } from "@/data/side-projects";
+import type { SideProject } from "@/data/types";
+import type { UiStrings } from "@/data/ui-strings";
 
-export function SideProjectsSection() {
+interface SideProjectsSectionProps {
+  sideProjects: SideProject[];
+  ui: UiStrings;
+}
+
+export function SideProjectsSection({ sideProjects, ui }: SideProjectsSectionProps) {
   return (
     <Section id="side-projects" title="Side Projects">
       <div className="flex flex-col gap-6">
@@ -22,15 +28,15 @@ export function SideProjectsSection() {
             </div>
 
             <dl className="mb-4 grid grid-cols-[auto_1fr] gap-x-4 gap-y-1 text-sm">
-              <dt className="text-text-secondary">기간</dt>
+              <dt className="text-text-secondary">{ui.period}</dt>
               <dd className="text-text">{project.period}</dd>
-              <dt className="text-text-secondary">역할</dt>
+              <dt className="text-text-secondary">{ui.role}</dt>
               <dd className="text-text">{project.role}</dd>
-              <dt className="text-text-secondary">규모</dt>
+              <dt className="text-text-secondary">{ui.scale}</dt>
               <dd className="text-text">{project.client}</dd>
               {project.links && project.links.length > 0 && (
                 <>
-                  <dt className="text-text-secondary">링크</dt>
+                  <dt className="text-text-secondary">{ui.links}</dt>
                   <dd className="flex flex-wrap gap-3">
                     {project.links.map((link) => (
                       <a

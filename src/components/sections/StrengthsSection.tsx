@@ -1,7 +1,11 @@
 import { Section } from "@/components/ui/Section";
-import { strengths } from "@/data/strengths";
+import type { Strength } from "@/data/types";
 
-export function StrengthsSection() {
+interface StrengthsSectionProps {
+  strengths: Strength[];
+}
+
+export function StrengthsSection({ strengths }: StrengthsSectionProps) {
   return (
     <Section id="strengths" title="Strengths">
       <div className="grid gap-4 sm:grid-cols-2">

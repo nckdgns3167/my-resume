@@ -2,18 +2,26 @@
 
 import { useScrollSpy } from "@/hooks/useScrollSpy";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
-import { tocSections, allTocIds, childToParentMap } from "@/data/toc";
+import { useUiStrings } from "@/context/LocaleContext";
+import type { TocSection } from "@/data/types";
 
-export function TocSidebar() {
+interface TocSidebarProps {
+  tocSections: TocSection[];
+  allTocIds: string[];
+  childToParentMap: Map<string, string>;
+}
+
+export function TocSidebar({ tocSections, allTocIds, childToParentMap }: TocSidebarProps) {
   const activeId = useScrollSpy(allTocIds);
   const isDesktop = useMediaQuery("(min-width: 1100px)");
+  const ui = useUiStrings();
 
   if (!isDesktop) return null;
 
   const activeParent = childToParentMap.get(activeId) ?? activeId;
 
   return (
-    <nav className="fixed left-[calc(50%+480px)] top-1/2 z-40 -translate-y-1/2" aria-label="목차">
+    <nav className="fixed left-[calc(50%+480px)] top-1/2 z-40 -translate-y-1/2" aria-label={ui.toc}>
       <ul className="flex flex-col gap-1.5">
         {tocSections.map((section) => {
           const isSectionActive = activeParent === section.id;

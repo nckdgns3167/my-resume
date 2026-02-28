@@ -1,9 +1,15 @@
 import Image from "next/image";
-import { profile } from "@/data/profile";
+import type { Profile } from "@/data/types";
+import type { UiStrings } from "@/data/ui-strings";
 import { calculateCareerYears } from "@/lib/career-calculator";
 import { CopyButton } from "@/components/ui/CopyButton";
 
-export function Header() {
+interface HeaderProps {
+  profile: Profile;
+  ui: UiStrings;
+}
+
+export function Header({ profile, ui }: HeaderProps) {
   const years = calculateCareerYears(profile.careerPeriods);
 
   return (
@@ -13,19 +19,19 @@ export function Header() {
         <div>
           <h1 className="font-serif text-2xl font-bold text-text sm:text-3xl">
             {profile.nameEn}
-            <span className="ml-2 text-lg font-normal text-text-secondary">Resume</span>
+            <span className="ml-2 text-lg font-normal text-text-secondary">{ui.resume}</span>
           </h1>
           <p className="mt-1 text-base text-text-secondary">
             {profile.name} · {profile.title}{" "}
-            <span className="text-accent-primary">({years}년차)</span>
+            <span className="text-accent-primary">({years}{ui.careerYearSuffix})</span>
           </p>
         </div>
 
         <div className="flex flex-wrap gap-x-4 gap-y-1 text-sm text-text-secondary">
-          <CopyButton text={profile.phoneRaw} label="전화번호">
+          <CopyButton text={profile.phoneRaw} label={ui.phone}>
             <span>{profile.phone}</span>
           </CopyButton>
-          <CopyButton text={profile.email} label="이메일">
+          <CopyButton text={profile.email} label={ui.email}>
             <span>{profile.email}</span>
           </CopyButton>
           <a
@@ -51,7 +57,7 @@ export function Header() {
       <div className="relative h-28 w-28 shrink-0 overflow-hidden rounded-2xl border border-border sm:h-32 sm:w-32">
         <Image
           src={profile.photo}
-          alt={`${profile.name} 프로필 사진`}
+          alt={`${profile.name} ${ui.profilePhoto}`}
           fill
           className="object-cover"
           priority

@@ -3,12 +3,14 @@
 import Image from "next/image";
 import { useStickyHeader } from "@/hooks/useStickyHeader";
 import { useTheme } from "@/context/ThemeContext";
+import { useUiStrings } from "@/context/LocaleContext";
 import { profile } from "@/data/profile";
 import { CopyButton } from "@/components/ui/CopyButton";
 
 export function StickyHeader() {
   const visible = useStickyHeader();
   const { theme } = useTheme();
+  const ui = useUiStrings();
 
   const isDark = theme === "dark";
 
@@ -24,13 +26,13 @@ export function StickyHeader() {
         {/* 왼쪽: 영어 이름 + Resume */}
         <div className="flex items-center gap-2">
           <span className="font-serif text-sm font-semibold text-text">{profile.nameEn}</span>
-          <span className="text-xs text-text-secondary">Resume</span>
+          <span className="text-xs text-text-secondary">{ui.resume}</span>
         </div>
 
         {/* 오른쪽: 아이콘 링크들 + 프로필 사진 */}
         <div className="flex items-center gap-3">
           {/* 전화번호 */}
-          <CopyButton text={profile.phoneRaw} label="전화번호">
+          <CopyButton text={profile.phoneRaw} label={ui.phone}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -48,7 +50,7 @@ export function StickyHeader() {
           </CopyButton>
 
           {/* 이메일 */}
-          <CopyButton text={profile.email} label="이메일">
+          <CopyButton text={profile.email} label={ui.email}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -108,7 +110,7 @@ export function StickyHeader() {
           <div className="relative h-7 w-7 shrink-0 overflow-hidden rounded-full border border-border">
             <Image
               src={profile.photo}
-              alt={`${profile.name} 프로필 사진`}
+              alt={`${profile.name} ${ui.profilePhoto}`}
               fill
               className="object-cover"
               sizes="28px"

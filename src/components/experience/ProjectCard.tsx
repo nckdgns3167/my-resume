@@ -1,4 +1,5 @@
 import type { Project } from "@/data/types";
+import type { UiStrings } from "@/data/ui-strings";
 import { parseRichText } from "@/lib/rich-text";
 import { HighlightBox } from "./HighlightBox";
 import { ProjectAchievements } from "./ProjectAchievements";
@@ -6,9 +7,10 @@ import { ProjectGallery } from "./ProjectGallery";
 
 interface ProjectCardProps {
   project: Project;
+  ui: UiStrings;
 }
 
-export function ProjectCard({ project }: ProjectCardProps) {
+export function ProjectCard({ project, ui }: ProjectCardProps) {
   return (
     <div id={project.id} className="relative scroll-mt-20">
       {/* 타임라인 작은 도트 */}
@@ -23,11 +25,11 @@ export function ProjectCard({ project }: ProjectCardProps) {
 
         {/* 메타 정보 */}
         <dl className="mb-3 grid grid-cols-[auto_1fr] gap-x-4 gap-y-1 text-sm">
-          <dt className="text-text-secondary">발주처</dt>
+          <dt className="text-text-secondary">{ui.client}</dt>
           <dd className="text-text">{project.client}</dd>
-          <dt className="text-text-secondary">기간</dt>
+          <dt className="text-text-secondary">{ui.period}</dt>
           <dd className="text-text">{project.period}</dd>
-          <dt className="text-text-secondary">역할</dt>
+          <dt className="text-text-secondary">{ui.role}</dt>
           <dd className="text-text">{project.role}</dd>
         </dl>
 

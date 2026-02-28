@@ -3,12 +3,20 @@
 import { useState } from "react";
 import { useScrollSpy } from "@/hooks/useScrollSpy";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
-import { tocSections, allTocIds, childToParentMap } from "@/data/toc";
+import { useUiStrings } from "@/context/LocaleContext";
+import type { TocSection } from "@/data/types";
 
-export function TocBottomSheet() {
+interface TocBottomSheetProps {
+  tocSections: TocSection[];
+  allTocIds: string[];
+  childToParentMap: Map<string, string>;
+}
+
+export function TocBottomSheet({ tocSections, allTocIds, childToParentMap }: TocBottomSheetProps) {
   const [isOpen, setIsOpen] = useState(false);
   const activeId = useScrollSpy(allTocIds);
   const isDesktop = useMediaQuery("(min-width: 1100px)");
+  const ui = useUiStrings();
 
   if (isDesktop) return null;
 
@@ -28,7 +36,7 @@ export function TocBottomSheet() {
         }`}
       >
         <div className="mx-auto mb-4 h-1 w-10 rounded-full bg-border" />
-        <nav aria-label="목차">
+        <nav aria-label={ui.toc}>
           <ul className="flex flex-col gap-1">
             {tocSections.map((section) => {
               const isSectionActive = activeParent === section.id;
@@ -81,8 +89,8 @@ export function TocBottomSheet() {
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
-          className="fixed bottom-[4.5rem] right-6 z-50 flex h-9 w-9 items-center justify-center rounded-full bg-accent-primary/70 text-white shadow-md transition-colors hover:bg-accent-primary print:hidden"
-          aria-label="목차 열기"
+          className="fixed bottom-[7.5rem] right-6 z-50 flex h-9 w-9 items-center justify-center rounded-full bg-accent-primary/70 text-white shadow-md transition-colors hover:bg-accent-primary print:hidden"
+          aria-label={ui.openToc}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"

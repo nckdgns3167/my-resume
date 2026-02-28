@@ -3,11 +3,13 @@
 import { useEffect, useRef } from "react";
 import { driver } from "driver.js";
 import "driver.js/dist/driver.css";
+import { useUiStrings } from "@/context/LocaleContext";
 
 const STORAGE_KEY = "coachmark-dismissed";
 
 export function CoachMark() {
   const hasTriggered = useRef(false);
+  const ui = useUiStrings();
 
   useEffect(() => {
     if (hasTriggered.current) return;
@@ -30,8 +32,8 @@ export function CoachMark() {
                 {
                   element: ".project-gallery summary",
                   popover: {
-                    title: "갤러리 열기",
-                    description: "클릭하면 프로젝트 스크린샷을 볼 수 있어요.",
+                    title: ui.coachGalleryTitle,
+                    description: ui.coachGalleryDesc,
                     side: "top",
                     align: "start",
                   },
@@ -39,8 +41,8 @@ export function CoachMark() {
                 {
                   element: ".project-gallery",
                   popover: {
-                    title: "이미지 클릭",
-                    description: "이미지를 클릭하면 라이트박스로 크게 볼 수 있어요.",
+                    title: ui.coachImageTitle,
+                    description: ui.coachImageDesc,
                     side: "top",
                     align: "start",
                   },
@@ -60,7 +62,7 @@ export function CoachMark() {
 
     observer.observe(el);
     return () => observer.disconnect();
-  }, []);
+  }, [ui]);
 
   return null;
 }

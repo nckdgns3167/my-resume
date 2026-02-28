@@ -3,6 +3,7 @@ import { JetBrains_Mono } from "next/font/google";
 import { LightboxProvider } from "@/context/LightboxContext";
 import { SnackbarProvider } from "@/context/SnackbarContext";
 import { ThemeProvider } from "@/context/ThemeContext";
+import { LocaleProvider } from "@/context/LocaleContext";
 import { profile } from "@/data/profile";
 import { calculateCareerYears } from "@/lib/career-calculator";
 import "./globals.css";
@@ -58,7 +59,7 @@ export default function RootLayout({
       <head>
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){try{var t=localStorage.getItem('theme');if(!t)t='light';document.documentElement.dataset.theme=t}catch(e){}})()`,
+            __html: `(function(){try{var t=localStorage.getItem('theme');if(!t)t='light';document.documentElement.dataset.theme=t;var l=localStorage.getItem('locale');if(!l)l='ko';document.documentElement.dataset.locale=l;document.documentElement.lang=l}catch(e){}})()`,
           }}
         />
         <script
@@ -68,9 +69,11 @@ export default function RootLayout({
       </head>
       <body className={`${jetbrainsMono.variable} font-sans antialiased`}>
         <ThemeProvider>
-          <SnackbarProvider>
-            <LightboxProvider>{children}</LightboxProvider>
-          </SnackbarProvider>
+          <LocaleProvider>
+            <SnackbarProvider>
+              <LightboxProvider>{children}</LightboxProvider>
+            </SnackbarProvider>
+          </LocaleProvider>
         </ThemeProvider>
       </body>
     </html>

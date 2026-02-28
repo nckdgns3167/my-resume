@@ -1,9 +1,11 @@
 "use client";
 
 import { useTheme } from "@/context/ThemeContext";
+import { useUiStrings } from "@/context/LocaleContext";
 
 export function ThemeToggle() {
   const { theme, toggleTheme } = useTheme();
+  const ui = useUiStrings();
 
   const handleToggle = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (!document.startViewTransition) {
@@ -40,7 +42,7 @@ export function ThemeToggle() {
     <button
       onClick={handleToggle}
       className="flex h-9 w-9 items-center justify-center rounded-full bg-accent-primary/70 text-white shadow-md transition-colors hover:bg-accent-primary"
-      aria-label={theme === "light" ? "다크 모드로 전환" : "라이트 모드로 전환"}
+      aria-label={theme === "light" ? ui.switchToDark : ui.switchToLight}
     >
       {theme === "light" ? (
         <svg

@@ -5,6 +5,7 @@ import { useState, useMemo, useRef, useCallback } from "react";
 import type { GalleryGrid, GalleryItem } from "@/data/types";
 import { isGalleryImageGroup } from "@/data/types";
 import { useLightbox } from "@/context/LightboxContext";
+import { useUiStrings } from "@/context/LocaleContext";
 
 interface ProjectGalleryProps {
   grids: GalleryGrid[];
@@ -48,6 +49,7 @@ export function ProjectGallery({ grids, projectName }: ProjectGalleryProps) {
   const [isOpen, setIsOpen] = useState(false);
   const { open } = useLightbox();
   const summaryRef = useRef<HTMLElement>(null);
+  const ui = useUiStrings();
 
   const allSlides = useMemo(() => flattenToSlides(grids), [grids]);
 
@@ -70,7 +72,7 @@ export function ProjectGallery({ grids, projectName }: ProjectGalleryProps) {
           ref={summaryRef}
           className="cursor-pointer select-none text-sm font-medium text-accent-secondary transition-colors hover:text-accent-secondary/80"
         >
-          {isOpen ? "갤러리 닫기" : `갤러리 보기 (${allSlides.length}장)`}
+          {isOpen ? ui.closeGallery : ui.viewGallery(allSlides.length)}
         </summary>
 
         <div className="relative mt-4">
@@ -79,7 +81,7 @@ export function ProjectGallery({ grids, projectName }: ProjectGalleryProps) {
             <button
               onClick={closeAndScroll}
               className="pointer-events-auto absolute -right-18 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-accent-primary/70 text-white shadow-lg transition-colors hover:bg-accent-primary"
-              aria-label="갤러리 닫기"
+              aria-label={ui.closeGallery}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"

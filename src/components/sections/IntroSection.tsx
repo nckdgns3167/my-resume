@@ -1,8 +1,12 @@
 import { Section } from "@/components/ui/Section";
-import { introduction } from "@/data/introduction";
+import type { Introduction } from "@/data/types";
 import { parseRichText } from "@/lib/rich-text";
 
-export function IntroSection() {
+interface IntroSectionProps {
+  introduction: Introduction;
+}
+
+export function IntroSection({ introduction }: IntroSectionProps) {
   return (
     <Section id="introduction" title="Introduction">
       <div className="flex flex-col gap-4">

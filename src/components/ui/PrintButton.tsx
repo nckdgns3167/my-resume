@@ -1,12 +1,16 @@
 "use client";
 
+import { useUiStrings } from "@/context/LocaleContext";
+
 export function PrintButton() {
+  const ui = useUiStrings();
+
   return (
     <button
       onClick={() => window.print()}
       className="flex h-9 w-9 items-center justify-center rounded-full bg-accent-primary/70 text-white shadow-md transition-colors hover:bg-accent-primary print:hidden"
-      aria-label="PDF로 저장"
-      title="PDF로 저장"
+      aria-label={ui.saveAsPdf}
+      title={ui.saveAsPdf}
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
