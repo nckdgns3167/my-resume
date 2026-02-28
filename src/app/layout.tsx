@@ -35,6 +35,20 @@ export const metadata: Metadata = {
     description: `${careerYears}년차 프론트엔드 개발자 정창훈의 경력기술서`,
     locale: "ko_KR",
     siteName: "정창훈 경력기술서",
+    images: [
+      {
+        url: "https://resume-changhoon.vercel.app/images/profile/thumb.jpg",
+        width: 512,
+        height: 512,
+        alt: "정창훈 Frontend Developer",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "정창훈 | Frontend Developer",
+    description: `${careerYears}년차 프론트엔드 개발자 정창훈의 경력기술서`,
+    images: ["https://resume-changhoon.vercel.app/images/profile/thumb.jpg"],
   },
   robots: { index: true, follow: true },
 };
