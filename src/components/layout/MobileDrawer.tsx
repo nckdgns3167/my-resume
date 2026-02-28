@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useScrollSpy } from "@/hooks/useScrollSpy";
 import { useScrollTop } from "@/hooks/useScrollTop";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
@@ -28,6 +28,7 @@ export function MobileDrawer({
 
 	// Drag-to-dismiss state
 	const sheetRef = useRef<HTMLDivElement>(null);
+	const handleRef = useRef<HTMLDivElement>(null);
 	const dragStartY = useRef(0);
 	const dragDelta = useRef(0);
 	const isDragging = useRef(false);
@@ -42,39 +43,46 @@ export function MobileDrawer({
 		return () => window.removeEventListener("keydown", handler);
 	}, [isOpen]);
 
-	// Drag handle touch handlers
-	const onTouchStart = useCallback((e: React.TouchEvent) => {
-		isDragging.current = true;
-		dragStartY.current = e.touches[0].clientY;
-		dragDelta.current = 0;
-		if (sheetRef.current) {
-			sheetRef.current.style.transition = "none";
-		}
-	}, []);
+	// Native touch listeners on drag handle (passive: false to allow preventDefault)
+	useEffect(() => {
+		const handle = handleRef.current;
+		const sheet = sheetRef.current;
+		if (!handle || !sheet) return;
 
-	const onTouchMove = useCallback((e: React.TouchEvent) => {
-		if (!isDragging.current) return;
-		const delta = e.touches[0].clientY - dragStartY.current;
-		// Only allow dragging downward
-		dragDelta.current = Math.max(0, delta);
-		if (sheetRef.current) {
-			sheetRef.current.style.transform = `translateY(${dragDelta.current}px)`;
-		}
-	}, []);
+		const onTouchStart = (e: TouchEvent) => {
+			isDragging.current = true;
+			dragStartY.current = e.touches[0].clientY;
+			dragDelta.current = 0;
+			sheet.style.transition = "none";
+		};
 
-	const onTouchEnd = useCallback(() => {
-		isDragging.current = false;
-		if (sheetRef.current) {
-			sheetRef.current.style.transition = "";
-		}
-		if (dragDelta.current > 50) {
-			setIsOpen(false);
-		}
-		// Reset transform (CSS transition handles snap back)
-		if (sheetRef.current) {
-			sheetRef.current.style.transform = "";
-		}
-		dragDelta.current = 0;
+		const onTouchMove = (e: TouchEvent) => {
+			if (!isDragging.current) return;
+			e.preventDefault(); // 페이지 스크롤 방지
+			const delta = e.touches[0].clientY - dragStartY.current;
+			dragDelta.current = Math.max(0, delta);
+			sheet.style.transform = `translateY(${dragDelta.current}px)`;
+		};
+
+		const onTouchEnd = () => {
+			isDragging.current = false;
+			sheet.style.transition = "";
+			if (dragDelta.current > 50) {
+				setIsOpen(false);
+			}
+			sheet.style.transform = "";
+			dragDelta.current = 0;
+		};
+
+		handle.addEventListener("touchstart", onTouchStart, { passive: true });
+		handle.addEventListener("touchmove", onTouchMove, { passive: false });
+		handle.addEventListener("touchend", onTouchEnd);
+
+		return () => {
+			handle.removeEventListener("touchstart", onTouchStart);
+			handle.removeEventListener("touchmove", onTouchMove);
+			handle.removeEventListener("touchend", onTouchEnd);
+		};
 	}, []);
 
 	if (isDesktop) return null;
@@ -105,10 +113,8 @@ export function MobileDrawer({
 			>
 				{/* Drag handle */}
 				<div
+					ref={handleRef}
 					className="flex cursor-grab items-center justify-center pb-3 pt-1 active:cursor-grabbing"
-					onTouchStart={onTouchStart}
-					onTouchMove={onTouchMove}
-					onTouchEnd={onTouchEnd}
 				>
 					<div className="h-1 w-10 rounded-full bg-border" />
 				</div>
