@@ -1,14 +1,18 @@
 "use client";
 
 import { useScrollTop } from "@/hooks/useScrollTop";
+import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { useLocale, useUiStrings } from "@/context/LocaleContext";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import { PrintButton } from "@/components/ui/PrintButton";
 
 export function FabStack() {
   const { showButton, scrollToTop } = useScrollTop();
+  const isDesktop = useMediaQuery("(min-width: 1100px)");
   const { locale, toggleLocale } = useLocale();
   const ui = useUiStrings();
+
+  if (!isDesktop) return null;
 
   return (
     <div className="fixed bottom-6 right-6 z-50 flex flex-col gap-2 print:hidden">

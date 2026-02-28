@@ -43,9 +43,11 @@ export interface UiStrings {
 	viewGallery: (count: number) => string;
 	closeGallery: string;
 
-	// TocSidebar / TocBottomSheet
+	// TocSidebar / MobileDrawer
 	toc: string;
 	openToc: string;
+	openMenu: string;
+	closeMenu: string;
 
 	// SkillsSection (print-only)
 	screenshotWebNotice: string;
@@ -96,6 +98,8 @@ export const uiStringsKo: UiStrings = {
 
 	toc: "목차",
 	openToc: "목차 열기",
+	openMenu: "메뉴 열기",
+	closeMenu: "메뉴 닫기",
 
 	screenshotWebNotice:
 		"각 프로젝트별 스크린샷은 웹 버전에서 확인하실 수 있습니다.",
@@ -143,6 +147,8 @@ export const uiStringsEn: UiStrings = {
 
 	toc: "Table of Contents",
 	openToc: "Open TOC",
+	openMenu: "Open menu",
+	closeMenu: "Close menu",
 
 	screenshotWebNotice:
 		"Screenshots for each project are available in the web version.",

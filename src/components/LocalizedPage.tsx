@@ -14,7 +14,7 @@ import { SideProjectsSection } from "@/components/sections/SideProjectsSection";
 import { ExperienceSection } from "@/components/sections/ExperienceSection";
 import { StrengthsSection } from "@/components/sections/StrengthsSection";
 import { TocSidebar } from "@/components/toc/TocSidebar";
-import { TocBottomSheet } from "@/components/toc/TocBottomSheet";
+import { MobileDrawer } from "@/components/layout/MobileDrawer";
 import { Snackbar } from "@/components/ui/Snackbar";
 import { Lightbox } from "@/components/lightbox/Lightbox";
 import { CoachMark } from "@/components/ui/CoachMark";
@@ -70,7 +70,7 @@ export function LocalizedPage() {
 				allTocIds={allTocIds}
 				childToParentMap={childToParentMap}
 			/>
-			<TocBottomSheet
+			<MobileDrawer
 				tocSections={data.tocSections}
 				allTocIds={allTocIds}
 				childToParentMap={childToParentMap}
