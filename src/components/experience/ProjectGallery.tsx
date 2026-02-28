@@ -80,7 +80,7 @@ export function ProjectGallery({ grids, projectName }: ProjectGalleryProps) {
           <div className="pointer-events-none sticky top-[50vh] z-40 h-0">
             <button
               onClick={closeAndScroll}
-              className="pointer-events-auto absolute -right-18 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-accent-primary/70 text-white shadow-lg transition-colors hover:bg-accent-primary"
+              className="pointer-events-auto absolute right-2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-accent-primary/70 text-white shadow-lg transition-colors hover:bg-accent-primary xl:-right-18"
               aria-label={ui.closeGallery}
             >
               <svg
