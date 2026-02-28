@@ -1,26 +1,153 @@
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css");
 @import "tailwindcss";
 
+/* ==============================
+   Claude.ai Brand Theme System
+   ============================== */
+
+/* Light theme (default) */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg: #faf9f5;
+  --bg-secondary: #e8e6dc;
+  --text: #141413;
+  --text-secondary: #b0aea5;
+  --border: #e8e6dc;
+  --surface: #ffffff;
+  --accent-primary: #d97757;
+  --accent-secondary: #6a9bcc;
+  --accent-tertiary: #788c5d;
 }
 
+/* Dark theme */
+[data-theme="dark"] {
+  --bg: #141413;
+  --bg-secondary: #1e1e1c;
+  --text: #faf9f5;
+  --text-secondary: #b0aea5;
+  --border: #2a2a28;
+  --surface: #1e1e1c;
+}
+
+/* Tailwind v4 theme tokens */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-bg: var(--bg);
+  --color-bg-secondary: var(--bg-secondary);
+  --color-surface: var(--surface);
+  --color-border: var(--border);
+  --color-text: var(--text);
+  --color-text-secondary: var(--text-secondary);
+  --color-accent-primary: var(--accent-primary);
+  --color-accent-secondary: var(--accent-secondary);
+  --color-accent-tertiary: var(--accent-tertiary);
+
+  --font-sans: "Pretendard Variable", Pretendard, -apple-system,
+    BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI",
+    "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", sans-serif;
+  --font-mono: var(--font-jetbrains-mono), "JetBrains Mono", "Fira Code",
+    Consolas, monospace;
+
+  --breakpoint-sm: 480px;
+  --breakpoint-md: 640px;
+  --breakpoint-lg: 768px;
+  --breakpoint-xl: 1100px;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+/* Base styles */
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--bg);
+  color: var(--text);
+  transition: background-color 0.2s, color 0.2s;
+}
+
+/* View Transition API (theme toggle circular reveal) */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+/* Selection */
+::selection {
+  background-color: var(--accent-primary);
+  color: #ffffff;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--text-secondary);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text);
+}
+
+/* driver.js CoachMark theme */
+.coachmark-popover {
+  background-color: var(--surface) !important;
+  color: var(--text) !important;
+}
+
+.coachmark-popover .driver-popover-title {
+  color: var(--text) !important;
+  font-family: var(--font-sans);
+}
+
+.coachmark-popover .driver-popover-description {
+  color: var(--text-secondary) !important;
+  font-family: var(--font-sans);
+}
+
+.coachmark-popover .driver-popover-progress-text {
+  color: var(--text-secondary) !important;
+}
+
+.coachmark-popover button.driver-popover-next-btn {
+  background-color: var(--accent-primary) !important;
+  color: #ffffff !important;
+  text-shadow: none !important;
+}
+
+.coachmark-popover button.driver-popover-prev-btn {
+  color: var(--text-secondary) !important;
+  text-shadow: none !important;
+}
+
+/* Print styles */
+@media print {
+  :root,
+  [data-theme="dark"] {
+    --bg: #ffffff;
+    --bg-secondary: #f5f5f5;
+    --text: #000000;
+    --text-secondary: #444444;
+    --border: #dddddd;
+    --surface: #ffffff;
+    --accent-primary: #d97757;
+    --accent-secondary: #6a9bcc;
+    --accent-tertiary: #788c5d;
+  }
+
+  body {
+    transition: none;
+  }
+
+  /* Hide interactive/fixed elements */
+  [style*="position: fixed"],
+  [style*="position:fixed"] {
+    display: none !important;
+  }
+
+  /* Page breaks */
+  section {
+    break-inside: avoid;
+  }
 }
