@@ -3,7 +3,7 @@ import type { SideProject } from "./types";
 export const sideProjects: SideProject[] = [
   {
     id: "project-sage",
-    name: "ChartSage",
+    name: "차트의 현자, 'ChartSage'",
     client: "1인 개발",
     period: "2025.02 ~ 진행 중",
     role: "기획 · 설계 · 프론트엔드 개발 · 인프라 전체",
