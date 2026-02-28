@@ -2,17 +2,23 @@
 
 import Image from "next/image";
 import { useStickyHeader } from "@/hooks/useStickyHeader";
+import { useTheme } from "@/context/ThemeContext";
 import { profile } from "@/data/profile";
 import { CopyButton } from "@/components/ui/CopyButton";
 
 export function StickyHeader() {
   const visible = useStickyHeader();
+  const { theme } = useTheme();
+
+  const isDark = theme === "dark";
 
   return (
     <div
-      className={`fixed left-0 top-0 z-50 w-full border-b border-accent-primary/25 bg-accent-primary/15 backdrop-blur-md transition-transform duration-300 print:hidden ${
-        visible ? "translate-y-0" : "-translate-y-full"
-      }`}
+      className={`fixed left-0 top-0 z-50 w-full backdrop-blur-md transition-transform duration-300 print:hidden ${
+        isDark
+          ? "border-b border-accent-primary/25 bg-accent-primary/15"
+          : "border-b border-accent-primary/15 bg-accent-primary/8"
+      } ${visible ? "translate-y-0" : "-translate-y-full"}`}
     >
       <div className="mx-auto flex max-w-[860px] items-center justify-between px-5 py-2 sm:px-8">
         {/* 왼쪽: 이름 + 직함 */}
