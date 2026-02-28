@@ -74,8 +74,7 @@ export const companies: Company[] = [
             ],
           },
           {
-            title:
-              "Tab Edit Mode UX 혁신 — iOS 홈 화면 앱 정리 UX 착안, 4단계 점진적 발전",
+            title: "Tab Edit Mode UX 혁신 — iOS 홈 화면 앱 정리 UX 착안, 4단계 점진적 발전",
             description:
               "검사원 1인당 5~10개 이상 탭을 동시 유지하는 환경에서, X 버튼 오터치·되돌리기 불가·일괄 정리 부재 문제를 해결하기 위해 고정형 탭 바를 In-place Edit Layout으로 혁신.",
             items: [
@@ -126,8 +125,7 @@ export const companies: Company[] = [
                 src: `${IMG}/01-smarton/edit-grid-1.png`,
                 alt: "P-Edit-DataTable",
                 caption: "P-Edit-DataTable",
-                subCaption:
-                  "행 상태(saved/added/modified/deleted) 시각 피드백",
+                subCaption: "행 상태(saved/added/modified/deleted) 시각 피드백",
               },
               {
                 src: `${IMG}/01-smarton/edit-grid-2.png`,
@@ -208,8 +206,7 @@ export const companies: Company[] = [
                   },
                 ],
                 caption: "코치마크 온보딩",
-                subCaption:
-                  "driver.js 2단계 투어 — 편집모드 진입 시 자동 표시",
+                subCaption: "driver.js 2단계 투어 — 편집모드 진입 시 자동 표시",
               },
               {
                 images: [
@@ -227,8 +224,7 @@ export const companies: Company[] = [
                   },
                 ],
                 caption: "편집모드 조작",
-                subCaption:
-                  "⊖ 삭제 마킹 · 롱프레스 순서 변경 · ConfirmPopup 일괄 저장",
+                subCaption: "⊖ 삭제 마킹 · 롱프레스 순서 변경 · ConfirmPopup 일괄 저장",
               },
             ],
           },
@@ -244,14 +240,7 @@ export const companies: Company[] = [
         client: "한국방송통신전파진흥원(KCA)",
         period: "2024.12 ~ 2025.03",
         role: "Interactive 분배도표 차트 설계 및 단독 개발",
-        stack: [
-          "React",
-          "TypeScript",
-          "TanStack Query",
-          "Context API",
-          "Emotion",
-          "Framer Motion",
-        ],
+        stack: ["React", "TypeScript", "TanStack Query", "Context API", "Emotion", "Framer Motion"],
         description:
           "위성 주파수 이용현황을 시각화한 Interactive 분배도표 차트를 직접 설계 및 단독 개발. 분배↔주파수↔용도↔이용 4행이 주파수 축으로 정렬·연결되는 복잡한 레이아웃 특성상 범용 차트 라이브러리(D3, Chart.js 등)로는 구현이 불가능하여, 차트 라이브러리 없이 순수 React + Emotion으로 자체 구현. 대외용/내부용으로 구분된 6개 밴드(L, S, C, X, Ku-V)별 데이터를 주파수 값 기반으로 위치·너비를 동적 계산하여 렌더링하는 데이터 시각화 프로젝트.",
         achievements: [
@@ -304,15 +293,13 @@ export const companies: Company[] = [
                 src: `${IMG}/02-satellite/distribution-chart.png`,
                 alt: "Interactive 분배도표 차트 전체 화면",
                 caption: "Interactive 분배도표",
-                subCaption:
-                  "대외용/내부용 주파수 대역별 분배·용도·이용 현황 시각화",
+                subCaption: "대외용/내부용 주파수 대역별 분배·용도·이용 현황 시각화",
               },
               {
                 src: `${IMG}/02-satellite/chart-zoom-toggle.png`,
                 alt: "스케일 조작 Toolbar",
                 caption: "Contextual Toolbar",
-                subCaption:
-                  "확대/축소 버튼 + 실제 스케일 토글 (마우스 오버 시 노출)",
+                subCaption: "확대/축소 버튼 + 실제 스케일 토글 (마우스 오버 시 노출)",
               },
             ],
           },
@@ -328,14 +315,7 @@ export const companies: Company[] = [
         client: "중소벤처기업부 / 스마트제조혁신추진단",
         period: "2023.03 ~ 2024.11",
         role: "협약 영역 기능 개발 · 공통 컴포넌트 자체 발굴·단독 개발 · 상태 관리 설계 · 유지보수",
-        stack: [
-          "React",
-          "Context API",
-          "useReducer",
-          "Ant Design",
-          "Spring Boot",
-          "MyBatis",
-        ],
+        stack: ["React", "Context API", "useReducer", "Ant Design", "Spring Boot", "MyBatis"],
         description:
           "25명 규모 개발팀(사전/협약/평가/공통 4개 파트) 내 협약 파트 담당. 촉박한 일정 속에서 각자 화면 개발에 집중하느라 상태 관리 체계가 부재하고 코드 스타일이 중구난방이던 상황에서, React 상태 관리의 중요성을 인식하고 Context API 기반 전역 상태 관리 체계를 자체 설계. 업무(협약) 팀 소속이면서도 팀 전체에 필요한 공통 컴포넌트를 자체 발굴·단독 개발하여 코드 리뷰·사용법 안내로 팀 코드 일관성과 생산성에 기여.",
         achievements: [
@@ -347,8 +327,7 @@ export const companies: Company[] = [
             ],
           },
           {
-            title:
-              "공통 컴포넌트 4종 자체 발굴·단독 개발 → 코드 리뷰·팀 전파",
+            title: "공통 컴포넌트 4종 자체 발굴·단독 개발 → 코드 리뷰·팀 전파",
             items: [
               "공통팀이 아닌 업무(협약) 파트 소속이면서, 팀 전체에 반복되는 UI 패턴(목록·검색·팝업·탭 등)을 직접 식별하여 재사용 가능한 공통 컴포넌트로 설계·개발",
               "선언적 설정만으로 화면을 구성할 수 있도록 만들어, 새로운 화면 개발 시 빠르게 적용 가능한 온보딩 환경 조성",
@@ -375,22 +354,19 @@ export const companies: Company[] = [
                 src: `${IMG}/03-pms/search-list.png`,
                 alt: "PMS 검색 및 목록",
                 caption: "협약변경 검색 · 목록",
-                subCaption:
-                  "공통 List 컴포넌트 — 검색조건 + 테이블 + 페이지네이션 자동 구성",
+                subCaption: "공통 List 컴포넌트 — 검색조건 + 테이블 + 페이지네이션 자동 구성",
               },
               {
                 src: `${IMG}/03-pms/before-after.png`,
                 alt: "PMS 변경전후 확인",
                 caption: "변경 정보 상세",
-                subCaption:
-                  "연노랑 배경 강조 + 왕관 아이콘 대표기관 시각화",
+                subCaption: "연노랑 배경 강조 + 왕관 아이콘 대표기관 시각화",
               },
               {
                 src: `${IMG}/03-pms/crud-confirm.png`,
                 alt: "PMS 추가삭제수정 확인",
                 caption: "추가 · 삭제 · 수정 확인",
-                subCaption:
-                  "파란(추가)/빨간(삭제)/노란(수정) 행 색상 구분 + 사업비 테이블",
+                subCaption: "파란(추가)/빨간(삭제)/노란(수정) 행 색상 구분 + 사업비 테이블",
               },
             ],
           },
@@ -406,14 +382,7 @@ export const companies: Company[] = [
         client: "한국가스안전공사(KGS)",
         period: "2022.09 ~ 2023.02",
         role: "신규 기능 추가 개발 · 모바일 화면 구현",
-        stack: [
-          "Spring",
-          "JSP",
-          "jQuery",
-          "OZ Report",
-          "MarkAny",
-          "ePapyrus",
-        ],
+        stack: ["Spring", "JSP", "jQuery", "OZ Report", "MarkAny", "ePapyrus"],
         achievements: [
           "레거시(Spring, JSP) 관공서 내부망 시스템에 모바일 환경 이수증 발급 기능 신규 개발",
           "OZ(문서 생성) → MarkAny(보안 적용) → ePapyrus(뷰어) 3개 솔루션 순차 파이프라인 구성",
@@ -426,15 +395,13 @@ export const companies: Company[] = [
                 src: `${IMG}/04-certificate/certificate-1.png`,
                 alt: "모바일 본인 인증 로그인",
                 caption: "본인 인증 시스템",
-                subCaption:
-                  "KGS 사이버지사 모바일 로그인 + 본인 인증",
+                subCaption: "KGS 사이버지사 모바일 로그인 + 본인 인증",
               },
               {
                 src: `${IMG}/04-certificate/certificate-2.png`,
                 alt: "모바일 교육이수증 조회",
                 caption: "교육이수 이력 조회",
-                subCaption:
-                  "가스 안전 교육 이수 과정 조회 + PDF 이수증 발급",
+                subCaption: "가스 안전 교육 이수 과정 조회 + PDF 이수증 발급",
               },
             ],
           },
@@ -450,14 +417,7 @@ export const companies: Company[] = [
         client: "한국화학연구원(KRICT)",
         period: "2022.03 ~ 2022.06",
         role: "플랫폼 전체 구조 설계 및 개발 주도",
-        stack: [
-          "Django",
-          "Flask",
-          "Python",
-          "multiprocessing",
-          "Crontab",
-          "Axios",
-        ],
+        stack: ["Django", "Flask", "Python", "multiprocessing", "Crontab", "Axios"],
         achievements: [
           {
             title: "Django + Flask 이중 구조 플랫폼 설계",
@@ -496,50 +456,43 @@ export const companies: Company[] = [
                 src: `${IMG}/05-ai-drug/main.png`,
                 alt: "AI 신약개발 플랫폼 메인화면",
                 caption: "메인 랜딩 페이지",
-                subCaption:
-                  "Cardiotoxicity, BBB Permeability 등 분석 모듈 소개",
+                subCaption: "Cardiotoxicity, BBB Permeability 등 분석 모듈 소개",
               },
               {
                 src: `${IMG}/05-ai-drug/module-list.png`,
                 alt: "분석 모듈 목록",
                 caption: "Module List",
-                subCaption:
-                  "15개 AI 분석 모듈 관리 (API name, Level, 등록일)",
+                subCaption: "15개 AI 분석 모듈 관리 (API name, Level, 등록일)",
               },
               {
                 src: `${IMG}/05-ai-drug/task-register.png`,
                 alt: "작업 등록 화면",
                 caption: "Register Job",
-                subCaption:
-                  "SMILES Editor로 분자 구조 시각적 편집 + SMILES 코드 목록 등록",
+                subCaption: "SMILES Editor로 분자 구조 시각적 편집 + SMILES 코드 목록 등록",
               },
               {
                 src: `${IMG}/05-ai-drug/task-list.png`,
                 alt: "작업 목록",
                 caption: "Job List",
-                subCaption:
-                  "SMILES 입력값, 선택 모듈, 상태(PAUSE/COMPLETE), 재생/삭제 액션",
+                subCaption: "SMILES 입력값, 선택 모듈, 상태(PAUSE/COMPLETE), 재생/삭제 액션",
               },
               {
                 src: `${IMG}/05-ai-drug/realtime-progress.png`,
                 alt: "모듈별 실시간 진행상태",
                 caption: "Job Detail",
-                subCaption:
-                  "분자 구조 시각화 + 12개 모듈별 실시간 진행 상태 모니터링",
+                subCaption: "분자 구조 시각화 + 12개 모듈별 실시간 진행 상태 모니터링",
               },
               {
                 src: `${IMG}/05-ai-drug/result-view.png`,
                 alt: "모듈 실행 결과 화면",
                 caption: "Result Detail",
-                subCaption:
-                  "모듈별 예측 결과 + SMILES 물성 정보 + PDF/CSV 다운로드",
+                subCaption: "모듈별 예측 결과 + SMILES 물성 정보 + PDF/CSV 다운로드",
               },
               {
                 src: `${IMG}/05-ai-drug/export-pdf-csv.png`,
                 alt: "결과 PDF/CSV 다운로드",
                 caption: "결과 내보내기",
-                subCaption:
-                  "PDF 리포트(분자 구조 + 분석 결과) 및 CSV 스프레드시트 다운로드",
+                subCaption: "PDF 리포트(분자 구조 + 분석 결과) 및 CSV 스프레드시트 다운로드",
               },
             ],
           },
@@ -560,8 +513,7 @@ export const companies: Company[] = [
           "NIA AI학습용 데이터 구축사업에서 PMO 조직이 활용하는 AI 학습데이터 품질 자동 검증 플랫폼. 텍스트·이미지·영상·음성 등 정형/비정형 데이터를 [metric]100여 개의 품질측정 모듈[/metric]로 자동 검수하고, 데이터 프로파일링·육안검수·통계 대시보드·결과 보고서까지 품질 진단 전 과정을 단일 플랫폼에서 처리.",
         achievements: [
           {
-            title:
-              "6단계 품질 진단 워크플로우 전체 설계·구현 (프론트엔드 + 백엔드)",
+            title: "6단계 품질 진단 워크플로우 전체 설계·구현 (프론트엔드 + 백엔드)",
             items: [
               "품질지표 정의 → 데이터 프로파일링 → 데이터 적재 → 품질 검수 → 결과 보고서까지, 새로고침 없는 단일 화면 비동기 UX 구현",
               "백엔드에서는 6단계 x 7상태 x 2역할(Auditor/Collector) 검토·승인 워크플로우를 2계층 상태 모델로 설계하여 다중 검토자 병렬 승인 지원",
@@ -607,22 +559,19 @@ export const companies: Company[] = [
                 src: `${IMG}/06-lime-dqm/data-load.png`,
                 alt: "LIME-DQM 데이터 적재 및 구조 분석",
                 caption: "데이터 적재 · 구조 분석",
-                subCaption:
-                  "JSON key별 Level·타입·매핑 자동 추출 + 프로파일링 항목 선택",
+                subCaption: "JSON key별 Level·타입·매핑 자동 추출 + 프로파일링 항목 선택",
               },
               {
                 src: `${IMG}/06-lime-dqm/quality-inspection.png`,
                 alt: "LIME-DQM 품질지표정의서 기반 검수",
                 caption: "품질지표 기반 검수 계획",
-                subCaption:
-                  "검증 계획서 버전 관리 + 데이터셋별 지표 항목·검수모듈 매핑 테이블",
+                subCaption: "검증 계획서 버전 관리 + 데이터셋별 지표 항목·검수모듈 매핑 테이블",
               },
               {
                 src: `${IMG}/06-lime-dqm/report-output.png`,
                 alt: "LIME-DQM 검수 결과 보고서",
                 caption: "검수 결과 보고서 출력",
-                subCaption:
-                  "A4 규격 인쇄 최적화 보고서 동적 생성 + Prev/Next 페이지 네비게이션",
+                subCaption: "A4 규격 인쇄 최적화 보고서 동적 생성 + Prev/Next 페이지 네비게이션",
               },
             ],
           },
@@ -643,16 +592,14 @@ export const companies: Company[] = [
           "자사 AI 학습데이터 구축 플랫폼 LabelOn의 내부 관리 시스템. 클라우드워커·리뷰어의 라벨링 작업부터 프로젝트·데이터셋·회원·정산까지, [metric]수십만 건의 운영 데이터[/metric]를 관리하는 백오피스 개발.",
         achievements: [
           {
-            title:
-              "입사 첫 프로젝트 — 사수의 가이드 아래 7개 관리 모듈 개발",
+            title: "입사 첫 프로젝트 — 사수의 가이드 아래 7개 관리 모듈 개발",
             items: [
               "UI 설계부터 백엔드 API까지 대부분의 개발을 담당하며 6개월 내 완성",
               "회원·프로젝트·데이터셋·어노테이터·리뷰어 작업 관리 등 핵심 CRUD 모듈 구현",
             ],
           },
           {
-            title:
-              "신입 개발자로서 자발적으로 UX 개선 — 새로고침 없는 화면 전환 구현",
+            title: "신입 개발자로서 자발적으로 UX 개선 — 새로고침 없는 화면 전환 구현",
             items: [
               "SSR 환경에서 페이지 전환마다 새로고침이 발생하는 것에 의문을 품고, AJAX 개념을 스스로 학습하여 Django SSR 부분 갱신 패턴을 적용",
               "요구사항에 없었지만, [metric]수십만 건 테이블[/metric]의 검색·페이징·필터링을 새로고침 없이 처리하는 UX를 스스로 제안하고 구현",
@@ -674,22 +621,19 @@ export const companies: Company[] = [
                 src: `${IMG}/07-labelon/login-otp.png`,
                 alt: "LabelOn Admin OTP 로그인",
                 caption: "OTP 로그인",
-                subCaption:
-                  "이메일 + 비밀번호 + OTP 2차 인증(SMS 발송) 보안 로그인",
+                subCaption: "이메일 + 비밀번호 + OTP 2차 인증(SMS 발송) 보안 로그인",
               },
               {
                 src: `${IMG}/07-labelon/sidebar-menu.png`,
                 alt: "LabelOn Admin DB 기반 동적 메뉴",
                 caption: "DB 기반 동적 메뉴",
-                subCaption:
-                  "Menu·MenuPermission 모델 기반 역할별 접근 제어 + 다단계 메뉴 구조",
+                subCaption: "Menu·MenuPermission 모델 기반 역할별 접근 제어 + 다단계 메뉴 구조",
               },
               {
                 src: `${IMG}/07-labelon/log-filter-excel.png`,
                 alt: "LabelOn Admin 목록 필터링 및 엑셀 다운로드",
                 caption: "목록 필터링 · 엑셀 내보내기",
-                subCaption:
-                  "필터링 설정/해제/재적용 상태 관리 + 엑셀 다운로드 툴바",
+                subCaption: "필터링 설정/해제/재적용 상태 관리 + 엑셀 다운로드 툴바",
               },
             ],
           },

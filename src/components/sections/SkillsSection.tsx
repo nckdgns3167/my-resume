@@ -8,9 +8,7 @@ export function SkillsSection() {
       <div className="grid gap-6 sm:grid-cols-2">
         {skillGroups.map((group) => (
           <div key={group.title}>
-            <h3 className="mb-3 text-sm font-semibold text-accent-primary">
-              {group.title}
-            </h3>
+            <h3 className="mb-3 text-sm font-semibold text-accent-primary">{group.title}</h3>
             <div className="flex flex-wrap gap-2">
               {group.skills.map((skill) => (
                 <SkillTag key={skill} name={skill} />

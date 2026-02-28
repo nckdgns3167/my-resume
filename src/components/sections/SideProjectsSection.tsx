@@ -29,9 +29,7 @@ export function SideProjectsSection() {
               <dd className="text-text">{project.client}</dd>
             </dl>
 
-            <p className="mb-3 text-sm leading-6 text-text-secondary">
-              {project.description}
-            </p>
+            <p className="mb-3 text-sm leading-6 text-text-secondary">{project.description}</p>
 
             <div className="mb-4 flex flex-wrap gap-1.5">
               {project.stack.map((tech) => (
@@ -45,16 +43,10 @@ export function SideProjectsSection() {
             </div>
 
             {project.notice && (
-              <p className="text-sm italic text-text-secondary">
-                {project.notice}
-              </p>
+              <p className="text-sm italic text-text-secondary">{project.notice}</p>
             )}
 
-            {project.hint && (
-              <p className="mt-1 text-sm text-text-secondary">
-                {project.hint}
-              </p>
-            )}
+            {project.hint && <p className="mt-1 text-sm text-text-secondary">{project.hint}</p>}
 
             {project.achievements.length > 0 && (
               <ul className="mt-3 flex flex-col gap-1">

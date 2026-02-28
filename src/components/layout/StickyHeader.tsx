@@ -23,12 +23,8 @@ export function StickyHeader() {
       <div className="mx-auto flex max-w-[860px] items-center justify-between px-5 py-2 sm:px-8">
         {/* 왼쪽: 이름 + 직함 */}
         <div className="flex items-center gap-2">
-          <span className="text-sm font-semibold text-text">
-            {profile.name}
-          </span>
-          <span className="hidden text-xs text-text-secondary sm:inline">
-            {profile.title}
-          </span>
+          <span className="text-sm font-semibold text-text">{profile.name}</span>
+          <span className="hidden text-xs text-text-secondary sm:inline">{profile.title}</span>
         </div>
 
         {/* 오른쪽: 아이콘 링크들 + 프로필 사진 */}

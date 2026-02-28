@@ -16,7 +16,7 @@ export function useScrollSpy(sectionIds: string[]) {
           setActiveId(visible[0].target.id);
         }
       },
-      { rootMargin: "-80px 0px -60% 0px", threshold: 0 }
+      { rootMargin: "-80px 0px -60% 0px", threshold: 0 },
     );
 
     const elements = sectionIds

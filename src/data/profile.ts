@@ -12,8 +12,7 @@ export const profile: Profile = {
   phoneRaw: "01094233167",
   email: "nckdgns3167@naver.com",
   github: "https://github.com/nckdgns3167",
-  linkedin:
-    "https://www.linkedin.com/in/%EC%B0%BD%ED%9B%88-%EC%A0%95-4545a435a/",
+  linkedin: "https://www.linkedin.com/in/%EC%B0%BD%ED%9B%88-%EC%A0%95-4545a435a/",
   photo: "/images/profile/photo.jpg",
   thumbPhoto: "/images/profile/thumb.jpg",
 };

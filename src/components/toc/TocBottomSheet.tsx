@@ -18,10 +18,7 @@ export function TocBottomSheet() {
     <>
       {/* Overlay */}
       {isOpen && (
-        <div
-          className="fixed inset-0 z-[90] bg-black/40"
-          onClick={() => setIsOpen(false)}
-        />
+        <div className="fixed inset-0 z-[90] bg-black/40" onClick={() => setIsOpen(false)} />
       )}
 
       {/* Bottom Sheet */}

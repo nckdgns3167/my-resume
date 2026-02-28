@@ -121,14 +121,10 @@ export interface Strength {
 }
 
 // --- Type Guards ---
-export function isGalleryImageGroup(
-  item: GalleryItem,
-): item is GalleryImageGroup {
+export function isGalleryImageGroup(item: GalleryItem): item is GalleryImageGroup {
   return "images" in item;
 }
 
-export function isAchievementDetail(
-  item: Achievement,
-): item is AchievementDetail {
+export function isAchievementDetail(item: Achievement): item is AchievementDetail {
   return typeof item !== "string";
 }

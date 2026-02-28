@@ -6,9 +6,7 @@ interface ProjectAchievementsProps {
   achievements: Achievement[];
 }
 
-export function ProjectAchievements({
-  achievements,
-}: ProjectAchievementsProps) {
+export function ProjectAchievements({ achievements }: ProjectAchievementsProps) {
   if (achievements.length === 0) return null;
 
   return (

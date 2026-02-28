@@ -39,8 +39,7 @@ export function calculateCareerMonths(periods: CareerPeriod[]): number {
       const [ey, em] = period.end.split("-").map(Number);
       totalMonths += (ey - sy) * 12 + (em - sm);
     } else {
-      totalMonths +=
-        (now.getFullYear() - sy) * 12 + (now.getMonth() + 1 - sm);
+      totalMonths += (now.getFullYear() - sy) * 12 + (now.getMonth() + 1 - sm);
     }
   }
 

@@ -44,10 +44,7 @@ const jsonLd = {
   name: "정창훈",
   jobTitle: "Frontend Developer",
   url: "https://resume-changhoon.vercel.app",
-  sameAs: [
-    "https://github.com/nckdgns3167",
-    "https://linkedin.com/in/changhoon-jung",
-  ],
+  sameAs: ["https://github.com/nckdgns3167", "https://linkedin.com/in/changhoon-jung"],
   knowsAbout: ["React", "Vue", "TypeScript", "JavaScript", "Tailwind CSS"],
 };
 

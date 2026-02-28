@@ -3,35 +3,15 @@ import type { SkillGroup } from "./types";
 export const skillGroups: SkillGroup[] = [
   {
     title: "Frontend",
-    skills: [
-      "React",
-      "Next.js",
-      "Vue 3",
-      "TypeScript",
-      "JavaScript ES6+",
-      "Vite",
-    ],
+    skills: ["React", "Next.js", "Vue 3", "TypeScript", "JavaScript ES6+", "Vite"],
   },
   {
     title: "State Management",
-    skills: [
-      "Zustand",
-      "Pinia",
-      "TanStack Query",
-      "Context API + useReducer",
-      "Recoil",
-    ],
+    skills: ["Zustand", "Pinia", "TanStack Query", "Context API + useReducer", "Recoil"],
   },
   {
     title: "Styling & UI",
-    skills: [
-      "Tailwind CSS",
-      "Framer Motion",
-      "Emotion",
-      "PrimeVue",
-      "Radix UI",
-      "Ant Design",
-    ],
+    skills: ["Tailwind CSS", "Framer Motion", "Emotion", "PrimeVue", "Radix UI", "Ant Design"],
   },
   {
     title: "Architecture & Patterns",

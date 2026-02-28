@@ -11,12 +11,9 @@ export function Header() {
       {/* 왼쪽: 이름, 직함, 연락처 */}
       <div className="flex min-w-0 flex-1 flex-col gap-3">
         <div>
-          <h1 className="text-2xl font-bold text-text sm:text-3xl">
-            {profile.name}
-          </h1>
+          <h1 className="text-2xl font-bold text-text sm:text-3xl">{profile.name}</h1>
           <p className="mt-1 text-base text-text-secondary">
-            {profile.title}{" "}
-            <span className="text-accent-primary">({years}년차)</span>
+            {profile.title} <span className="text-accent-primary">({years}년차)</span>
           </p>
         </div>
 

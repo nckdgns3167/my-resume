@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  createContext,
-  useContext,
-  useState,
-  useCallback,
-  type ReactNode,
-} from "react";
+import { createContext, useContext, useState, useCallback, type ReactNode } from "react";
 
 interface LightboxSlide {
   src: string;
@@ -42,9 +36,7 @@ export function LightboxProvider({ children }: { children: ReactNode }) {
   }, []);
 
   return (
-    <LightboxContext.Provider
-      value={{ slides, index, isOpen, open, close, setIndex }}
-    >
+    <LightboxContext.Provider value={{ slides, index, isOpen, open, close, setIndex }}>
       {children}
     </LightboxContext.Provider>
   );

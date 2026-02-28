@@ -20,9 +20,7 @@ export function CompanyCard({ company, children }: CompanyCardProps) {
       </div>
 
       {/* 프로젝트 목록 */}
-      <div className="flex flex-col gap-8">
-        {children}
-      </div>
+      <div className="flex flex-col gap-8">{children}</div>
     </div>
   );
 }

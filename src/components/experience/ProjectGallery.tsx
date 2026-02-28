@@ -65,10 +65,7 @@ export function ProjectGallery({ grids, projectName }: ProjectGalleryProps) {
 
   return (
     <div className="project-gallery print:hidden">
-      <details
-        open={isOpen}
-        onToggle={(e) => setIsOpen((e.target as HTMLDetailsElement).open)}
-      >
+      <details open={isOpen} onToggle={(e) => setIsOpen((e.target as HTMLDetailsElement).open)}>
         <summary
           ref={summaryRef}
           className="cursor-pointer select-none text-sm font-medium text-accent-secondary transition-colors hover:text-accent-secondary/80"
@@ -141,11 +138,7 @@ interface GalleryItemCardProps {
   onImageClick: (src: string) => void;
 }
 
-function GalleryItemCard({
-  item,
-  layout,
-  onImageClick,
-}: GalleryItemCardProps) {
+function GalleryItemCard({ item, layout, onImageClick }: GalleryItemCardProps) {
   if (isGalleryImageGroup(item)) {
     return (
       <div className="rounded-lg border border-border bg-bg-secondary p-3">
@@ -167,11 +160,7 @@ function GalleryItemCard({
           ))}
         </div>
         <p className="text-xs font-medium text-text">{item.caption}</p>
-        {item.subCaption && (
-          <p className="mt-0.5 text-xs text-text-secondary">
-            {item.subCaption}
-          </p>
-        )}
+        {item.subCaption && <p className="mt-0.5 text-xs text-text-secondary">{item.subCaption}</p>}
       </div>
     );
   }
@@ -199,9 +188,7 @@ function GalleryItemCard({
         />
       </button>
       <p className="mt-2 text-xs font-medium text-text">{item.caption}</p>
-      {item.subCaption && (
-        <p className="mt-0.5 text-xs text-text-secondary">{item.subCaption}</p>
-      )}
+      {item.subCaption && <p className="mt-0.5 text-xs text-text-secondary">{item.subCaption}</p>}
     </div>
   );
 }

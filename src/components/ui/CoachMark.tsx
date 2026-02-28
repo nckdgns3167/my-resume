@@ -31,8 +31,7 @@ export function CoachMark() {
                   element: ".project-gallery summary",
                   popover: {
                     title: "갤러리 열기",
-                    description:
-                      "클릭하면 프로젝트 스크린샷을 볼 수 있어요.",
+                    description: "클릭하면 프로젝트 스크린샷을 볼 수 있어요.",
                     side: "top",
                     align: "start",
                   },
@@ -41,8 +40,7 @@ export function CoachMark() {
                   element: ".project-gallery",
                   popover: {
                     title: "이미지 클릭",
-                    description:
-                      "이미지를 클릭하면 라이트박스로 크게 볼 수 있어요.",
+                    description: "이미지를 클릭하면 라이트박스로 크게 볼 수 있어요.",
                     side: "top",
                     align: "start",
                   },
@@ -57,7 +55,7 @@ export function CoachMark() {
           }, 500);
         }
       },
-      { threshold: 0.3 }
+      { threshold: 0.3 },
     );
 
     observer.observe(el);

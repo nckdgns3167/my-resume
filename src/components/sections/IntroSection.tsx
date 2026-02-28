@@ -7,10 +7,7 @@ export function IntroSection() {
     <Section id="introduction" title="Introduction">
       <div className="flex flex-col gap-4">
         {introduction.paragraphs.map((paragraph, i) => (
-          <p
-            key={i}
-            className="text-[15px] leading-7 text-text-secondary"
-          >
+          <p key={i} className="text-[15px] leading-7 text-text-secondary">
             {parseRichText(paragraph)}
           </p>
         ))}
