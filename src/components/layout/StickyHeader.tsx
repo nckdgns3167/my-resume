@@ -21,10 +21,10 @@ export function StickyHeader() {
       } ${visible ? "translate-y-0" : "-translate-y-full"}`}
     >
       <div className="mx-auto flex max-w-[860px] items-center justify-between px-5 py-2 sm:px-8">
-        {/* 왼쪽: 이름 + 직함 */}
+        {/* 왼쪽: 영어 이름 + Resume */}
         <div className="flex items-center gap-2">
-          <span className="text-sm font-semibold text-text">{profile.name}</span>
-          <span className="hidden text-xs text-text-secondary sm:inline">{profile.title}</span>
+          <span className="font-serif text-sm font-semibold text-text">{profile.nameEn}</span>
+          <span className="text-xs text-text-secondary">Resume</span>
         </div>
 
         {/* 오른쪽: 아이콘 링크들 + 프로필 사진 */}

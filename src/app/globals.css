@@ -1,4 +1,5 @@
 @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css");
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap");
 @import "tailwindcss";
 
 /* ==============================
@@ -44,6 +45,7 @@
     "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto,
     "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", sans-serif;
   --font-mono: var(--font-jetbrains-mono), "JetBrains Mono", "Fira Code", Consolas, monospace;
+  --font-serif: "Playfair Display", Georgia, "Times New Roman", Times, serif;
 
   --breakpoint-sm: 480px;
   --breakpoint-md: 640px;

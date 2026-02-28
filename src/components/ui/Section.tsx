@@ -8,7 +8,7 @@ interface SectionProps {
 export function Section({ id, title, children, className }: SectionProps) {
   return (
     <section id={id} className={`scroll-mt-24 ${className ?? ""}`}>
-      <h2 className="mb-8 border-l-[3px] border-accent-primary pl-3 text-xl font-bold text-text">
+      <h2 className="mb-8 border-l-[3px] border-accent-primary pl-3 font-serif text-xl font-bold text-text">
         {title}
       </h2>
       {children}

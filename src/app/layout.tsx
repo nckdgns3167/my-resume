@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import { JetBrains_Mono } from "next/font/google";
-import { ThemeProvider } from "@/context/ThemeContext";
-import { SnackbarProvider } from "@/context/SnackbarContext";
 import { LightboxProvider } from "@/context/LightboxContext";
-import { calculateCareerYears } from "@/lib/career-calculator";
+import { SnackbarProvider } from "@/context/SnackbarContext";
+import { ThemeProvider } from "@/context/ThemeContext";
 import { profile } from "@/data/profile";
+import { calculateCareerYears } from "@/lib/career-calculator";
 import "./globals.css";
 
 const jetbrainsMono = JetBrains_Mono({
@@ -16,7 +16,7 @@ const jetbrainsMono = JetBrains_Mono({
 const careerYears = calculateCareerYears(profile.careerPeriods);
 
 export const metadata: Metadata = {
-  title: "정창훈 | Frontend Developer",
+  title: "정창훈_resume",
   description: `${careerYears}년차 프론트엔드 개발자 정창훈의 경력기술서 — Vue, React, TypeScript`,
   keywords: [
     "프론트엔드 개발자",

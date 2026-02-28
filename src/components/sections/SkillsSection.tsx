@@ -17,6 +17,15 @@ export function SkillsSection() {
           </div>
         ))}
       </div>
+
+      {/* PDF 전용 — 웹 버전 안내 (Skills 페이지 하단에 표시) */}
+      <div className="mt-8 hidden rounded-lg border-2 border-dashed border-accent-primary/40 bg-bg-secondary px-5 py-4 text-center text-sm text-text-secondary print:block">
+        각 프로젝트별 스크린샷은 웹 버전에서 확인하실 수 있습니다.
+        <br />
+        <span className="font-medium text-accent-primary">
+          https://resume-changhoon.vercel.app
+        </span>
+      </div>
     </Section>
   );
 }

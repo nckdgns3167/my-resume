@@ -21,6 +21,7 @@ export interface TocSection {
 
 export interface Profile {
   name: string;
+  nameEn: string;
   title: string;
   careerStartDate: string; // "2019-08" format (첫 경력 시작일, 메타데이터용)
   careerPeriods: CareerPeriod[]; // 실제 근무 기간 목록 (공백 제외)

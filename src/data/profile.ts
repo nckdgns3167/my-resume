@@ -2,6 +2,7 @@ import type { Profile } from "./types";
 
 export const profile: Profile = {
   name: "정창훈",
+  nameEn: "Changhoon Jung",
   title: "Frontend Developer",
   careerStartDate: "2019-08",
   careerPeriods: [
