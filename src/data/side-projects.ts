@@ -3,7 +3,7 @@ import type { SideProject } from "./types";
 export const sideProjects: SideProject[] = [
   {
     id: "project-sage",
-    name: "(가제) Project 'Sage'",
+    name: "ChartSage",
     client: "1인 개발",
     period: "2025.02 ~ 진행 중",
     role: "기획 · 설계 · 프론트엔드 개발 · 인프라 전체",
@@ -21,7 +21,10 @@ export const sideProjects: SideProject[] = [
       "driver.js",
     ],
     description:
-      "실시간 암호화폐 차트 위에 사용자가 직접 드로잉(추세선, 수평선, 피보나치 등)을 그리고, AI가 차트 데이터와 드로잉 컨텍스트를 함께 분석하여 시나리오를 시각화해주는 대화형 분석 플랫폼. 기획·설계·프론트엔드·서버리스 백엔드·배포까지 1인 풀사이클 개발.",
+      `"그려서 물어보고, 시나리오로 답한다." ` +
+      "바이비트 수준의 차트 드로잉·기술 지표 모듈과 Claude Code/ChatGPT 스타일의 세션별 대화 관리를 결합한 AI 암호화폐 분석 플랫폼. " +
+      "사용자가 차트 위에 직접 드로잉하고 AI와 함께 실시간으로 분석하며 투자 인사이트를 얻을 수 있으며, " +
+      "향후 대시보드·속보·리포트 다운로드 등으로 확장 예정. 기획·설계·프론트엔드·서버리스 백엔드·배포까지 1인 풀사이클 개발.",
     achievements: [
       "조코딩 x OpenAI x Primer AI 해커톤 참여 및 MVP 제출 (2026.02)",
       "Feature-based Zustand 설계 — chart·drawing·session·analysis·onboarding 5개 독립 스토어로 관심사 분리, devtools 미들웨어로 상태 추적",
