@@ -6,7 +6,7 @@ export const tocSections: TocSection[] = [
   {
     id: "side-projects",
     label: "Side Projects",
-    children: [{ id: "project-sage", label: "Project 'Sage'" }],
+    children: [{ id: "project-sage", label: "ChartSage" }],
   },
   {
     id: "experience",
