@@ -1,11 +1,11 @@
 "use client";
 
 import Image from "next/image";
-import { useState, useMemo, useRef, useCallback } from "react";
-import type { GalleryGrid, GalleryItem } from "@/data/types";
-import { isGalleryImageGroup } from "@/data/types";
+import { useCallback, useMemo, useRef, useState } from "react";
 import { useLightbox } from "@/context/LightboxContext";
 import { useUiStrings } from "@/context/LocaleContext";
+import type { GalleryGrid, GalleryItem } from "@/data/types";
+import { isGalleryImageGroup } from "@/data/types";
 
 interface ProjectGalleryProps {
   grids: GalleryGrid[];
@@ -80,7 +80,7 @@ export function ProjectGallery({ grids, projectName }: ProjectGalleryProps) {
           <div className="pointer-events-none sticky top-[50vh] z-40 h-0">
             <button
               onClick={closeAndScroll}
-              className="pointer-events-auto absolute right-2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-accent-primary/70 text-white shadow-lg transition-colors hover:bg-accent-primary xl:-right-18"
+              className="pointer-events-auto absolute -right-10 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-accent-primary/70 text-white shadow-lg transition-colors hover:bg-accent-primary xl:-right-18"
               aria-label={ui.closeGallery}
             >
               <svg
@@ -127,7 +127,6 @@ function getGridClassName(layout: GalleryGrid["layout"]): string {
       return "grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4";
     case "group":
       return "grid gap-4 sm:grid-cols-2";
-    case "default":
     default:
       return "grid gap-4 sm:grid-cols-2 lg:grid-cols-3";
   }
