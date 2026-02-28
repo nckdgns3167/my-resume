@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useRef, useCallback } from "react";
 import type { GalleryGrid, GalleryItem } from "@/data/types";
 import { isGalleryImageGroup } from "@/data/types";
 import { useLightbox } from "@/context/LightboxContext";
@@ -47,8 +47,14 @@ function flattenToSlides(grids: GalleryGrid[]): FlatSlide[] {
 export function ProjectGallery({ grids, projectName }: ProjectGalleryProps) {
   const [isOpen, setIsOpen] = useState(false);
   const { open } = useLightbox();
+  const summaryRef = useRef<HTMLElement>(null);
 
   const allSlides = useMemo(() => flattenToSlides(grids), [grids]);
+
+  const closeAndScroll = useCallback(() => {
+    setIsOpen(false);
+    summaryRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+  }, []);
 
   if (grids.length === 0) return null;
 
@@ -58,29 +64,58 @@ export function ProjectGallery({ grids, projectName }: ProjectGalleryProps) {
   };
 
   return (
-    <div className="project-gallery">
+    <div className="project-gallery print:hidden">
       <details
         open={isOpen}
         onToggle={(e) => setIsOpen((e.target as HTMLDetailsElement).open)}
       >
-        <summary className="cursor-pointer select-none text-sm font-medium text-accent-secondary transition-colors hover:text-accent-secondary/80">
+        <summary
+          ref={summaryRef}
+          className="cursor-pointer select-none text-sm font-medium text-accent-secondary transition-colors hover:text-accent-secondary/80"
+        >
           {isOpen ? "갤러리 닫기" : `갤러리 보기 (${allSlides.length}장)`}
         </summary>
 
-        <div className="mt-4 flex flex-col gap-6">
-          {grids.map((grid, gridIdx) => (
-            <div key={gridIdx} className={getGridClassName(grid.layout)}>
-              {grid.items.map((item, itemIdx) => (
-                <GalleryItemCard
-                  key={itemIdx}
-                  item={item}
-                  layout={grid.layout}
-                  projectName={projectName}
-                  onImageClick={handleImageClick}
-                />
-              ))}
-            </div>
-          ))}
+        <div className="relative mt-4">
+          {/* 갤러리 오른쪽 sticky X 닫기 FAB */}
+          <div className="pointer-events-none sticky top-[50vh] z-40 h-0">
+            <button
+              onClick={closeAndScroll}
+              className="pointer-events-auto absolute -right-18 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-accent-primary/70 text-white shadow-lg transition-colors hover:bg-accent-primary"
+              aria-label="갤러리 닫기"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <line x1="18" y1="6" x2="6" y2="18" />
+                <line x1="6" y1="6" x2="18" y2="18" />
+              </svg>
+            </button>
+          </div>
+
+          <div className="flex flex-col gap-6">
+            {grids.map((grid, gridIdx) => (
+              <div key={gridIdx} className={getGridClassName(grid.layout)}>
+                {grid.items.map((item, itemIdx) => (
+                  <GalleryItemCard
+                    key={itemIdx}
+                    item={item}
+                    layout={grid.layout}
+                    projectName={projectName}
+                    onImageClick={handleImageClick}
+                  />
+                ))}
+              </div>
+            ))}
+          </div>
         </div>
       </details>
     </div>

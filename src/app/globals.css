@@ -10,7 +10,7 @@
   --bg: #faf9f5;
   --bg-secondary: #e8e6dc;
   --text: #141413;
-  --text-secondary: #b0aea5;
+  --text-secondary: #7a7870;
   --border: #e8e6dc;
   --surface: #ffffff;
   --accent-primary: #d97757;
@@ -23,7 +23,7 @@
   --bg: #141413;
   --bg-secondary: #1e1e1c;
   --text: #faf9f5;
-  --text-secondary: #b0aea5;
+  --text-secondary: #908e85;
   --border: #2a2a28;
   --surface: #1e1e1c;
 }
@@ -121,29 +121,50 @@ body {
   text-shadow: none !important;
 }
 
-/* Print styles */
+/* Print styles — PDF 저장 시 배경색·글자색 보존 */
 @media print {
+  *,
+  *::before,
+  *::after {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Framer Motion whileInView 강제 표시 — 스크롤 전 요소도 PDF에 포함 */
+  [style*="opacity"] {
+    opacity: 1 !important;
+  }
+  [style*="transform"] {
+    transform: none !important;
+  }
+
   :root,
   [data-theme="dark"] {
-    --bg: #ffffff;
-    --bg-secondary: #f5f5f5;
-    --text: #000000;
-    --text-secondary: #444444;
-    --border: #dddddd;
+    --bg: #faf9f5;
+    --bg-secondary: #e8e6dc;
+    --text: #141413;
+    --text-secondary: #7a7870;
+    --border: #e0ded5;
     --surface: #ffffff;
     --accent-primary: #d97757;
     --accent-secondary: #6a9bcc;
     --accent-tertiary: #788c5d;
   }
 
-  body {
-    transition: none;
+  @page {
+    margin: 0;
   }
 
-  /* Hide interactive/fixed elements */
-  [style*="position: fixed"],
-  [style*="position:fixed"] {
-    display: none !important;
+  html {
+    background-color: var(--bg) !important;
+  }
+
+  body {
+    transition: none;
+    background-color: var(--bg) !important;
+    padding: 8mm !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
   }
 
   /* Page breaks */

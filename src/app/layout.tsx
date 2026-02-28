@@ -4,6 +4,7 @@ import { ThemeProvider } from "@/context/ThemeContext";
 import { SnackbarProvider } from "@/context/SnackbarContext";
 import { LightboxProvider } from "@/context/LightboxContext";
 import { calculateCareerYears } from "@/lib/career-calculator";
+import { profile } from "@/data/profile";
 import "./globals.css";
 
 const jetbrainsMono = JetBrains_Mono({
@@ -12,7 +13,7 @@ const jetbrainsMono = JetBrains_Mono({
   display: "swap",
 });
 
-const careerYears = calculateCareerYears("2019-08");
+const careerYears = calculateCareerYears(profile.careerPeriods);
 
 export const metadata: Metadata = {
   title: "정창훈 | Frontend Developer",
@@ -60,7 +61,7 @@ export default function RootLayout({
       <head>
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){try{var t=localStorage.getItem('theme');if(!t)t=matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light';document.documentElement.dataset.theme=t}catch(e){}})()`,
+            __html: `(function(){try{var t=localStorage.getItem('theme');if(!t)t='light';document.documentElement.dataset.theme=t}catch(e){}})()`,
           }}
         />
         <script

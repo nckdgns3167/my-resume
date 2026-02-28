@@ -4,6 +4,10 @@ export const profile: Profile = {
   name: "정창훈",
   title: "Frontend Developer",
   careerStartDate: "2019-08",
+  careerPeriods: [
+    { start: "2019-08", end: "2019-12" },
+    { start: "2020-09", end: null },
+  ],
   phone: "010-9423-3167",
   phoneRaw: "01094233167",
   email: "nckdgns3167@naver.com",

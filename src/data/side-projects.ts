@@ -2,6 +2,7 @@ import type { SideProject } from "./types";
 
 export const sideProjects: SideProject[] = [
   {
+    id: "project-sage",
     name: "(가제) Project 'Sage'",
     client: "1인 개발",
     period: "2025.02 ~ 진행 중",

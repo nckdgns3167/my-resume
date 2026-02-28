@@ -3,10 +3,27 @@
 // ==============================
 
 // --- Profile ---
+export interface CareerPeriod {
+  start: string; // "YYYY-MM" format
+  end: string | null; // null = 현재 재직 중
+}
+
+export interface TocChild {
+  id: string;
+  label: string;
+}
+
+export interface TocSection {
+  id: string;
+  label: string;
+  children?: TocChild[];
+}
+
 export interface Profile {
   name: string;
   title: string;
-  careerStartDate: string; // "2019-08" format
+  careerStartDate: string; // "2019-08" format (첫 경력 시작일, 메타데이터용)
+  careerPeriods: CareerPeriod[]; // 실제 근무 기간 목록 (공백 제외)
   phone: string;
   phoneRaw: string;
   email: string;
@@ -29,6 +46,7 @@ export interface SkillGroup {
 
 // --- Side Projects ---
 export interface SideProject {
+  id: string;
   name: string;
   client: string;
   period: string;
@@ -77,6 +95,7 @@ export interface HighlightBox {
 }
 
 export interface Project {
+  id: string;
   name: string;
   client: string;
   period: string;

@@ -4,21 +4,12 @@ import { calculateCareerYears } from "@/lib/career-calculator";
 import { CopyButton } from "@/components/ui/CopyButton";
 
 export function Header() {
-  const years = calculateCareerYears(profile.careerStartDate);
+  const years = calculateCareerYears(profile.careerPeriods);
 
   return (
-    <header className="flex flex-col gap-6 sm:flex-row sm:items-center sm:gap-8">
-      <div className="relative h-28 w-28 shrink-0 overflow-hidden rounded-2xl border border-border sm:h-32 sm:w-32">
-        <Image
-          src={profile.photo}
-          alt={`${profile.name} 프로필 사진`}
-          fill
-          className="object-cover"
-          priority
-        />
-      </div>
-
-      <div className="flex flex-col gap-3">
+    <header className="flex items-center gap-6 sm:gap-8">
+      {/* 왼쪽: 이름, 직함, 연락처 */}
+      <div className="flex min-w-0 flex-1 flex-col gap-3">
         <div>
           <h1 className="text-2xl font-bold text-text sm:text-3xl">
             {profile.name}
@@ -53,6 +44,17 @@ export function Header() {
             LinkedIn
           </a>
         </div>
+      </div>
+
+      {/* 오른쪽: 프로필 사진 */}
+      <div className="relative h-28 w-28 shrink-0 overflow-hidden rounded-2xl border border-border sm:h-32 sm:w-32">
+        <Image
+          src={profile.photo}
+          alt={`${profile.name} 프로필 사진`}
+          fill
+          className="object-cover"
+          priority
+        />
       </div>
     </header>
   );

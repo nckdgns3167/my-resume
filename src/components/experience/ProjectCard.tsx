@@ -10,7 +10,7 @@ interface ProjectCardProps {
 
 export function ProjectCard({ project }: ProjectCardProps) {
   return (
-    <div className="rounded-xl border border-border bg-surface p-6">
+    <div id={project.id} className="scroll-mt-20 rounded-xl border border-border bg-surface p-6">
       <h4 className="mb-4 text-base font-bold text-text">{project.name}</h4>
 
       <dl className="mb-4 grid grid-cols-[auto_1fr] gap-x-4 gap-y-1 text-sm">
@@ -48,7 +48,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
       )}
 
       {project.gallery.length > 0 && (
-        <div className="mt-5 border-t border-border pt-4">
+        <div className="mt-5 border-t border-border pt-4 print:hidden">
           <ProjectGallery
             grids={project.gallery}
             projectName={project.name}

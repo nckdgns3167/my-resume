@@ -18,7 +18,7 @@ export function ProjectAchievements({
           return (
             <p
               key={idx}
-              className="text-sm leading-6 text-text-secondary before:mr-2 before:text-accent-primary before:content-['•']"
+              className="relative pl-4 text-sm leading-6 text-text-secondary before:absolute before:left-0 before:text-accent-primary before:content-['•']"
             >
               {parseRichText(achievement)}
             </p>
@@ -39,7 +39,7 @@ export function ProjectAchievements({
               {achievement.items.map((item, itemIdx) => (
                 <li
                   key={itemIdx}
-                  className="text-sm leading-6 text-text-secondary before:mr-2 before:text-accent-primary before:content-['•']"
+                  className="relative pl-4 text-sm leading-6 text-text-secondary before:absolute before:left-0 before:text-accent-primary before:content-['•']"
                 >
                   {parseRichText(item)}
                 </li>

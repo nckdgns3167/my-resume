@@ -8,7 +8,8 @@ export function SideProjectsSection() {
         {sideProjects.map((project) => (
           <div
             key={project.name}
-            className="rounded-xl border border-border bg-surface p-6"
+            id={project.id}
+            className="scroll-mt-20 rounded-xl border border-border bg-surface p-6"
           >
             <div className="mb-4 flex flex-wrap items-center gap-2">
               <h3 className="text-lg font-bold text-text">{project.name}</h3>
@@ -60,7 +61,7 @@ export function SideProjectsSection() {
                 {project.achievements.map((a, i) => (
                   <li
                     key={i}
-                    className="text-sm text-text-secondary before:mr-2 before:text-accent-primary before:content-['•']"
+                    className="relative pl-4 text-sm text-text-secondary before:absolute before:left-0 before:text-accent-primary before:content-['•']"
                   >
                     {a}
                   </li>

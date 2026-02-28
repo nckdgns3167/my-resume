@@ -8,11 +8,11 @@ export function FabStack() {
   const { showButton, scrollToTop } = useScrollTop();
 
   return (
-    <div className="fixed bottom-6 right-6 z-50 flex flex-col gap-2">
+    <div className="fixed bottom-6 right-6 z-50 flex flex-col gap-2 print:hidden">
       {showButton && (
         <button
           onClick={scrollToTop}
-          className="flex h-9 w-9 items-center justify-center rounded-full bg-bg-secondary text-text-secondary shadow-md transition-colors hover:text-text"
+          className="flex h-9 w-9 items-center justify-center rounded-full bg-accent-primary/70 text-white shadow-md transition-colors hover:bg-accent-primary"
           aria-label="맨 위로"
         >
           <svg

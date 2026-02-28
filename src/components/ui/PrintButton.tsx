@@ -4,7 +4,7 @@ export function PrintButton() {
   return (
     <button
       onClick={() => window.print()}
-      className="flex h-9 w-9 items-center justify-center rounded-full bg-bg-secondary text-text-secondary shadow-md transition-colors hover:text-text print:hidden"
+      className="flex h-9 w-9 items-center justify-center rounded-full bg-accent-primary/70 text-white shadow-md transition-colors hover:bg-accent-primary print:hidden"
       aria-label="PDF로 저장"
       title="PDF로 저장"
     >

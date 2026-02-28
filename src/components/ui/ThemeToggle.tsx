@@ -42,7 +42,7 @@ export function ThemeToggle() {
   return (
     <button
       onClick={handleToggle}
-      className="flex h-9 w-9 items-center justify-center rounded-full bg-bg-secondary text-text-secondary transition-colors hover:text-text"
+      className="flex h-9 w-9 items-center justify-center rounded-full bg-accent-primary/70 text-white shadow-md transition-colors hover:bg-accent-primary"
       aria-label={theme === "light" ? "다크 모드로 전환" : "라이트 모드로 전환"}
     >
       {theme === "light" ? (

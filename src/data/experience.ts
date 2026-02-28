@@ -15,6 +15,7 @@ export const companies: Company[] = [
       // 01. 스마트온 2.0
       // ----------------------------------------------------------
       {
+        id: "project-smarton",
         name: "스마트온 2.0 구축 — 가스 현장검사원 태블릿 업무 시스템",
         client: "한국가스안전공사(KGS)",
         period: "2025.03 ~ 2026.01",
@@ -238,6 +239,7 @@ export const companies: Company[] = [
       // 02. 위성망 이용 관리 시스템
       // ----------------------------------------------------------
       {
+        id: "project-satellite",
         name: "위성망 이용 관리 시스템 — Interactive 분배도표 차트",
         client: "한국방송통신전파진흥원(KCA)",
         period: "2024.12 ~ 2025.03",
@@ -251,7 +253,7 @@ export const companies: Company[] = [
           "Framer Motion",
         ],
         description:
-          "위성 주파수 이용현황을 시각화한 Interactive 분배도표 차트를 직접 설계 및 단독 개발. 분배↔주파수↔용도↔이용 4행이 주파수 축으로 정렬·연결되는 복잡한 레이아웃 특성상 범용 차트 라이브러리(D3, Chart.js 등)로는 구현이 불가능하여, 차트 라이브러리 없이 순수 React + Emotion으로 자체 구현. 대외용/내부용으로 구분된 6개 밴드(L, S, C, X, Ku-V)별 데이터를 주파수 값 기반으로 위치·너비를 동적 계산하여 렌더링하는 [metric]프론트 33파일 3,669줄[/metric] 규모의 데이터 시각화 프로젝트.",
+          "위성 주파수 이용현황을 시각화한 Interactive 분배도표 차트를 직접 설계 및 단독 개발. 분배↔주파수↔용도↔이용 4행이 주파수 축으로 정렬·연결되는 복잡한 레이아웃 특성상 범용 차트 라이브러리(D3, Chart.js 등)로는 구현이 불가능하여, 차트 라이브러리 없이 순수 React + Emotion으로 자체 구현. 대외용/내부용으로 구분된 6개 밴드(L, S, C, X, Ku-V)별 데이터를 주파수 값 기반으로 위치·너비를 동적 계산하여 렌더링하는 데이터 시각화 프로젝트.",
         achievements: [
           {
             title: "합성 컴포넌트 패턴으로 선언적 차트 구조 설계",
@@ -274,7 +276,7 @@ export const companies: Company[] = [
               "주파수 범위를 픽셀 너비로 변환하는 좌표 매핑 엔진 구현",
               "밴드별 가상 전체 너비(VIRTUAL_TOTAL_WIDTH)와 확대 계수(MAGNIFICATION_FACTOR) 상수 맵 6종으로 실제/기본 스케일 이중 모드 정밀 제어",
               "제너레이터 함수(mergeSortedArraysLazy)로 정렬된 배열 병합, 이벤트 기반 구간 분할 알고리즘으로 분배→주파수 구간 자동 매핑",
-              "레이블 겹침 감지 + 적응형 폰트 사이즈 자동 축소 — [metric]utils.js 단일 모듈 944줄[/metric]",
+              "레이블 겹침 감지 + 적응형 폰트 사이즈 자동 축소",
             ],
           },
           {
@@ -321,6 +323,7 @@ export const companies: Company[] = [
       // 03. 스마트공장 PMS
       // ----------------------------------------------------------
       {
+        id: "project-pms",
         name: "스마트공장 PMS 구축 및 유지운영",
         client: "중소벤처기업부 / 스마트제조혁신추진단",
         period: "2023.03 ~ 2024.11",
@@ -398,6 +401,7 @@ export const companies: Company[] = [
       // 04. 온라인 검사서류
       // ----------------------------------------------------------
       {
+        id: "project-certificate",
         name: "온라인 검사서류 신청·접수 시스템 시범 구축",
         client: "한국가스안전공사(KGS)",
         period: "2022.09 ~ 2023.02",
@@ -441,6 +445,7 @@ export const companies: Company[] = [
       // 05. AI 신약개발 플랫폼
       // ----------------------------------------------------------
       {
+        id: "project-ai-drug",
         name: "AI 신약개발 플랫폼 구축",
         client: "한국화학연구원(KRICT)",
         period: "2022.03 ~ 2022.06",
@@ -545,6 +550,7 @@ export const companies: Company[] = [
       // 06. LIME-DQM
       // ----------------------------------------------------------
       {
+        id: "project-lime-dqm",
         name: "LIME-DQM AI 학습데이터 품질 검증 플랫폼",
         client: "자사 솔루션",
         period: "2021.03 ~ 2021.11",
@@ -627,6 +633,7 @@ export const companies: Company[] = [
       // 07. LabelOn 어드민
       // ----------------------------------------------------------
       {
+        id: "project-labelon",
         name: "LabelOn 내부 어드민 페이지 구축",
         client: "자사 솔루션",
         period: "2020.09 ~ 2021.02",
@@ -700,6 +707,7 @@ export const companies: Company[] = [
     description: "웹 개발",
     projects: [
       {
+        id: "project-etri",
         name: "연구 지원 시스템 웹 개발",
         client: "한국전자통신연구원(ETRI)",
         period: "2019.08 ~ 2019.12",
