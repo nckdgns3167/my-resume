@@ -13,6 +13,10 @@ import { SkillsSection } from "@/components/sections/SkillsSection";
 import { SideProjectsSection } from "@/components/sections/SideProjectsSection";
 import { ExperienceSection } from "@/components/sections/ExperienceSection";
 import { StrengthsSection } from "@/components/sections/StrengthsSection";
+import { EducationSection } from "@/components/sections/EducationSection";
+import { TrainingSection } from "@/components/sections/TrainingSection";
+import { CertificationsSection } from "@/components/sections/CertificationsSection";
+import { MilitarySection } from "@/components/sections/MilitarySection";
 import { TocSidebar } from "@/components/toc/TocSidebar";
 import { MobileDrawer } from "@/components/layout/MobileDrawer";
 import { Snackbar } from "@/components/ui/Snackbar";
@@ -58,6 +62,21 @@ export function LocalizedPage() {
 					</SectionReveal>
 					<SectionReveal>
 						<StrengthsSection strengths={data.strengths} />
+					</SectionReveal>
+					<SectionReveal>
+						<EducationSection education={data.education} />
+					</SectionReveal>
+					<SectionReveal>
+						<TrainingSection training={data.training} />
+					</SectionReveal>
+					<SectionReveal>
+						<CertificationsSection
+							certifications={data.certifications}
+							ui={ui}
+						/>
+					</SectionReveal>
+					<SectionReveal>
+						<MilitarySection militaryService={data.militaryService} />
 					</SectionReveal>
 					<SectionReveal>
 						<Footer ui={ui} />

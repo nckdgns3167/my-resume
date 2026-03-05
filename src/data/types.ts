@@ -128,6 +128,43 @@ export interface Strength {
   description: string;
 }
 
+// --- Education ---
+export interface Education {
+  school: string;
+  location?: string;
+  period: string;
+  major?: string;
+  faculty?: string;
+  degree?: string;
+  status: string;
+}
+
+// --- Training ---
+export interface Training {
+  name: string;
+  institution: string;
+  period: string;
+  details?: string[];
+  posterFileName?: string;
+}
+
+// --- Certification ---
+export interface Certification {
+  name: string;
+  passDate: string;
+  issuer: string;
+  registrationNumber: string;
+  validPeriod?: string;
+  examSession?: string;
+  pdfFileName?: string;
+}
+
+// --- Military Service ---
+export interface MilitaryService {
+  status: string;
+  category: string;
+}
+
 // --- Type Guards ---
 export function isGalleryImageGroup(item: GalleryItem): item is GalleryImageGroup {
   return "images" in item;

@@ -58,6 +58,12 @@ export interface UiStrings {
 	// FabStack
 	scrollToTop: string;
 
+	// Certifications
+	downloadCertificate: string;
+
+	// Training placeholder
+	trainingPlaceholder: string;
+
 	// Dates
 	present: string;
 	inProgress: string;
@@ -108,6 +114,9 @@ export const uiStringsKo: UiStrings = {
 
 	scrollToTop: "맨 위로",
 
+	downloadCertificate: "자격증",
+	trainingPlaceholder: "준비 중입니다.",
+
 	present: "현재",
 	inProgress: "진행 중",
 };
@@ -156,6 +165,9 @@ export const uiStringsEn: UiStrings = {
 	lastUpdated: "Last updated:",
 
 	scrollToTop: "Scroll to top",
+
+	downloadCertificate: "Download",
+	trainingPlaceholder: "Coming soon.",
 
 	present: "Present",
 	inProgress: "In Progress",

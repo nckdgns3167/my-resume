@@ -12,6 +12,7 @@ export const tocSections: TocSection[] = [
 		id: "experience",
 		label: "Experience",
 		children: [
+			{ id: "project-smarton-offline", label: "SmartOn Offline" },
 			{ id: "project-smarton", label: "SmartOn 2.0" },
 			{ id: "project-satellite", label: "Satellite Frequency" },
 			{ id: "project-pms", label: "Smart Factory PMS" },
@@ -23,4 +24,8 @@ export const tocSections: TocSection[] = [
 		],
 	},
 	{ id: "strengths", label: "Strengths" },
+	{ id: "education", label: "Education" },
+	{ id: "training", label: "Training" },
+	{ id: "certifications", label: "Certifications" },
+	{ id: "military", label: "Military Service" },
 ];

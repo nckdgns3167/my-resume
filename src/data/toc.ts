@@ -12,6 +12,7 @@ export const tocSections: TocSection[] = [
     id: "experience",
     label: "Experience",
     children: [
+      { id: "project-smarton-offline", label: "스마트온 오프라인" },
       { id: "project-smarton", label: "스마트온 2.0" },
       { id: "project-satellite", label: "위성망 분배도표" },
       { id: "project-pms", label: "스마트공장 PMS" },
@@ -23,6 +24,10 @@ export const tocSections: TocSection[] = [
     ],
   },
   { id: "strengths", label: "Strengths" },
+  { id: "education", label: "학력사항" },
+  { id: "training", label: "교육사항" },
+  { id: "certifications", label: "자격증" },
+  { id: "military", label: "병역사항" },
 ];
 
 /** 모든 TOC ID의 평탄화된 목록 (useScrollSpy용) */
