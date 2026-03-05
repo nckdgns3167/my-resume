@@ -12,6 +12,70 @@ export const companies: Company[] = [
     description: "공공·기업 시스템 개발 SI 기업 · 프론트엔드 개발",
     projects: [
       // ----------------------------------------------------------
+      // 00. 스마트온 2.0 APP (오프라인)
+      // ----------------------------------------------------------
+      {
+        id: "project-smarton-offline",
+        name: "스마트온 2.0 APP — 가스 현장검사 오프라인 태블릿 앱",
+        client: "한국가스안전공사(KGS)",
+        period: "2026.02 ~ 현재",
+        role: "앱 개발 리드 (3명 리딩)",
+        stack: [
+          "Android (Java/Kotlin)",
+          "Vue 3 (IIFE)",
+          "NanoHTTPD",
+          "SQLite 3",
+          "Claude Code",
+          "MCP",
+        ],
+        description:
+          "스마트온 2.0 웹 시스템을 기반으로 VPN/인터넷 없이 현장에서 독립 운용 가능한 Android 태블릿 앱을 구축하는 프로젝트. 내장형 LocalWebServer(NanoHTTPD) + SQLite 오프라인 DB로 [metric]128개 테이블[/metric]을 로컬 복제하고, [metric]150+ REST API[/metric] 엔드포인트를 앱 내부에서 제공. [metric]30개 AI 컨텍스트 문서[/metric](CLAUDE.md·아키텍처·포팅 가이드)를 구축하여 팀원 전원이 Claude Code로 일관된 컨텍스트 위에서 개발할 수 있는 AI 협업 체계를 설계.",
+        achievements: [
+          {
+            title: "하이브리드 온/오프라인 아키텍처 설계",
+            items: [
+              "내장 LocalWebServer에 Spring-style 어노테이션 프레임워크(@RestController, @PostMapping 등) 자체 구현, 웹 서비스 레이어 80% 재사용",
+              "Gradle 플러그인으로 Controller/Service 보일러플레이트 자동 생성, [metric]150+ REST API[/metric] 엔드포인트를 앱 내부에서 서빙",
+            ],
+          },
+          {
+            title: "오프라인 데이터 동기화 엔진",
+            items: [
+              "OfflineDataSyncManager: [metric]18+[/metric] 전용 동기 서비스 오케스트레이션, SyncQueueHelper로 비즈니스 SQL + 큐 등록 원자적 트랜잭션 보장",
+              "시설 단위 스마트 스코핑: 검사 과제 다운로드 시 관련 시설 이력 일괄 포함하여 오프라인 현장 비교 분석 지원",
+            ],
+          },
+          {
+            title: "Oracle→SQLite 자동 변환 레이어",
+            items: [
+              "MyBatis 스타일 커스텀 SqlMapper ORM (Spring 미의존), 동적 SQL 빌딩 + 파라미터 바인딩",
+              "NVL→COALESCE, DECODE→CASE WHEN, ROW_NUMBER, MERGE 등 함수 자동 변환, [metric]128개 테이블[/metric] DDL 기반 SQLite 스키마 자동 생성",
+            ],
+          },
+          {
+            title: "팀 AI 협업 체계 구축",
+            items: [
+              "CLAUDE.md·아키텍처·포팅 가이드 등 [metric]30개 AI 컨텍스트 문서[/metric]를 구축하여 팀원 전원이 Claude Code로 일관된 컨텍스트 위에서 개발 가능한 환경 설계",
+              "커스텀 스킬(front-sync, scm, svn-commit-msg) 등록으로 반복 작업을 자동화하고, MCP 서버 연동으로 AI 에이전트의 작업 범위 확장",
+            ],
+          },
+          {
+            title: "AI 기반 개발 프로세스",
+            items: [
+              "Claude Code + MCP 활용하여 Oracle→SQLite 쿼리 포팅·스키마 변환 작업을 AI로 자동화, [metric]128개 테이블[/metric] 포팅 생산성 극대화",
+              "오프라인 앱 구조 설계 후 팀원에게 도메인별 업무를 분배하고, 코드 리뷰를 통해 품질 관리. [metric]150+ API[/metric]·[metric]8개 비즈니스 도메인[/metric] 커버",
+            ],
+          },
+        ],
+        highlightBox: {
+          title: "기여 포인트",
+          content:
+            "웹 프로젝트에서 설계한 프론트엔드 아키텍처(IIFE 모듈, 메타데이터 라우팅, P-Edit-DataTable 등)를 Android 앱에 성공적으로 이식. 3명의 팀원을 리딩하며 30개 AI 컨텍스트 문서를 구축하여 팀 전원이 Claude Code로 일관된 개발을 수행할 수 있는 AI 협업 체계를 설계하고, Oracle→SQLite 쿼리 포팅 등 반복 작업을 AI로 자동화.",
+        },
+        gallery: [],
+      },
+
+      // ----------------------------------------------------------
       // 01. 스마트온 2.0
       // ----------------------------------------------------------
       {

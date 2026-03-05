@@ -13,6 +13,70 @@ export const companies: Company[] = [
 			"Public/Enterprise System Development SI Company · Frontend Development",
 		projects: [
 			// ----------------------------------------------------------
+			// 00. SmartOn 2.0 APP (Offline)
+			// ----------------------------------------------------------
+			{
+				id: "project-smarton-offline",
+				name: "SmartOn 2.0 APP — Gas Inspection Offline Tablet App",
+				client: "Korea Gas Safety Corporation (KGS)",
+				period: "2026.02 ~ Present",
+				role: "App Development Lead (Leading 3 Developers)",
+				stack: [
+					"Android (Java/Kotlin)",
+					"Vue 3 (IIFE)",
+					"NanoHTTPD",
+					"SQLite 3",
+					"Claude Code",
+					"MCP",
+				],
+				description:
+					"Building an Android tablet app based on the SmartOn 2.0 web system that operates independently without VPN/internet in the field. Locally replicates [metric]128 tables[/metric] via embedded LocalWebServer (NanoHTTPD) + SQLite offline DB, serving [metric]150+ REST API[/metric] endpoints within the app. Built [metric]30 AI context documents[/metric] (CLAUDE.md, architecture, porting guides) enabling the entire team to develop on a consistent context via Claude Code.",
+				achievements: [
+					{
+						title: "Hybrid Online/Offline Architecture Design",
+						items: [
+							"Self-implemented Spring-style annotation framework (@RestController, @PostMapping, etc.) in embedded LocalWebServer, reusing 80% of web service layer",
+							"Auto-generated Controller/Service boilerplate via Gradle plugin, serving [metric]150+ REST API[/metric] endpoints within the app",
+						],
+					},
+					{
+						title: "Offline Data Synchronization Engine",
+						items: [
+							"OfflineDataSyncManager: orchestrating [metric]18+[/metric] dedicated sync services, SyncQueueHelper ensuring atomic transactions for business SQL + queue registration",
+							"Smart facility-scoped downloading: batch-including related facility inspection history when downloading assignments for offline field comparison",
+						],
+					},
+					{
+						title: "Oracle→SQLite Auto-Translation Layer",
+						items: [
+							"Custom MyBatis-style SqlMapper ORM (Spring-independent), dynamic SQL building + parameter binding",
+							"Auto-translating NVL→COALESCE, DECODE→CASE WHEN, ROW_NUMBER, MERGE, etc., auto-generating SQLite schema from [metric]128-table[/metric] DDL",
+						],
+					},
+					{
+						title: "Team AI Collaboration Framework",
+						items: [
+							"Built [metric]30 AI context documents[/metric] (CLAUDE.md, architecture, porting guides) enabling the entire team to develop on a consistent context via Claude Code",
+							"Registered custom skills (front-sync, scm, svn-commit-msg) to automate repetitive tasks, extended AI agent capabilities through MCP server integration",
+						],
+					},
+					{
+						title: "AI-Driven Development Process",
+						items: [
+							"Automated Oracle→SQLite query porting and schema translation via Claude Code + MCP, maximizing productivity for [metric]128-table[/metric] migration",
+							"Designed offline app structure, delegated domain-specific tasks to team members, and maintained quality through code reviews. Covering [metric]150+ APIs[/metric] and [metric]8 business domains[/metric]",
+						],
+					},
+				],
+				highlightBox: {
+					title: "Key Contribution",
+					content:
+						"Successfully ported the frontend architecture designed in the web project (IIFE modules, metadata routing, P-Edit-DataTable, etc.) to the Android app. Led a team of 3 developers by building 30 AI context documents enabling consistent development via Claude Code, and automated Oracle→SQLite query porting and other repetitive tasks with AI.",
+				},
+				gallery: [],
+			},
+
+			// ----------------------------------------------------------
 			// 01. SmartOn 2.0
 			// ----------------------------------------------------------
 			{
