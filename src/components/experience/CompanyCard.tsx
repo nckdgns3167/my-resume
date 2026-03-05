@@ -7,10 +7,7 @@ interface CompanyCardProps {
 
 export function CompanyCard({ company, children }: CompanyCardProps) {
   return (
-    <div className="relative pl-7">
-      {/* 타임라인 세로 선 */}
-      <div className="absolute left-[7px] top-[10px] bottom-0 w-px bg-border" />
-
+    <div className="relative">
       {/* 회사 헤더 — 타임라인 도트 */}
       <div className="relative mb-8">
         <div className="absolute -left-7 top-[6px] h-[15px] w-[15px] rounded-full border-[3px] border-accent-primary bg-bg" />
