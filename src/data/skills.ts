@@ -2,54 +2,49 @@ import type { SkillGroup } from "./types";
 
 export const skillGroups: SkillGroup[] = [
   {
-    title: "Frontend",
-    skills: ["React", "Next.js", "Vue 3", "TypeScript", "JavaScript ES6+", "Vite"],
+    title: "Frontend Engineering",
+    skills: ["React", "Next.js (App Router)", "Vue 3", "Svelte", "TypeScript", "JavaScript (ES6+)", "Vite"],
+  },
+  {
+    title: "Frontend Architecture",
+    skills: [
+      "디자인 시스템 설계",
+      "합성 컴포넌트 패턴",
+      "선언적 UI 패턴",
+      "모듈 컴포넌트 아키텍처",
+      "SSR / SSG 아키텍처",
+    ],
   },
   {
     title: "State Management",
-    skills: ["Zustand", "Pinia", "TanStack Query", "Context API + useReducer", "Recoil"],
+    skills: ["Zustand", "Recoil", "Pinia", "Context API + useReducer", "TanStack Query"],
   },
   {
-    title: "Styling & UI",
-    skills: ["Tailwind CSS", "Framer Motion", "Emotion", "PrimeVue", "Radix UI", "Ant Design"],
+    title: "UI Engineering",
+    skills: ["Tailwind CSS", "Emotion", "Radix UI", "Ant Design", "PrimeVue", "Framer Motion"],
   },
   {
-    title: "Architecture & Patterns",
-    skills: [
-      "합성 컴포넌트 패턴",
-      "선언적 코드 스타일",
-      "디자인 시스템 설계",
-      "SSR / SSG (App Router)",
-      "IIFE 모듈 시스템",
-    ],
+    title: "Backend Integration",
+    skills: ["Spring Boot", "Django", "Flask", "Node.js"],
   },
   {
-    title: "Backend & Database",
-    skills: [
-      "Spring Boot",
-      "Django",
-      "Flask",
-      "Node.js",
-      "Supabase",
-      "Oracle",
-      "MySQL",
-      "Elasticsearch",
-      "MyBatis",
-    ],
+    title: "Database & Search",
+    skills: ["MySQL", "Oracle", "SQLite", "Supabase", "Elasticsearch", "MyBatis"],
   },
   {
-    title: "DevTools & Infra",
-    skills: [
-      "Git",
-      "Vercel",
-      "ESLint",
-      "Biome",
-      "Vitest",
-      "VSCode",
-      "Cursor AI",
-      "Claude Code",
-      "Antigravity",
-      "GitHub Flow",
-    ],
+    title: "DevOps & Deployment",
+    skills: ["GitHub Actions", "Jenkins", "Vercel"],
+  },
+  {
+    title: "Development Workflow",
+    skills: ["Git", "SVN", "GitHub Flow", "GitHub Issues · Milestones · Kanban"],
+  },
+  {
+    title: "Development Tools",
+    skills: ["VSCode", "ESLint", "Biome", "Vitest", "Antigravity"],
+  },
+  {
+    title: "AI Development",
+    skills: ["Claude Code", "OpenAI API", "Claude API", "MCP", "Gemini", "GitHub Copilot"],
   },
 ];
