@@ -2,33 +2,23 @@ import type { Strength } from "./types";
 
 export const strengths: Strength[] = [
   {
-    title: "기술적 제약 → 아키텍처 혁신",
+    title: "제약 환경에서도 아키텍처로 해결하는 엔지니어",
     description:
-      "Node.js·npm·번들러가 없는 폐쇄망 환경에서 IIFE 모듈 시스템과 Promise 기반 ScriptLoader를 설계하여 초기 로딩 50% 단축. 태블릿 전용 터치 제스처(롱프레스·스와이프)와 iOS 위글 UX를 구현하며 '제약 = 불가능'이 아닌 '제약 = 차별화된 설계'로 전환합니다.",
+      "Node.js·npm·번들러를 사용할 수 없는 폐쇄망 환경에서 [metric]IIFE 기반 모듈 시스템과 Promise 기반 ScriptLoader 아키텍처를 설계[/metric]하여 프론트엔드 의존성을 해결했습니다.\n\n이를 통해 초기 로딩 시간을 [metric]약 50% 단축[/metric]하고, 외부 패키지 없이도 [metric]모듈 단위 설계가 가능한 구조[/metric]를 구축했습니다.\n\n기술 제약을 단순한 한계가 아니라 [metric]설계 차별화의 기회로 전환[/metric]하는 접근을 중요하게 생각합니다.",
   },
   {
-    title: "자기주도적 문제 발굴",
+    title: "팀 생산성을 시스템으로 개선하는 개발자",
     description:
-      "요구사항 이전에 개선점을 먼저 발견합니다. PMS에서 팀 전체에 필요한 공통 컴포넌트 4종을 자체 발굴·단독 개발하고, 스마트온에서 Tab Edit Mode·드래그 삭제 등 차별화 UX를 자발적으로 제안·구현했습니다. LIME-DQM에서는 사내 최초로 Elasticsearch 도입을 주도하여 조회 속도 10배 이상 개선을 이끌어냈습니다.",
+      "반복적인 화면 개발 문제를 해결하기 위해 [metric]P-Edit-DataTable 기반 그리드 시스템과 디자인 시스템(PrimeBridge)[/metric]을 설계했습니다.\n\n이를 통해 CRUD 화면 개발 시 [metric]중복 코드를 약 80% 감소[/metric]시켰고, 주니어 개발자도 [metric]1일 이내 온보딩이 가능한 개발 환경[/metric]을 만들었습니다.\n\n개별 기능 구현보다 [metric]팀 전체 생산성을 높이는 구조 설계[/metric]에 집중합니다.",
   },
   {
-    title: "팀 생산성 극대화",
+    title: "데이터 흐름까지 이해하는 프론트엔드 개발",
     description:
-      "스마트온 프로젝트에서 4명 주니어 개발자가 일관된 방식으로 500+ 화면을 개발할 수 있도록 P-Edit-DataTable 그리드 시스템과 디자인 시스템(PrimeBridge)을 설계. 업무 개발자의 CRUD 구현 코드량 80% 감소, 신규 개발자 온보딩 1일 이내를 달성했습니다.",
+      "Spring Boot·Django·Node.js 기반 백엔드와 [metric]Oracle·MySQL·Elasticsearch 데이터 구조를 직접 설계하며 개발[/metric]했습니다.\n\n특히 MyBatis 3단계 ResultMap 구조를 설계하여 [metric]단일 API 호출로 계층형 데이터를 처리[/metric]하고 N+1 문제를 방지했습니다.\n\n프론트엔드 구현뿐 아니라 [metric]API 구조와 데이터 흐름까지 고려한 시스템 설계[/metric]를 지향합니다.",
   },
   {
-    title: "풀스택 관점의 프론트엔드",
+    title: "AI 에이전트를 팀 인프라로 설계하는 개발자",
     description:
-      "Spring Boot·Django·Node.js 백엔드와 Oracle·MySQL·Elasticsearch DB를 직접 설계·구현한 경험으로, 프론트-백엔드 간 최적의 데이터 흐름을 설계합니다. MyBatis 3단계 중첩 ResultMap으로 단일 API 호출에 차트 전체 트리를 반환하는 등, API 설계 단계에서 프론트엔드 성능을 고려합니다.",
-  },
-  {
-    title: "AI 도구 기반 개발 생산성",
-    description:
-      "Cursor AI·Claude Code·Antigravity 등 AI 코딩 도구를 실무와 사이드 프로젝트에 적극 활용합니다. MCP(Model Context Protocol) 서버 연동으로 AI 에이전트의 작업 범위를 확장하고, CLAUDE.md 등 컨텍스트 문서를 체계적으로 작성하여 AI와의 협업 품질을 높이는 워크플로우를 갖추고 있습니다.",
-  },
-  {
-    title: "1인 풀사이클 개발",
-    description:
-      "사이드 프로젝트에서 기획·설계·프론트엔드 개발·인프라(Supabase·Vercel)까지 전 과정을 주도합니다. React 19 + Vite 6 + Zustand 아키텍처 설계, Biome·Vitest·GitHub Flow 기반 DX 환경 구축, 해커톤 MVP 제출까지 완수하며 개인 프로젝트에서도 프로덕션 수준의 품질을 추구합니다.",
+      "Claude Code를 단순 코드 생성 도구가 아닌 개발 인프라로 활용합니다. [metric]CLAUDE.md 기반 프로젝트 컨텍스트 설계[/metric], [metric]MCP 서버 연동으로 에이전트 작업 범위 확장[/metric], [metric]커스텀 스킬 등록으로 반복 워크플로우 자동화[/metric] — 이 세 가지를 조합하여 AI가 프로젝트 맥락을 이해한 상태에서 동작하는 환경을 구축합니다.\n\n실제로 스마트온 오프라인 프로젝트에서 [metric]30개 AI 컨텍스트 문서[/metric]를 구축하여 팀원 3명 전원이 Claude Code로 일관된 컨텍스트 위에서 개발할 수 있는 체계를 설계했고, Oracle→SQLite 쿼리 포팅·스키마 변환 등 [metric]128개 테이블 마이그레이션[/metric]을 AI로 자동화했습니다.\n\nAI를 개인 생산성 도구에 머무르지 않고 [metric]팀 전체의 개발 품질과 일관성을 높이는 인프라[/metric]로 확장하는 데 집중합니다.",
   },
 ];
