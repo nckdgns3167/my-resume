@@ -117,7 +117,7 @@ export const uiStringsKo: UiStrings = {
 	downloadCertificate: "자격증",
 	trainingPlaceholder: "준비 중입니다.",
 
-	present: "현재",
+	present: "진행중",
 	inProgress: "진행 중",
 };
 

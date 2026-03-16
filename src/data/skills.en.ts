@@ -5,7 +5,7 @@ export const skillGroups: SkillGroup[] = [
 		title: "Frontend Engineering",
 		skills: [
 			"React",
-			"Next.js (App Router)",
+			"Next.js",
 			"Vue 3",
 			"Svelte",
 			"TypeScript",

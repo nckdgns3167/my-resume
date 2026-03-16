@@ -8,7 +8,7 @@ export const companies: Company[] = [
 	// ============================================================
 	{
 		name: "Euclid Soft",
-		period: "2020.09 ~ Present",
+		period: "2020.09 ~ In Progress",
 		description:
 			"Public/Enterprise System Development SI Company · Frontend Development",
 		projects: [
@@ -19,7 +19,7 @@ export const companies: Company[] = [
 				id: "project-smarton-offline",
 				name: "SmartOn 2.0 APP — Gas Inspection Offline Tablet App",
 				client: "Korea Gas Safety Corporation (KGS)",
-				period: "2026.02 ~ Present",
+				period: "2026.02 ~ In Progress",
 				role: "App Development Lead (Leading 3 Developers)",
 				stack: [
 					"Android (Java/Kotlin)",
