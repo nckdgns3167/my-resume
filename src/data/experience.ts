@@ -8,7 +8,7 @@ export const companies: Company[] = [
   // ============================================================
   {
     name: "유클리드소프트",
-    period: "2020.09 ~ 진행중",
+    period: "2020.09 ~ 진행 중",
     description: "공공·기업 시스템 개발 SI 기업 · 프론트엔드 개발",
     projects: [
       // ----------------------------------------------------------
@@ -18,7 +18,7 @@ export const companies: Company[] = [
         id: "project-smarton-offline",
         name: "스마트온 2.0 APP — 가스 현장검사 오프라인 태블릿 앱",
         client: "한국가스안전공사(KGS)",
-        period: "2026.02 ~ 진행중",
+        period: "2026.02 ~ 진행 중",
         role: "앱 개발 리드 (3명 리딩)",
         stack: [
           "Android (Java/Kotlin)",
