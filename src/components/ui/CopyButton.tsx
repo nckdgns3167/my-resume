@@ -25,6 +25,7 @@ export function CopyButton({ text, label, children }: CopyButtonProps) {
       onClick={handleClick}
       className="inline-flex items-center gap-1 transition-colors hover:text-text"
       title={ui.copyAction(label)}
+      aria-label={ui.copyAction(label)}
     >
       {children}
     </button>

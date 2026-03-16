@@ -149,6 +149,7 @@ function GalleryItemCard({ item, layout, onImageClick }: GalleryItemCardProps) {
               key={i}
               onClick={() => onImageClick(img.src)}
               className="relative aspect-[3/4] cursor-zoom-in overflow-hidden rounded"
+              aria-label={img.alt}
             >
               <Image
                 src={img.src}
@@ -175,6 +176,7 @@ function GalleryItemCard({ item, layout, onImageClick }: GalleryItemCardProps) {
         className={`relative w-full cursor-zoom-in overflow-hidden rounded ${
           isPortrait ? "aspect-[3/4]" : "aspect-video"
         }`}
+        aria-label={item.alt}
       >
         <Image
           src={item.src}
