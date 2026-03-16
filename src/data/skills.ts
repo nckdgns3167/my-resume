@@ -21,7 +21,7 @@ export const skillGroups: SkillGroup[] = [
   },
   {
     title: "UI Engineering",
-    skills: ["Tailwind CSS", "Emotion", "Radix UI", "Ant Design", "PrimeVue", "Framer Motion"],
+    skills: ["Tailwind CSS", "Emotion", "Vanilla Extract", "Radix UI", "Ant Design", "PrimeVue", "Framer Motion"],
   },
   {
     title: "Backend Integration",

@@ -38,6 +38,7 @@ export const skillGroups: SkillGroup[] = [
 		skills: [
 			"Tailwind CSS",
 			"Emotion",
+			"Vanilla Extract",
 			"Radix UI",
 			"Ant Design",
 			"PrimeVue",
