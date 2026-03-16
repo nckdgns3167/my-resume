@@ -8,7 +8,7 @@ export const companies: Company[] = [
 	// ============================================================
 	{
 		name: "Euclid Soft",
-		period: "2020.09 ~ In Progress",
+		period: "2020.09 ~ Present",
 		description:
 			"Public/Enterprise System Development SI Company · Frontend Development",
 		projects: [
