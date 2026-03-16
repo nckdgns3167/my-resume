@@ -29,7 +29,7 @@ export const companies: Company[] = [
           "MCP",
         ],
         description:
-          "스마트온 2.0 웹 시스템을 기반으로 VPN/인터넷 없이 현장에서 독립 운용 가능한 Android 태블릿 앱을 구축하는 프로젝트. 내장형 LocalWebServer(NanoHTTPD) + SQLite 오프라인 DB로 [metric]128개 테이블[/metric]을 로컬 복제하고, [metric]150+ REST API[/metric] 엔드포인트를 앱 내부에서 제공. [metric]30개 AI 컨텍스트 문서[/metric](CLAUDE.md·아키텍처·포팅 가이드)를 구축하여 팀원 전원이 Claude Code로 일관된 컨텍스트 위에서 개발할 수 있는 AI 협업 체계를 설계.",
+          "스마트온 2.0 웹 시스템을 기반으로 VPN/인터넷 없이 현장에서 독립 운용 가능한 Android 태블릿 앱을 구축하는 프로젝트. 내장형 LocalWebServer(NanoHTTPD) + SQLite 오프라인 DB로 [metric]128개 테이블[/metric]을 로컬 복제하고, [metric]150+ REST API[/metric] 엔드포인트를 앱 내부에서 제공. [metric]30개 AI 컨텍스트 문서[/metric](CLAUDE.md·아키텍처·포팅 가이드)를 구축하여 팀원 전원이 Claude Code로 일관된 컨텍스트 위에서 개발할 수 있는 AI 협업 체계를 설계. VPN 연결 상태에 따라 온오프라인 모드를 자동 전환하고, 오프라인에서 작성한 검사표와 PDF 마크업을 온라인 복귀 시 서버에 동기화하는 양방향 데이터 흐름을 구현.",
         achievements: [
           {
             title: "하이브리드 온/오프라인 아키텍처 설계",
@@ -39,10 +39,18 @@ export const companies: Company[] = [
             ],
           },
           {
+            title: "온오프라인 모드 전환 및 네트워크 처리",
+            items: [
+              "NetworkManager로 VPN 연결 상태를 실시간 감지하고, 연결 끊김 시 커스텀 에러 페이지에서 자동 재연결 시도(10초 카운트다운) + 3회 실패 시 오프라인 모드 전환 버튼 노출",
+              "오프라인 모드 진입 시 로컬 저장된 자격증명으로 인증 처리하고, 온라인 복귀 시 쿠키 초기화 후 서버 재접속 + 대기 데이터 자동 업로드",
+            ],
+          },
+          {
             title: "오프라인 데이터 동기화 엔진",
             items: [
-              "OfflineDataSyncManager: [metric]18+[/metric] 전용 동기 서비스 오케스트레이션, SyncQueueHelper로 비즈니스 SQL + 큐 등록 원자적 트랜잭션 보장",
-              "시설 단위 스마트 스코핑: 검사 과제 다운로드 시 관련 시설 이력 일괄 포함하여 오프라인 현장 비교 분석 지원",
+              "OfflineDataSyncManager로 [metric]18+[/metric] 동기 서비스를 관리하고, SyncQueueHelper로 검사결과 저장과 업로드 큐 등록을 하나의 트랜잭션으로 처리",
+              "온라인 전환 시 SYNC_QUEUE → Canvas → PDF 순서로 대기 항목을 자동 업로드하고, 실패 시 지수 백오프로 재시도",
+              "증분 동기화로 변경분만 다운로드하고, 시설 단위로 [metric]50+ 테이블[/metric]의 연관 데이터를 일괄 포함하여 오프라인 현장 조회 지원",
             ],
           },
           {
@@ -50,6 +58,14 @@ export const companies: Company[] = [
             items: [
               "MyBatis 스타일 커스텀 SqlMapper ORM (Spring 미의존), 동적 SQL 빌딩 + 파라미터 바인딩",
               "NVL→COALESCE, DECODE→CASE WHEN, ROW_NUMBER, MERGE 등 함수 자동 변환, [metric]128개 테이블[/metric] DDL 기반 SQLite 스키마 자동 생성",
+            ],
+          },
+          {
+            title: "오프라인 PDF 마크업 편집 및 동기화",
+            items: [
+              "오프라인에서 PDF에 서명·주석을 편집하면 편집여부와 동기화 상태를 추적하고, 온라인 복귀 시 서버에 자동 반영",
+              "Canvas JSON과 마크업 PDF를 각각 동기화하는 이중 업로드 파이프라인 구성, 이미지 압축으로 업로드 트래픽 절감",
+              "PDF·스캔이미지 다운로드 이력을 로컬 DB에 기록하여, 앱 재시작 후에도 다운로드 상태를 복원",
             ],
           },
           {
@@ -70,7 +86,7 @@ export const companies: Company[] = [
         highlightBox: {
           title: "기여 포인트",
           content:
-            "웹 프로젝트에서 설계한 프론트엔드 아키텍처(IIFE 모듈, 메타데이터 라우팅, P-Edit-DataTable 등)를 Android 앱에 성공적으로 이식. 3명의 팀원을 리딩하며 30개 AI 컨텍스트 문서를 구축하여 팀 전원이 Claude Code로 일관된 개발을 수행할 수 있는 AI 협업 체계를 설계하고, Oracle→SQLite 쿼리 포팅 등 반복 작업을 AI로 자동화.",
+            "웹 프로젝트에서 설계한 프론트엔드 아키텍처(IIFE 모듈, 메타데이터 라우팅, P-Edit-DataTable 등)를 Android 앱에 성공적으로 이식. 3명의 팀원을 리딩하며 30개 AI 컨텍스트 문서를 구축하여 팀 전원이 Claude Code로 일관된 개발을 수행할 수 있는 AI 협업 체계를 설계하고, Oracle→SQLite 쿼리 포팅 등 반복 작업을 AI로 자동화. VPN 감지 기반 온오프라인 모드 전환과 오프라인 검사표·PDF 마크업의 서버 동기화 데이터 흐름을 설계.",
         },
         gallery: [],
       },

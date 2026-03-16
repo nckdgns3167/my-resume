@@ -30,7 +30,7 @@ export const companies: Company[] = [
 					"MCP",
 				],
 				description:
-					"Building an Android tablet app based on the SmartOn 2.0 web system that operates independently without VPN/internet in the field. Locally replicates [metric]128 tables[/metric] via embedded LocalWebServer (NanoHTTPD) + SQLite offline DB, serving [metric]150+ REST API[/metric] endpoints within the app. Built [metric]30 AI context documents[/metric] (CLAUDE.md, architecture, porting guides) enabling the entire team to develop on a consistent context via Claude Code.",
+					"Building an Android tablet app based on the SmartOn 2.0 web system that operates independently without VPN/internet in the field. Locally replicates [metric]128 tables[/metric] via embedded LocalWebServer (NanoHTTPD) + SQLite offline DB, serving [metric]150+ REST API[/metric] endpoints within the app. Built [metric]30 AI context documents[/metric] (CLAUDE.md, architecture, porting guides) enabling the entire team to develop on a consistent context via Claude Code. Automatically switches between online/offline modes based on VPN connection state, and synchronizes inspection forms and PDF markups created offline to the server upon reconnection.",
 				achievements: [
 					{
 						title: "Hybrid Online/Offline Architecture Design",
@@ -40,10 +40,18 @@ export const companies: Company[] = [
 						],
 					},
 					{
+						title: "Online/Offline Mode Switching & Network Handling",
+						items: [
+							"Real-time VPN connection monitoring via NetworkManager; on disconnection, custom error page with auto-retry countdown (10s) and offline mode button after 3 failures",
+							"Offline mode entry with locally stored credential authentication; on reconnection, cookie reset + server reconnection + automatic upload of queued data",
+						],
+					},
+					{
 						title: "Offline Data Synchronization Engine",
 						items: [
-							"OfflineDataSyncManager: orchestrating [metric]18+[/metric] dedicated sync services, SyncQueueHelper ensuring atomic transactions for business SQL + queue registration",
-							"Smart facility-scoped downloading: batch-including related facility inspection history when downloading assignments for offline field comparison",
+							"OfflineDataSyncManager orchestrating [metric]18+[/metric] sync services, SyncQueueHelper ensuring atomic transactions for inspection result saving and upload queue registration",
+							"Three-phase auto-upload on reconnection (SYNC_QUEUE → Canvas → PDF) with exponential backoff retry on failure",
+							"Incremental sync downloading only changed data, with facility-scoped batching of [metric]50+ tables[/metric] of related data for offline field access",
 						],
 					},
 					{
@@ -51,6 +59,14 @@ export const companies: Company[] = [
 						items: [
 							"Custom MyBatis-style SqlMapper ORM (Spring-independent), dynamic SQL building + parameter binding",
 							"Auto-translating NVL→COALESCE, DECODE→CASE WHEN, ROW_NUMBER, MERGE, etc., auto-generating SQLite schema from [metric]128-table[/metric] DDL",
+						],
+					},
+					{
+						title: "Offline PDF Markup Editing & Synchronization",
+						items: [
+							"Tracking edit status and sync state when PDF signatures/annotations are edited offline, with automatic server sync on reconnection",
+							"Dual upload pipeline for Canvas JSON and markup PDF separately, with image compression to reduce upload traffic",
+							"Persistent download tracking for PDF and scan images in local DB, restoring download status after app restart",
 						],
 					},
 					{
@@ -71,7 +87,7 @@ export const companies: Company[] = [
 				highlightBox: {
 					title: "Key Contribution",
 					content:
-						"Successfully ported the frontend architecture designed in the web project (IIFE modules, metadata routing, P-Edit-DataTable, etc.) to the Android app. Led a team of 3 developers by building 30 AI context documents enabling consistent development via Claude Code, and automated Oracle→SQLite query porting and other repetitive tasks with AI.",
+						"Successfully ported the frontend architecture designed in the web project (IIFE modules, metadata routing, P-Edit-DataTable, etc.) to the Android app. Led a team of 3 developers by building 30 AI context documents enabling consistent development via Claude Code, and automated Oracle→SQLite query porting and other repetitive tasks with AI. Designed VPN-based online/offline mode switching and bidirectional data flow for offline inspection forms and PDF markup synchronization.",
 				},
 				gallery: [],
 			},
