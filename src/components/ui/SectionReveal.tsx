@@ -1,7 +1,7 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
-import type { ReactNode } from "react";
+import { motion } from "framer-motion";
+import { useEffect, useState, type ReactNode } from "react";
 
 interface SectionRevealProps {
   children: ReactNode;
@@ -9,9 +9,13 @@ interface SectionRevealProps {
 }
 
 export function SectionReveal({ children, delay = 0 }: SectionRevealProps) {
-  const prefersReducedMotion = useReducedMotion();
+  const [reducedMotion, setReducedMotion] = useState(false);
 
-  if (prefersReducedMotion) {
+  useEffect(() => {
+    setReducedMotion(window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+  }, []);
+
+  if (reducedMotion) {
     return <div>{children}</div>;
   }
 
