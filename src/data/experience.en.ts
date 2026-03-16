@@ -19,7 +19,7 @@ export const companies: Company[] = [
 				id: "project-smarton-offline",
 				name: "SmartOn 2.0 APP — Gas Inspection Offline Tablet App",
 				client: "Korea Gas Safety Corporation (KGS)",
-				period: "2026.02 ~ In Progress",
+				period: "2026.02 ~ 2026.04",
 				role: "App Development Lead (Leading 3 Developers)",
 				stack: [
 					"Android (Java/Kotlin)",
