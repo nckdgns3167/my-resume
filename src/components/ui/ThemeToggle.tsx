@@ -8,8 +8,7 @@ export function ThemeToggle() {
   const ui = useUiStrings();
 
   const handleToggle = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (!document.startViewTransition || prefersReducedMotion) {
+    if (!document.startViewTransition) {
       toggleTheme();
       return;
     }

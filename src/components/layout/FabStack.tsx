@@ -32,7 +32,6 @@ export function FabStack() {
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
-            aria-hidden="true"
           >
             <polyline points="18 15 12 9 6 15" />
           </svg>
