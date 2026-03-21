@@ -140,12 +140,28 @@ export interface Education {
 }
 
 // --- Training ---
+export interface TrainingDetailSection {
+  term: string;
+  desc: string;
+  subItems?: { term: string; desc: string }[];
+}
+
+export interface TrainingDetailDialog {
+  id: string;
+  title: string;
+  subtitle: string;
+  sections: TrainingDetailSection[];
+}
+
 export interface Training {
   name: string;
   institution: string;
   period: string;
   details?: string[];
   posterFileName?: string;
+  certificateFileName?: string;
+  link?: string;
+  detailDialogs?: TrainingDetailDialog[];
 }
 
 // --- Certification ---
@@ -163,6 +179,7 @@ export interface Certification {
 export interface MilitaryService {
   status: string;
   category: string;
+  pdfFileName?: string;
 }
 
 // --- Type Guards ---

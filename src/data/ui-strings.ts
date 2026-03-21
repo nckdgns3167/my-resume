@@ -61,8 +61,19 @@ export interface UiStrings {
   // Certifications
   downloadCertificate: string;
 
-  // Training placeholder
+  // Training
   trainingPlaceholder: string;
+  downloadPoster: string;
+  downloadTrainingCertificate: string;
+  trainingOnline: string;
+  trainingOffline: string;
+
+  // Military
+  downloadMilitaryCertificate: string;
+
+  // FileViewer
+  viewFile: string;
+  closeViewer: string;
 
   // Dates
   present: string;
@@ -115,6 +126,15 @@ export const uiStringsKo: UiStrings = {
 
   downloadCertificate: "자격증",
   trainingPlaceholder: "준비 중입니다.",
+  downloadPoster: "포스터",
+  downloadTrainingCertificate: "수료증",
+  trainingOnline: "온라인",
+  trainingOffline: "오프라인",
+
+  downloadMilitaryCertificate: "증명서",
+
+  viewFile: "뷰어",
+  closeViewer: "닫기",
 
   present: "진행 중",
   inProgress: "진행 중",
@@ -166,6 +186,15 @@ export const uiStringsEn: UiStrings = {
 
   downloadCertificate: "Download",
   trainingPlaceholder: "Coming soon.",
+  downloadPoster: "Poster",
+  downloadTrainingCertificate: "Certificate",
+  trainingOnline: "Online",
+  trainingOffline: "Offline",
+
+  downloadMilitaryCertificate: "Certificate",
+
+  viewFile: "Viewer",
+  closeViewer: "Close",
 
   present: "Present",
   inProgress: "In Progress",

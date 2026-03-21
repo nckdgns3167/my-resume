@@ -44,7 +44,7 @@ export interface LocalizedData {
 	strengths: Strength[];
 	tocSections: TocSection[];
 	education: Education[];
-	training: Training[];
+	training: { online: Training[]; offline: Training[] };
 	certifications: Certification[];
 	militaryService: MilitaryService;
 }

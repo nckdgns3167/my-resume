@@ -67,7 +67,7 @@ export function LocalizedPage() {
 						<EducationSection education={data.education} />
 					</SectionReveal>
 					<SectionReveal>
-						<TrainingSection training={data.training} />
+						<TrainingSection training={data.training} ui={ui} />
 					</SectionReveal>
 					<SectionReveal>
 						<CertificationsSection
@@ -76,7 +76,7 @@ export function LocalizedPage() {
 						/>
 					</SectionReveal>
 					<SectionReveal>
-						<MilitarySection militaryService={data.militaryService} />
+						<MilitarySection militaryService={data.militaryService} ui={ui} />
 					</SectionReveal>
 					<SectionReveal>
 						<Footer ui={ui} />
