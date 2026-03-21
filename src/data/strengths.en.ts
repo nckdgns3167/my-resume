@@ -21,4 +21,9 @@ export const strengths: Strength[] = [
 		description:
 			"I use Claude Code not as a simple code generator, but as development infrastructure. [metric]Project context design via CLAUDE.md[/metric], [metric]extending agent capabilities through MCP server integration[/metric], and [metric]automating repetitive workflows with custom skills[/metric] — combining these three to build an environment where AI operates with full project context.\n\nIn the SmartOn Offline project, I built [metric]30 AI context documents[/metric] enabling all 3 team members to develop on a consistent context via Claude Code, and automated Oracle→SQLite query porting and schema translation for [metric]128-table migration[/metric] with AI.\n\nI focus on expanding AI beyond personal productivity tools into [metric]infrastructure that elevates the entire team's development quality and consistency[/metric].",
 	},
+	{
+		title: "A Developer Who Proactively Adapts to Technological Change",
+		description:
+			"I keep up with technology trends through [metric]self-directed learning beyond work hours[/metric], including earning the Google AI Professional Certificate.\n\nI automate development workflows with Claude Code, and systematize [metric]interview preparation and handover documentation[/metric] with Gemini, NotebookLM, and Google Gems — [metric]selecting and combining AI tools based on their purpose and strengths[/metric].\n\nI focus on [metric]directly learning, applying to practice, and expanding capabilities[/metric] rather than simply observing technological change.",
+	},
 ];

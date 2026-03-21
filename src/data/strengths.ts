@@ -21,4 +21,9 @@ export const strengths: Strength[] = [
     description:
       "Claude Code를 단순 코드 생성 도구가 아닌 개발 인프라로 활용합니다. [metric]CLAUDE.md 기반 프로젝트 컨텍스트 설계[/metric], [metric]MCP 서버 연동으로 에이전트 작업 범위 확장[/metric], [metric]커스텀 스킬 등록으로 반복 워크플로우 자동화[/metric] — 이 세 가지를 조합하여 AI가 프로젝트 맥락을 이해한 상태에서 동작하는 환경을 구축합니다.\n\n실제로 스마트온 오프라인 프로젝트에서 [metric]30개 AI 컨텍스트 문서[/metric]를 구축하여 팀원 3명 전원이 Claude Code로 일관된 컨텍스트 위에서 개발할 수 있는 체계를 설계했고, Oracle→SQLite 쿼리 포팅·스키마 변환 등 [metric]128개 테이블 마이그레이션[/metric]을 AI로 자동화했습니다.\n\nAI를 개인 생산성 도구에 머무르지 않고 [metric]팀 전체의 개발 품질과 일관성을 높이는 인프라[/metric]로 확장하는 데 집중합니다.",
   },
+  {
+    title: "기술 변화에 능동적으로 대응하는 개발자",
+    description:
+      "Google AI Professional Certificate 취득 등 [metric]업무 외 시간에도 자발적으로 학습[/metric]하며 기술 트렌드를 파악합니다.\n\nClaude Code로 개발 워크플로우를 자동화하고, Gemini·NotebookLM·Google Gems로 [metric]면접 준비·인수인계 문서 관리[/metric]를 체계화하는 등 AI 도구를 [metric]용도와 강점에 맞게 선별 조합[/metric]하여 활용합니다.\n\n기술 변화를 관망하지 않고 [metric]직접 학습하고 실무에 적용하며 역량을 확장[/metric]하는 데 집중합니다.",
+  },
 ];
