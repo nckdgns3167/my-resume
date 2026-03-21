@@ -20,7 +20,7 @@ export function MobileDrawer({
 	childToParentMap,
 }: MobileDrawerProps) {
 	const [isOpen, setIsOpen] = useState(false);
-	const activeId = useScrollSpy(allTocIds);
+	const { activeId, forceActive } = useScrollSpy(allTocIds);
 	const isDesktop = useMediaQuery("(min-width: 1100px)");
 	const { showButton, scrollToTop } = useScrollTop();
 	const { locale, toggleLocale } = useLocale();
@@ -201,7 +201,7 @@ export function MobileDrawer({
 								<li key={section.id}>
 									<a
 										href={`#${section.id}`}
-										onClick={() => setIsOpen(false)}
+										onClick={() => { forceActive(section.id); setIsOpen(false); }}
 										className={`block rounded-lg px-3 py-2 text-sm transition-colors ${
 											isExactActive
 												? "bg-accent-primary/10 font-semibold text-accent-primary"
@@ -219,9 +219,7 @@ export function MobileDrawer({
 												<li key={child.id}>
 													<a
 														href={`#${child.id}`}
-														onClick={() =>
-															setIsOpen(false)
-														}
+														onClick={() => { forceActive(child.id); setIsOpen(false); }}
 														className={`block rounded-lg px-3 py-1.5 text-xs transition-colors ${
 															activeId ===
 															child.id

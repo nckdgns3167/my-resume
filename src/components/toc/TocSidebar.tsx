@@ -12,7 +12,7 @@ interface TocSidebarProps {
 }
 
 export function TocSidebar({ tocSections, allTocIds, childToParentMap }: TocSidebarProps) {
-  const activeId = useScrollSpy(allTocIds);
+  const { activeId, forceActive } = useScrollSpy(allTocIds);
   const isDesktop = useMediaQuery("(min-width: 1100px)");
   const ui = useUiStrings();
 
@@ -31,6 +31,7 @@ export function TocSidebar({ tocSections, allTocIds, childToParentMap }: TocSide
             <li key={section.id}>
               <a
                 href={`#${section.id}`}
+                onClick={() => forceActive(section.id)}
                 className={`block text-xs transition-colors ${
                   isExactActive
                     ? "font-semibold text-accent-primary"
@@ -49,6 +50,7 @@ export function TocSidebar({ tocSections, allTocIds, childToParentMap }: TocSide
                     <li key={child.id}>
                       <a
                         href={`#${child.id}`}
+                        onClick={() => forceActive(child.id)}
                         className={`block text-[11px] transition-colors ${
                           activeId === child.id
                             ? "font-semibold text-accent-primary"
