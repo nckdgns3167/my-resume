@@ -25,7 +25,7 @@ export const skillGroups: SkillGroup[] = [
   },
   {
     title: "Backend Integration",
-    skills: ["Spring Boot", "Django", "Flask", "Node.js"],
+    skills: ["Java", "Spring Boot", "Django", "Node.js"],
   },
   {
     title: "Database & Search",
@@ -41,10 +41,18 @@ export const skillGroups: SkillGroup[] = [
   },
   {
     title: "Development Tools",
-    skills: ["VSCode", "ESLint", "Biome", "Vitest", "Antigravity"],
+    skills: ["VSCode", "Antigravity", "ESLint", "Biome", "Vitest"],
   },
   {
-    title: "AI Development",
-    skills: ["Claude Code", "OpenAI API", "Claude API", "MCP", "Gemini", "GitHub Copilot"],
+    title: "AI · Dev Tools",
+    skills: ["MCP", "Claude Code", "Claude API", "OpenAI API"],
+  },
+  {
+    title: "AI · Knowledge Management",
+    skills: ["Gemini", "NotebookLM", "Google Gems"],
+  },
+  {
+    title: "Documentation",
+    skills: ["Typora", "Obsidian"],
   },
 ];
