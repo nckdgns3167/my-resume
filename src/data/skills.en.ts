@@ -7,7 +7,6 @@ export const skillGroups: SkillGroup[] = [
 			"React",
 			"Next.js",
 			"Vue 3",
-			"Svelte",
 			"TypeScript",
 			"JavaScript (ES6+)",
 			"Vite",
