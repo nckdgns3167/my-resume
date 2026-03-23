@@ -36,6 +36,7 @@ export interface Profile {
 
 // --- Introduction ---
 export interface Introduction {
+  quote: string;
   paragraphs: string[];
 }
 
