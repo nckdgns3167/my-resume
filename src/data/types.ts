@@ -123,9 +123,16 @@ export interface Company {
 }
 
 // --- Strengths ---
+export interface StrengthTipPopover {
+  id: string;
+  title: string;
+  content: string;
+}
+
 export interface Strength {
   title: string;
   description: string;
+  tipPopovers?: StrengthTipPopover[];
 }
 
 // --- Education ---
