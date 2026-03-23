@@ -59,7 +59,7 @@ export function ProjectCard({ project, ui }: ProjectCardProps) {
         {/* 러닝 포인트 */}
         {project.learningPoints && project.learningPoints.length > 0 && (
           <div className="mt-4">
-            <LearningPointCallout learningPoints={project.learningPoints} badge={ui.learningPointBadge} />
+            <LearningPointCallout learningPoints={project.learningPoints} title={ui.learningPointBadge} />
           </div>
         )}
 

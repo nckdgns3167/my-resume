@@ -1,8 +1,8 @@
+import { CompanyCard } from "@/components/experience/CompanyCard";
+import { ProjectCard } from "@/components/experience/ProjectCard";
 import { Section } from "@/components/ui/Section";
 import type { Company } from "@/data/types";
 import type { UiStrings } from "@/data/ui-strings";
-import { CompanyCard } from "@/components/experience/CompanyCard";
-import { ProjectCard } from "@/components/experience/ProjectCard";
 
 interface ExperienceSectionProps {
   companies: Company[];
@@ -27,6 +27,7 @@ export function ExperienceSection({ companies, ui }: ExperienceSectionProps) {
           ))}
         </div>
       </div>
+
     </Section>
   );
 }

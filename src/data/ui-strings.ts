@@ -49,8 +49,8 @@ export interface UiStrings {
   openMenu: string;
   closeMenu: string;
 
-  // SkillsSection (print-only)
-  screenshotWebNotice: string;
+  // Print-only web notice
+  printWebNotice: string;
 
   // Footer
   lastUpdated: string;
@@ -122,7 +122,8 @@ export const uiStringsKo: UiStrings = {
   openMenu: "메뉴 열기",
   closeMenu: "메뉴 닫기",
 
-  screenshotWebNotice: "각 프로젝트별 스크린샷은 웹 버전에서 확인하실 수 있습니다.",
+  printWebNotice:
+    "각 프로젝트별 러닝 포인트·기술 목표 상세 내용과 스크린샷은 PDF에서 지원되지 않습니다.\n아래 웹 버전에서 확인해 주세요.",
 
   lastUpdated: "Last updated:",
 
@@ -142,7 +143,6 @@ export const uiStringsKo: UiStrings = {
 
   learningPointBadge: "러닝 포인트",
   technicalGoalBadge: "기술 목표",
-
   present: "진행 중",
   inProgress: "진행 중",
 };
@@ -185,7 +185,8 @@ export const uiStringsEn: UiStrings = {
   openMenu: "Open menu",
   closeMenu: "Close menu",
 
-  screenshotWebNotice: "Screenshots for each project are available in the web version.",
+  printWebNotice:
+    "Project screenshots and detailed Learning Points / Technical Goals are not supported in PDF.\nPlease visit the web version below.",
 
   lastUpdated: "Last updated:",
 
@@ -205,7 +206,6 @@ export const uiStringsEn: UiStrings = {
 
   learningPointBadge: "Learning Point",
   technicalGoalBadge: "Technical Goal",
-
   present: "Present",
   inProgress: "In Progress",
 };

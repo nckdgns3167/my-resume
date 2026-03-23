@@ -1,6 +1,6 @@
-import { Section } from "@/components/ui/Section";
-import { ProjectGallery } from "@/components/experience/ProjectGallery";
 import { LearningPointCallout } from "@/components/experience/LearningPointCallout";
+import { ProjectGallery } from "@/components/experience/ProjectGallery";
+import { Section } from "@/components/ui/Section";
 import type { SideProject } from "@/data/types";
 import type { UiStrings } from "@/data/ui-strings";
 
@@ -76,9 +76,9 @@ export function SideProjectsSection({ sideProjects, ui }: SideProjectsSectionPro
 
             {project.achievements.length > 0 && (
               <ul className="mt-3 flex flex-col gap-1">
-                {project.achievements.map((a, i) => (
+                {project.achievements.map((a) => (
                   <li
-                    key={i}
+                    key={a}
                     className="relative pl-4 text-sm text-text-secondary before:absolute before:left-0 before:text-accent-primary before:content-['•']"
                   >
                     {a}
@@ -92,7 +92,7 @@ export function SideProjectsSection({ sideProjects, ui }: SideProjectsSectionPro
               <div className="mt-4">
                 <LearningPointCallout
                   learningPoints={project.learningPoints}
-                  badge={ui.technicalGoalBadge}
+                  title={ui.technicalGoalBadge}
                 />
               </div>
             )}

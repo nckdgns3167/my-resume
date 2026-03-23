@@ -1,5 +1,5 @@
-import { Section } from "@/components/ui/Section";
 import { SkillTag } from "@/components/skills/SkillTag";
+import { Section } from "@/components/ui/Section";
 import type { SkillGroup } from "@/data/types";
 import type { UiStrings } from "@/data/ui-strings";
 
@@ -24,13 +24,12 @@ export function SkillsSection({ skillGroups, ui }: SkillsSectionProps) {
         ))}
       </div>
 
-      {/* PDF 전용 — 웹 버전 안내 (Skills 페이지 하단에 표시) */}
-      <div className="mt-8 hidden rounded-lg border-2 border-dashed border-accent-primary/40 bg-bg-secondary px-5 py-4 text-center text-sm text-text-secondary print:block">
-        {ui.screenshotWebNotice}
-        <br />
-        <span className="font-medium text-accent-primary">
+      {/* PDF 전용 — 웹 버전 안내 */}
+      <div className="mt-8 hidden rounded-lg border-2 border-dashed border-accent-primary/40 bg-accent-primary/5 px-5 py-4 text-center print:block">
+        <p className="text-sm font-medium text-text whitespace-pre-line">{ui.printWebNotice}</p>
+        <p className="mt-1.5 text-sm font-semibold text-accent-primary">
           https://resume-changhoon.vercel.app
-        </span>
+        </p>
       </div>
     </Section>
   );
