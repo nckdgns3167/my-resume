@@ -1,5 +1,6 @@
 import { Section } from "@/components/ui/Section";
 import { ProjectGallery } from "@/components/experience/ProjectGallery";
+import { LearningPointCallout } from "@/components/experience/LearningPointCallout";
 import type { SideProject } from "@/data/types";
 import type { UiStrings } from "@/data/ui-strings";
 
@@ -84,6 +85,16 @@ export function SideProjectsSection({ sideProjects, ui }: SideProjectsSectionPro
                   </li>
                 ))}
               </ul>
+            )}
+
+            {/* 기술 목표 */}
+            {project.learningPoints && project.learningPoints.length > 0 && (
+              <div className="mt-4">
+                <LearningPointCallout
+                  learningPoints={project.learningPoints}
+                  badge={ui.technicalGoalBadge}
+                />
+              </div>
             )}
 
             {/* 갤러리 */}

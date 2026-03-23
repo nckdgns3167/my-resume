@@ -84,7 +84,7 @@ export const strengths: Strength[] = [
 	{
 		title: "프론트엔드에서 DB까지, 전 계층을 설계하는 엔지니어",
 		description:
-			"프론트엔드 전문이지만, 필요한 경우 [tip=fullstack,metric]Controller→Service→Mapper→SQL 전 계층[/tip]을 직접 설계하고 구현합니다. 스마트공장 PMS에서는 Spring Boot + MyBatis 백엔드를, AI 신약개발 플랫폼에서는 [tip=django-flask,metric]Django + Flask 이중 구조[/tip]와 Python multiprocessing 병렬 처리 파이프라인을 설계했습니다.\n\nAPI 설계에서 N+1 문제를 구조적으로 방지합니다. MyBatis [tip=resultmap,metric]3단계 ResultMap[/tip](중첩 collection)으로 단일 호출에 트리 데이터를 반환하는 구조를 설계했고, LIME-DQM에서는 Elasticsearch 인덱스 분리와 [tip=es-paging]search_after 딥 페이징[/tip]으로 [metric]100만 건 이상의 품질 데이터를 수 초 내로 조회[/metric]합니다.\n\nOracle·MySQL·SQLite·Elasticsearch 등 [tip=four-db,metric]4종 데이터베이스[/tip] 실무 경험을 바탕으로, 프론트엔드가 소비하기 최적인 데이터 구조를 API 설계 단계에서부터 고려합니다.",
+			"프론트엔드 전문이지만, 필요한 경우 [tip=fullstack,metric]Controller→Service→Mapper→SQL 전 계층[/tip]을 직접 설계하고 구현합니다. 스마트공장 PMS에서는 Spring Boot + MyBatis 백엔드를, AI 신약개발 플랫폼에서는 [tip=django-flask,metric]Django + Flask 이중 구조[/tip]와 Python multiprocessing 병렬 처리 파이프라인을 설계했습니다.\n\n프론트엔드가 한 번의 API 호출로 필요한 데이터를 모두 받을 수 있도록, [tip=n-plus-one]N+1 문제[/tip]를 구조적으로 방지합니다. MyBatis [tip=resultmap,metric]3단계 ResultMap[/tip]으로 하나의 SQL에서 부모→자식→손자 관계의 데이터를 트리 구조로 자동 조립하여 반환하고, LIME-DQM에서는 Elasticsearch 인덱스 분리와 [tip=es-paging]search_after 딥 페이징[/tip]으로 [metric]100만 건 이상의 품질 데이터를 수 초 내로 조회[/metric]합니다.\n\nOracle·MySQL·SQLite·Elasticsearch 등 [tip=four-db,metric]4종 데이터베이스[/tip] 실무 경험을 바탕으로, 프론트엔드가 소비하기 최적인 데이터 구조를 API 설계 단계에서부터 고려합니다.",
 		tipPopovers: [
 			{
 				id: "fullstack",
@@ -99,10 +99,16 @@ export const strengths: Strength[] = [
 					"Django가 웹 UI와 프로젝트 관리를 담당하고, Flask가 15개 이상의 AI 분석 모듈을 REST API로 서빙하는 분리 아키텍처. Python multiprocessing으로 복수 분석을 병렬 실행합니다.",
 			},
 			{
+				id: "n-plus-one",
+				title: "N+1 문제",
+				content:
+					"목록을 1번 조회한 뒤, 각 항목의 상세를 N번 추가 조회하는 비효율적 패턴. 예: 밴드 6개를 조회(1번) → 밴드별 상세를 각각 조회(6번) = 총 7번 쿼리. 데이터가 많아질수록 쿼리 수가 폭발적으로 증가합니다.",
+			},
+			{
 				id: "resultmap",
 				title: "MyBatis 3단계 ResultMap",
 				content:
-					"중첩 collection 매핑(예: SectionDTO → BandDTO → DetailDTO)으로 JOIN 결과를 자동으로 트리 구조 객체에 매핑. 단일 SQL 호출로 계층형 데이터를 반환하여 N+1 문제를 원천 방지합니다.",
+					"JOIN 한 번으로 가져온 평탄한 결과를 부모→자식→손자 트리 구조 객체로 자동 조립하는 MyBatis 매핑 기능. 예: 릴리스섹션 → 밴드 → 밴드상세 3단계를 단일 SQL로 반환하여 N+1 문제를 원천 방지합니다.",
 			},
 			{
 				id: "es-paging",

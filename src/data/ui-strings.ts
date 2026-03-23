@@ -75,6 +75,10 @@ export interface UiStrings {
   viewFile: string;
   closeViewer: string;
 
+  // LearningPoint
+  learningPointBadge: string;
+  technicalGoalBadge: string;
+
   // Dates
   present: string;
   inProgress: string;
@@ -136,6 +140,9 @@ export const uiStringsKo: UiStrings = {
   viewFile: "뷰어",
   closeViewer: "닫기",
 
+  learningPointBadge: "러닝 포인트",
+  technicalGoalBadge: "기술 목표",
+
   present: "진행 중",
   inProgress: "진행 중",
 };
@@ -195,6 +202,9 @@ export const uiStringsEn: UiStrings = {
 
   viewFile: "Viewer",
   closeViewer: "Close",
+
+  learningPointBadge: "Learning Point",
+  technicalGoalBadge: "Technical Goal",
 
   present: "Present",
   inProgress: "In Progress",

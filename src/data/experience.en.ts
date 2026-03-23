@@ -177,6 +177,22 @@ export const companies: Company[] = [
 						],
 					},
 				],
+				learningPoints: [
+					{
+						topic: "Air-Gapped IIFE Module System = Micro Frontend Principles",
+						paragraphs: [
+							"In a government closed network with no access to Node.js/npm/bundlers, I needed to modularize 500+ screens. Looking back, the IIFE-based architecture I designed was essentially an implementation of [metric]Islands Architecture / Micro Frontend principles[/metric] through browser-native mechanisms.",
+							"Each screen operates as an independent Vue app instance, managed by a common shell (mainPage.html) — structurally identical to Webpack Module Federation. This project taught me that architecture patterns like MFA and Islands are concepts, not tool dependencies. Understanding the principles allows applying them even in extreme constraint environments.",
+						],
+					},
+					{
+						topic: "P-Edit-DataTable — Component Design That Elevated Team-Wide Productivity",
+						paragraphs: [
+							"With 500+ screens sharing repetitive CRUD patterns but no budget for commercial solutions like AG Grid, I designed a custom 3-layer architecture (useEditGridFactory hook + p-edit-datatable wrapper + p-edit-column directive). The most important consideration wasn't technical sophistication but [metric]developer experience (DX)[/metric].",
+							"By hiding complexity behind a declarative API and letting junior developers focus solely on CRUD implementation, we achieved an [metric]80% code reduction[/metric]. I learned that a component's true impact is measured not by one person's technical excellence, but by how much redundant work it eliminates across the entire team.",
+						],
+					},
+				],
 				highlightBox: {
 					title: "Key Contributions",
 					content:
@@ -393,6 +409,23 @@ export const companies: Company[] = [
 						],
 					},
 				],
+				learningPoints: [
+					{
+						topic: "CSS-in-JS Technology Choice — Emotion vs Vanilla Extract",
+						paragraphs: [
+							"Emotion was chosen for this project because positions and widths had to be dynamically calculated from frequency values. While Vanilla Extract is superior in performance with zero runtime overhead, the nature of chart development demands careful consideration of dynamic styling limitations.",
+							"Vanilla Extract generates static CSS entirely at build time, so injecting geometric values like width or left that change at runtime based on data is constrained. Emotion, on the other hand, computes and injects styles at render time, making it well-suited for coordinate-based dynamic layouts.",
+							"In retrospect, a [metric]hybrid approach[/metric] would have been optimal. Static styles like colors, fonts, and base layouts could have been handled by Vanilla Extract to eliminate rendering overhead, while dynamic styles computed from real-time data — chart positions and widths — could be separated into inline styles, capturing the best of both technologies.",
+						],
+					},
+					{
+						topic: "Custom Chart Engine vs Library",
+						paragraphs: [
+							"D3, Chart.js, and Recharts were evaluated, but the structure where distribution, frequency, usage, and utilization rows align and connect along a shared frequency axis was impossible to implement with general-purpose chart libraries' X-Y axis models. Fighting a library's abstractions would have taken more time than building from primitives, so I built a custom implementation with React + Emotion.",
+							"By minimizing coupling through the Compound Component pattern (Band > Header/Body/Arrow) and achieving [metric]full control[/metric] over the coordinate mapping engine, zoom levels, and cross-row hover highlighting, I learned that building from scratch is the right decision when the visualization domain is truly unique.",
+						],
+					},
+				],
 				gallery: [
 					{
 						layout: "default",
@@ -466,6 +499,15 @@ export const companies: Company[] = [
 					},
 					"Full-stack development across Controller → Service → Mapper (MyBatis) → SQL queries",
 					"Voluntarily joined the maintenance project to achieve personal goals for development completeness. Processed [metric]approximately 30,000[/metric] SR tickets including board responses and customer phone support",
+				],
+				learningPoints: [
+					{
+						topic: "Mid-Development State Management Adoption — A Pragmatic Architecture Decision",
+						paragraphs: [
+							"I joined a 25-person team where development was already underway. With no state management system in place and prop drilling everywhere, introducing Redux at this stage would have been too disruptive. I chose Context API + useReducer as the [metric]least disruptive improvement[/metric].",
+							"By separating 4 domain-specific independent Contexts and structuring them with State/Dispatch split custom hooks, I established order. The trade-off of broader re-render scope compared to Redux selectors was acceptable — for an admin-panel use case, the organizational improvement far outweighed the performance cost. The best state management solution isn't the technically optimal one, but the one the existing team can adopt without stopping development.",
+						],
+					},
 				],
 				gallery: [
 					{

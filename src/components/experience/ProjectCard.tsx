@@ -2,6 +2,7 @@ import type { Project } from "@/data/types";
 import type { UiStrings } from "@/data/ui-strings";
 import { parseRichText } from "@/lib/rich-text";
 import { HighlightBox } from "./HighlightBox";
+import { LearningPointCallout } from "./LearningPointCallout";
 import { ProjectAchievements } from "./ProjectAchievements";
 import { ProjectGallery } from "./ProjectGallery";
 
@@ -54,6 +55,13 @@ export function ProjectCard({ project, ui }: ProjectCardProps) {
 
         {/* 성과 */}
         <ProjectAchievements achievements={project.achievements} />
+
+        {/* 러닝 포인트 */}
+        {project.learningPoints && project.learningPoints.length > 0 && (
+          <div className="mt-4">
+            <LearningPointCallout learningPoints={project.learningPoints} badge={ui.learningPointBadge} />
+          </div>
+        )}
 
         {/* 하이라이트 박스 */}
         {project.highlightBox && (

@@ -84,7 +84,7 @@ export const strengths: Strength[] = [
 	{
 		title: "An Engineer Who Designs Across All Layers, from Frontend to DB",
 		description:
-			"While specializing in frontend, I directly design and implement [tip=fullstack,metric]the full stack — Controller → Service → Mapper → SQL[/tip] — when needed. I built Spring Boot + MyBatis backends for Smart Factory PMS, and designed a [tip=django-flask,metric]Django + Flask dual architecture[/tip] with Python multiprocessing parallel pipelines for an AI Drug Discovery platform.\n\nI structurally prevent N+1 problems in API design. I designed MyBatis [tip=resultmap,metric]3-level ResultMap[/tip] (nested collections) to return tree data in a single call, and in LIME-DQM, improved Elasticsearch index separation with [tip=es-paging]search_after deep pagination[/tip] to [metric]query 1M+ quality data records within seconds[/metric].\n\nWith hands-on experience across [tip=four-db,metric]4 database systems[/tip] — Oracle, MySQL, SQLite, and Elasticsearch — I consider optimal data structures for frontend consumption from the API design stage.",
+			"While specializing in frontend, I directly design and implement [tip=fullstack,metric]the full stack — Controller → Service → Mapper → SQL[/tip] — when needed. I built Spring Boot + MyBatis backends for Smart Factory PMS, and designed a [tip=django-flask,metric]Django + Flask dual architecture[/tip] with Python multiprocessing parallel pipelines for an AI Drug Discovery platform.\n\nI ensure the frontend can get all needed data in a single API call by structurally preventing the [tip=n-plus-one]N+1 problem[/tip]. Using MyBatis [tip=resultmap,metric]3-level ResultMap[/tip], a single SQL automatically assembles parent → child → grandchild data into a tree structure. In LIME-DQM, Elasticsearch index separation with [tip=es-paging]search_after deep pagination[/tip] enables [metric]querying 1M+ quality data records within seconds[/metric].\n\nWith hands-on experience across [tip=four-db,metric]4 database systems[/tip] — Oracle, MySQL, SQLite, and Elasticsearch — I consider optimal data structures for frontend consumption from the API design stage.",
 		tipPopovers: [
 			{
 				id: "fullstack",
@@ -99,10 +99,16 @@ export const strengths: Strength[] = [
 					"Django handles web UI and project management, while Flask serves 15+ AI analysis modules as REST APIs. Python multiprocessing enables parallel execution of multiple analyses.",
 			},
 			{
+				id: "n-plus-one",
+				title: "N+1 Problem",
+				content:
+					"An inefficient query pattern where a list is fetched once (1), then each item's details are fetched individually (N times). Example: fetch 6 bands (1 query) → fetch details for each band (6 queries) = 7 total. Query count explodes as data grows.",
+			},
+			{
 				id: "resultmap",
 				title: "MyBatis 3-Level ResultMap",
 				content:
-					"Nested collection mapping (e.g., SectionDTO → BandDTO → DetailDTO) automatically maps JOIN results into tree-structured objects. Returns hierarchical data in a single SQL call, eliminating N+1 problems at the root.",
+					"A MyBatis mapping feature that automatically assembles flat JOIN results into a parent → child → grandchild tree structure. Example: ReleaseSection → Band → BandDetail in a single SQL call, eliminating N+1 at the root.",
 			},
 			{
 				id: "es-paging",

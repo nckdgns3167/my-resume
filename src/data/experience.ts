@@ -174,6 +174,22 @@ export const companies: Company[] = [
             ],
           },
         ],
+        learningPoints: [
+          {
+            topic: "폐쇄망 IIFE 모듈 시스템 = Micro Frontend 원리",
+            paragraphs: [
+              "Node.js/npm/번들러를 사용할 수 없는 관공서 폐쇄망에서 500+ 화면을 모듈화해야 했다. IIFE 패턴으로 설계한 이 구조는 돌이켜보면 [metric]Islands Architecture / Micro Frontend 원리[/metric]를 브라우저 네이티브 메커니즘으로 구현한 것이었다.",
+              "각 화면이 독립 Vue 앱 인스턴스로 동작하고, 공통 셸(mainPage.html)이 이를 관리하는 구조는 Webpack Module Federation과 개념적으로 동일하다. MFA·Islands 같은 아키텍처 패턴은 특정 도구가 아니라 개념이라는 것을 이 프로젝트에서 체감했다. 원리를 이해하면 도구가 없는 환경에서도 적용할 수 있다.",
+            ],
+          },
+          {
+            topic: "P-Edit-DataTable — 팀 전체 생산성을 끌어올린 컴포넌트 설계",
+            paragraphs: [
+              "500+ 화면에 반복되는 CRUD 패턴을 해결해야 했지만 AG Grid 같은 유료 솔루션 도입 예산이 없었다. 3계층 아키텍처(useEditGridFactory 훅 + p-edit-datatable 래퍼 + p-edit-column 디렉티브)로 자체 설계하면서, 가장 중요하게 생각한 것은 기술적 정교함이 아니라 [metric]개발자 경험(DX)[/metric]이었다.",
+              "선언적 API로 복잡성을 숨기고, 주니어 개발자가 CRUD 구현에만 집중할 수 있게 만든 결과 [metric]코드량 80% 감소[/metric]를 달성했다. 컴포넌트의 진짜 임팩트는 한 사람이 만든 기술적 우수성이 아니라, 팀 전체에 걸쳐 얼마나 많은 중복 작업을 제거했는지로 측정된다는 것을 배웠다.",
+            ],
+          },
+        ],
         highlightBox: {
           title: "기여 포인트",
           content:
@@ -365,6 +381,23 @@ export const companies: Company[] = [
             ],
           },
         ],
+        learningPoints: [
+          {
+            topic: "CSS-in-JS 기술 선택 — Emotion vs Vanilla Extract",
+            paragraphs: [
+              "이 프로젝트에서 Emotion을 선택한 이유는 주파수 값에 따라 위치와 너비를 동적으로 계산해야 했기 때문이다. 성능 측면만 보면 런타임 오버헤드가 없는 Vanilla Extract가 우수하지만, 차트 개발이라는 특성상 동적 스타일링의 한계를 고려해야 한다.",
+              "Vanilla Extract는 빌드 타임에 정적 CSS를 완전히 생성하므로, 데이터에 따라 런타임에 실시간으로 변하는 width나 left 같은 기하학적 수치를 직접 주입하는 데 제약이 따른다. 반면 Emotion은 렌더링 시점에 스타일을 계산하여 주입하기 때문에 좌표 기반 동적 레이아웃에 적합하다.",
+              "돌이켜보면 [metric]하이브리드 접근[/metric]이 최적이었다. 색상·폰트·기본 레이아웃 같은 정적 스타일은 Vanilla Extract로 처리해 렌더링 오버헤드를 없애고, 실시간 데이터로 계산되는 차트의 위치 및 너비 같은 동적 스타일은 인라인 style로 분리했다면 두 기술의 장점을 모두 취할 수 있었을 것이다.",
+            ],
+          },
+          {
+            topic: "커스텀 차트 엔진 vs 라이브러리",
+            paragraphs: [
+              "D3, Chart.js, Recharts 등을 검토했지만, 분배↔주파수↔용도↔이용 4행이 주파수 축으로 정렬·연결되는 구조는 범용 차트 라이브러리의 X-Y 축 기반 모델로는 구현이 불가능했다. 라이브러리의 추상화와 싸우는 시간이 프리미티브부터 빌드하는 시간보다 클 것이라 판단하여 React + Emotion으로 자체 구현했다.",
+              "합성 컴포넌트 패턴(Band > Header/Body/Arrow)으로 결합도를 최소화하고, 좌표 매핑 엔진·줌 레벨·크로스 행 호버 하이라이팅까지 [metric]완전한 제어권[/metric]을 확보했다. 시각화 도메인이 정말 독특할 때는 직접 만드는 것이 올바른 결정이 될 수 있다는 것을 배웠다.",
+            ],
+          },
+        ],
         gallery: [
           {
             layout: "default",
@@ -425,6 +458,15 @@ export const companies: Company[] = [
           },
           "Controller → Service → Mapper(MyBatis) → SQL 쿼리까지 전 계층 직접 개발",
           "개발 완성도에 대한 개인적 목표 달성을 위해 유지보수 프로젝트에 자발적 참여. SR 게시판 답변 작성 + 고객 전화 응대 [metric]약 30,000건[/metric] 처리",
+        ],
+        learningPoints: [
+          {
+            topic: "개발 도중 상태 관리 도입 — 실용적 아키텍처 결정",
+            paragraphs: [
+              "25명 규모 팀에서 이미 개발이 진행 중인 상태였다. 상태 관리 체계가 전혀 없어 prop drilling이 만연했지만, 이 시점에서 Redux를 도입하는 것은 너무 파괴적이었다. Context API + useReducer로 [metric]최소 파괴적 개선[/metric]을 선택했다.",
+              "4개 도메인별로 독립 Context를 분리하고, State/Dispatch를 분리한 커스텀 훅으로 구조화했다. Redux selector 대비 리렌더 범위가 넓다는 트레이드오프가 있었지만, 관리자 페이지 특성상 성능 비용보다 조직적 개선 가치가 훨씬 컸다. 최선의 상태 관리 솔루션은 기술적 최적이 아니라 기존 팀이 개발을 멈추지 않고 채택할 수 있는 것이다.",
+            ],
+          },
         ],
         gallery: [
           {

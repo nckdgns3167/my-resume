@@ -65,6 +65,7 @@ export interface SideProject {
   notice?: string;
   hint?: string;
   achievements: string[];
+  learningPoints?: LearningPoint[];
   gallery?: GalleryGrid[];
 }
 
@@ -103,6 +104,11 @@ export interface HighlightBox {
   content: string;
 }
 
+export interface LearningPoint {
+  topic: string;
+  paragraphs: string[];
+}
+
 export interface Project {
   id: string;
   name: string;
@@ -112,6 +118,7 @@ export interface Project {
   stack: string[];
   description?: string;
   achievements: Achievement[];
+  learningPoints?: LearningPoint[];
   highlightBox?: HighlightBox;
   gallery: GalleryGrid[];
 }
