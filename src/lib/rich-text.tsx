@@ -2,11 +2,20 @@ import { Fragment, type ReactNode } from "react";
 
 /**
  * Parses [metric]...[/metric] tokens in text and renders them as
- * highlighted spans with accent-primary color.
+ * highlighted spans. Default color is accent-primary; pass "secondary"
+ * for accent-secondary styling.
  */
-export function parseRichText(text: string): ReactNode {
+export function parseRichText(
+	text: string,
+	variant: "primary" | "secondary" = "primary",
+): ReactNode {
 	const parts = text.split(/\[metric\](.*?)\[\/metric\]/g);
 	if (parts.length === 1) return text;
+
+	const cls =
+		variant === "secondary"
+			? "font-semibold text-accent-secondary"
+			: "font-semibold text-accent-primary";
 
 	return (
 		<>
@@ -14,7 +23,7 @@ export function parseRichText(text: string): ReactNode {
 				i % 2 === 0 ? (
 					<Fragment key={i}>{part}</Fragment>
 				) : (
-					<span key={i} className="font-semibold text-accent-primary">
+					<span key={i} className={cls}>
 						{part}
 					</span>
 				),

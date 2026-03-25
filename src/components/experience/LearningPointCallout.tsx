@@ -58,7 +58,7 @@ export function LearningPointCallout({ learningPoints, title }: LearningPointCal
 											key={paragraph.slice(0, 40)}
 											className="text-sm leading-6 text-text-secondary"
 										>
-											{parseRichText(paragraph)}
+											{parseRichText(paragraph, "secondary")}
 										</p>
 									))}
 								</div>

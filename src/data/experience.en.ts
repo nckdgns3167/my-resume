@@ -89,7 +89,7 @@ export const companies: Company[] = [
 						topic:
 							"Web→Native Architecture Porting — \"Same Codebase, Different Runtime\" Strategy",
 						paragraphs: [
-							"Ported the IIFE + Islands Architecture designed for the web directly onto Android WebView + NanoHTTPD. Being able to reuse 80% of frontend code was possible because the architecture was never coupled to a specific runtime (browser) from the start.",
+							"Ported the IIFE + Islands Architecture designed for the web directly onto Android WebView + NanoHTTPD. Being able to [metric]reuse 80% of frontend code[/metric] was possible because the architecture was never coupled to a specific runtime (browser) from the start.",
 							"This experience demonstrated that [metric]architecture portability[/metric] goes beyond simple code reuse — it dramatically reduces platform transition costs. The fact that a structure validated on the web works identically on a native app shows how much difference separating runtime dependencies at the design stage can make.",
 						],
 					},
@@ -98,23 +98,23 @@ export const companies: Company[] = [
 							"Offline-First Sync Design — \"Conflict Resolution Policy\" Is the Real Challenge",
 						paragraphs: [
 							"While implementing 18+ sync services, SYNC_QUEUE, and exponential backoff retry, the key realization was that the real difficulty of offline apps is not 'storing data locally' but [metric]how to resolve conflicts when going back online[/metric].",
-							"By wrapping inspection result saving and upload queue registration in a single transaction, and sequentially uploading dependent data in Canvas→PDF order, 'partial success' states were structurally eliminated. Offline synchronization is ultimately a data consistency problem — a miniature version of distributed systems.",
+							"By wrapping inspection result saving and upload queue registration in a single transaction, and sequentially uploading dependent data in Canvas→PDF order, [metric]'partial success' states were structurally eliminated[/metric]. Offline synchronization is ultimately a data consistency problem — a miniature version of distributed systems.",
 						],
 					},
 					{
 						topic:
 							"Oracle→SQLite Auto-Translation — Give AI \"Context\" and Repetitive Work Disappears",
 						paragraphs: [
-							"Automated Oracle DDL→SQLite conversion for 128 tables with AI, but it didn't work well from the start. Simply asking AI to 'convert this' resulted in poor handling of Oracle-specific syntax like NVL, DECODE, and sequences.",
-							"The turning point was systematically building [metric]30 AI context documents[/metric]. Once porting guides, type mapping rules, and function translation tables were created — documents that 'teach the project to AI' — conversion accuracy improved dramatically. This project convinced me that the key to AI utilization is not prompt engineering but context design.",
+							"Automated Oracle DDL→SQLite conversion for [metric]128 tables[/metric] with AI, but it didn't work well from the start. Simply asking AI to 'convert this' resulted in poor handling of Oracle-specific syntax like NVL, DECODE, and sequences.",
+							"The turning point was systematically building [metric]30 AI context documents[/metric]. Once porting guides, type mapping rules, and function translation tables were created — documents that 'teach the project to AI' — conversion accuracy improved dramatically. This project convinced me that [metric]the key to AI utilization is not prompt engineering but context design[/metric].",
 						],
 					},
 					{
 						topic:
 							"Spring Without Spring — The Essence of a Framework Is \"Convention\"",
 						paragraphs: [
-							"Since Spring dependencies couldn't be brought into the Android app, I self-implemented an annotation-based routing framework (@RestController, @PostMapping, etc.) on top of NanoHTTPD. Built a lightweight framework that maintains the existing web project's Controller/Service structure while operating without Spring.",
-							"Through this process, I realized Spring's real value lies not in its libraries or features but in [metric]conventions developers are already familiar with[/metric]. Because team members could leverage their existing Spring experience without learning new patterns, they could be deployed to 150+ API development with zero onboarding cost.",
+							"Since Spring dependencies couldn't be brought into the Android app, I [metric]self-implemented an annotation-based routing framework[/metric] (@RestController, @PostMapping, etc.) on top of NanoHTTPD. Built a lightweight framework that maintains the existing web project's Controller/Service structure while operating without Spring.",
+							"Through this process, I realized Spring's real value lies not in its libraries or features but in [metric]conventions developers are already familiar with[/metric]. Because team members could leverage their existing Spring experience without learning new patterns, [metric]they could be deployed to 150+ API development with zero onboarding cost[/metric].",
 						],
 					},
 					{
@@ -122,7 +122,7 @@ export const companies: Company[] = [
 							"Leading 3 Developers + AI Collaboration — Designing Human-AI Role Division",
 						paragraphs: [
 							"Distributed domain-specific tasks to 3 team members while simultaneously operating Claude Code as the entire team's development infrastructure. The key was designing AI not as 'an individual's code generation tool' but as [metric]team-level development infrastructure[/metric].",
-							"By building CLAUDE.md and porting guides as shared team context, and automating repetitive tasks with custom skills (front-sync, svn-commit-msg), all team members could produce code of consistent quality regardless of experience differences. Future team leadership requires designing not only 'what to assign to people' but also 'what to delegate to AI and what people should focus on.'",
+							"By building CLAUDE.md and porting guides as shared team context, and [metric]automating repetitive tasks with custom skills (front-sync, svn-commit-msg)[/metric], all team members could produce code of consistent quality regardless of experience differences. Future team leadership requires designing not only 'what to assign to people' but also 'what to delegate to AI and what people should focus on.'",
 						],
 					},
 				],
@@ -224,14 +224,14 @@ export const companies: Company[] = [
 						topic: "Air-Gapped IIFE Module System = Micro Frontend Principles",
 						paragraphs: [
 							"In a government closed network with no access to Node.js/npm/bundlers, I needed to modularize 500+ screens. Looking back, the IIFE-based architecture I designed was essentially an implementation of [metric]Islands Architecture / Micro Frontend principles[/metric] through browser-native mechanisms.",
-							"Each screen operates as an independent Vue app instance, managed by a common shell (mainPage.html) — structurally identical to Webpack Module Federation. This project taught me that architecture patterns like MFA and Islands are concepts, not tool dependencies. Understanding the principles allows applying them even in extreme constraint environments.",
+							"Each screen operates as an independent Vue app instance, managed by a common shell (mainPage.html) — structurally identical to Webpack Module Federation. This project taught me that architecture patterns like MFA and Islands are concepts, not tool dependencies. [metric]Understanding the principles allows applying them even in extreme constraint environments[/metric].",
 						],
 					},
 					{
 						topic: "P-Edit-DataTable — Component Design That Elevated Team-Wide Productivity",
 						paragraphs: [
 							"With 500+ screens sharing repetitive CRUD patterns but no budget for commercial solutions like AG Grid, I designed a custom 3-layer architecture (useEditGridFactory hook + p-edit-datatable wrapper + p-edit-column directive). The most important consideration wasn't technical sophistication but [metric]developer experience (DX)[/metric].",
-							"By hiding complexity behind a declarative API and letting junior developers focus solely on CRUD implementation, we achieved an [metric]80% code reduction[/metric]. I learned that a component's true impact is measured not by one person's technical excellence, but by how much redundant work it eliminates across the entire team.",
+							"By hiding complexity behind a declarative API and [metric]letting junior developers focus solely on CRUD implementation[/metric], we achieved an [metric]80% code reduction[/metric]. I learned that a component's true impact is measured not by one person's technical excellence, but by how much redundant work it eliminates across the entire team.",
 						],
 					},
 				],
@@ -463,7 +463,7 @@ export const companies: Company[] = [
 					{
 						topic: "Custom Chart Engine vs Library",
 						paragraphs: [
-							"D3, Chart.js, and Recharts were evaluated, but the structure where distribution, frequency, usage, and utilization rows align and connect along a shared frequency axis was impossible to implement with general-purpose chart libraries' X-Y axis models. Fighting a library's abstractions would have taken more time than building from primitives, so I built a custom implementation with React + Emotion.",
+							"D3, Chart.js, and Recharts were evaluated, but the structure where distribution, frequency, usage, and utilization rows align and connect along a shared frequency axis was [metric]impossible to implement with general-purpose chart libraries' X-Y axis models[/metric]. Fighting a library's abstractions would have taken more time than building from primitives, so I built a custom implementation with React + Emotion.",
 							"By minimizing coupling through the Compound Component pattern (Band > Header/Body/Arrow) and achieving [metric]full control[/metric] over the coordinate mapping engine, zoom levels, and cross-row hover highlighting, I learned that building from scratch is the right decision when the visualization domain is truly unique.",
 						],
 					},
@@ -547,7 +547,7 @@ export const companies: Company[] = [
 						topic: "Mid-Development State Management Adoption — A Pragmatic Architecture Decision",
 						paragraphs: [
 							"I joined a 25-person team where development was already underway. With no state management system in place and prop drilling everywhere, introducing Redux at this stage would have been too disruptive. I chose Context API + useReducer as the [metric]least disruptive improvement[/metric].",
-							"By separating 4 domain-specific independent Contexts and structuring them with State/Dispatch split custom hooks, I established order. The trade-off of broader re-render scope compared to Redux selectors was acceptable — for an admin-panel use case, the organizational improvement far outweighed the performance cost. The best state management solution isn't the technically optimal one, but the one the existing team can adopt without stopping development.",
+							"By separating 4 domain-specific independent Contexts and structuring them with State/Dispatch split custom hooks, I established order. The trade-off of broader re-render scope compared to Redux selectors was acceptable — for an admin-panel use case, the organizational improvement far outweighed the performance cost. The best state management solution isn't the technically optimal one, but [metric]the one the existing team can adopt without stopping development[/metric].",
 						],
 					},
 				],
