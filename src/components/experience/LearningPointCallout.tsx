@@ -10,10 +10,15 @@ interface LearningPointCalloutProps {
 }
 
 export function LearningPointCallout({ learningPoints, title }: LearningPointCalloutProps) {
-	const [openIndex, setOpenIndex] = useState<number | null>(null);
+	const [openSet, setOpenSet] = useState<Set<number>>(new Set());
 
 	const toggle = (i: number) => {
-		setOpenIndex(openIndex === i ? null : i);
+		setOpenSet((prev) => {
+			const next = new Set(prev);
+			if (next.has(i)) next.delete(i);
+			else next.add(i);
+			return next;
+		});
 	};
 
 	return (
@@ -24,7 +29,7 @@ export function LearningPointCallout({ learningPoints, title }: LearningPointCal
 			{/* 웹 전용 — 아코디언 */}
 			<div className="flex flex-col gap-2 print:hidden">
 				{learningPoints.map((lp, i) => {
-					const isOpen = openIndex === i;
+					const isOpen = openSet.has(i);
 					return (
 						<div key={lp.topic}>
 							<button

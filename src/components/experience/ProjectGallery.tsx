@@ -9,6 +9,7 @@ import { isGalleryImageGroup } from "@/data/types";
 
 interface ProjectGalleryProps {
   grids: GalleryGrid[];
+  projectId: string;
   projectName: string;
 }
 
@@ -45,7 +46,7 @@ function flattenToSlides(grids: GalleryGrid[]): FlatSlide[] {
   return slides;
 }
 
-export function ProjectGallery({ grids, projectName }: ProjectGalleryProps) {
+export function ProjectGallery({ grids, projectId, projectName }: ProjectGalleryProps) {
   const [isOpen, setIsOpen] = useState(false);
   const { open } = useLightbox();
   const summaryRef = useRef<HTMLElement>(null);
@@ -66,7 +67,7 @@ export function ProjectGallery({ grids, projectName }: ProjectGalleryProps) {
   };
 
   return (
-    <div className="project-gallery print:hidden">
+    <div className="project-gallery print:hidden" data-gallery={projectId}>
       <details open={isOpen} onToggle={(e) => setIsOpen((e.target as HTMLDetailsElement).open)}>
         <summary
           ref={summaryRef}

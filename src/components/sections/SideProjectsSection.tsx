@@ -100,7 +100,7 @@ export function SideProjectsSection({ sideProjects, ui }: SideProjectsSectionPro
             {/* 갤러리 */}
             {project.gallery && project.gallery.length > 0 && (
               <div className="mt-5 border-t border-border pt-4 print:hidden">
-                <ProjectGallery grids={project.gallery} projectName={project.name} />
+                <ProjectGallery grids={project.gallery} projectId={project.id} projectName={project.name} />
               </div>
             )}
           </div>

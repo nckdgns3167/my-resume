@@ -28,12 +28,19 @@ export function IntroSection({ introduction }: IntroSectionProps) {
         </p>
       </blockquote>
 
-      {/* Body Paragraphs */}
-      <div className="flex flex-col gap-4">
-        {introduction.paragraphs.map((paragraph) => (
-          <p key={paragraph.slice(0, 40)} className="text-[15px] leading-7 text-text-secondary">
-            {parseRichText(paragraph)}
-          </p>
+      {/* Body Blocks with Subtitles */}
+      <div className="flex flex-col gap-6">
+        {introduction.blocks.map((block) => (
+          <div key={block.subtitle ?? block.body.slice(0, 40)}>
+            {block.subtitle && (
+              <h3 className="mb-2 text-[15px] font-semibold text-text">
+                {block.subtitle}
+              </h3>
+            )}
+            <p className="text-[15px] leading-7 text-text-secondary">
+              {parseRichText(block.body)}
+            </p>
+          </div>
         ))}
       </div>
     </Section>

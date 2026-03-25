@@ -2,10 +2,21 @@ import type { Introduction } from "./types";
 
 export const introduction: Introduction = {
 	quote: "No compromise on the experience users see, or the structure behind it",
-	paragraphs: [
-		"Users face these screens every day, so I refuse to stop at 'good enough.' I treat the visible experience and the invisible code structure with equal weight. Whatever the constraints, [metric]I push until it works[/metric]. That's how I build software.",
-		"In SI environments, I've [metric]single-handedly architected the frontend[/metric] for 500+ screens and built structures that enable 4 junior developers to ship at consistent quality. From screen structure to user flows, and when needed, API and DB design, I aim for [metric]design that cuts across all layers[/metric].",
-		"I [metric]obsess[/metric] over seemingly minor UX details. I've consolidated repetitive CRUD patterns into a single component, [metric]cutting development effort by 80%[/metric], and I [metric]proactively propose better UX[/metric] before clients even ask. In information-heavy screens, I refine until the balance is right, showing what's needed without overwhelming the layout.",
-		"I've built AI not as a personal tool but as [metric]team development infrastructure[/metric], creating an environment where the entire team works on shared context. Even in constrained environments, I design systems from scratch, and I've naturally picked up modern stacks through a side project (ChartSage). In any environment, I pursue [metric]better experiences and better structures[/metric], focusing on [metric]bringing those results to the team and the product[/metric].",
+	blocks: [
+		{
+			body: "Because users face these screens every day, I never stop at 'good enough.' I treat visible UX polish and invisible architectural solidity with equal weight. No matter the constraints, [metric]finding a way to make it work[/metric] is how I build software.",
+		},
+		{
+			subtitle: "Cross-Layer Architecture & Radical Team Productivity",
+			body: "In complex business domains, I've [metric]single-handedly designed frontend architecture spanning 500+ screens[/metric], establishing a solid foundation where even junior developers can ship at consistent quality. I don't stop at the UI layer — from user flows to backend API and DB design when needed, I pursue [metric]optimal structures that cut across every layer[/metric]. By abstracting repetitive CRUD patterns into a single shared component, I've [metric]dramatically reduced development effort[/metric], always obsessing over structural improvements that boost team productivity.",
+		},
+		{
+			subtitle: "UX Detail Beyond the Spec",
+			body: "Before clients even ask, I uncover hidden friction points and [metric]proactively propose better UX[/metric]. In information-dense screens, I refine relentlessly until the balance is right — showing exactly what's needed, intuitively, without overwhelming the layout.",
+		},
+		{
+			subtitle: "Building AI-Native Development Infrastructure",
+			body: "I'm cautious about blindly relying on AI-generated code — instead, I pursue [metric]development that controls AI[/metric] through solid technical understanding. Beyond personal code generation, I've built an [metric]'Agentic AI' collaboration infrastructure[/metric] powered by [metric]30+ context documents[/metric], enabling the entire team to work within a shared context. I overcome constraints in production environments through original architecture, continuously explore modern stacks through side projects (ChartSage), and focus on channeling those results into team and product growth.",
+		},
 	],
 };

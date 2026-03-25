@@ -21,7 +21,7 @@ export function TocSidebar({ tocSections, allTocIds, childToParentMap }: TocSide
   const activeParent = childToParentMap.get(activeId) ?? activeId;
 
   return (
-    <nav className="fixed left-[calc(50%+480px)] top-1/2 z-40 -translate-y-1/2" aria-label={ui.toc}>
+    <nav data-tour="toc-sidebar" className="fixed left-[calc(50%+480px)] top-1/2 z-40 -translate-y-1/2" aria-label={ui.toc}>
       <ul className="flex flex-col gap-1.5">
         {tocSections.map((section) => {
           const isSectionActive = activeParent === section.id;

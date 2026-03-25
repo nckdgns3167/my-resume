@@ -243,6 +243,7 @@ export function MobileDrawer({
 			{/* Hamburger FAB */}
 			{!isOpen && (
 				<button
+					data-tour="mobile-drawer"
 					onClick={() => setIsOpen(true)}
 					className="fixed bottom-6 right-6 z-50 flex h-11 w-11 items-center justify-center rounded-full bg-accent-primary/70 text-white shadow-lg transition-colors hover:bg-accent-primary print:hidden"
 					aria-label={ui.openMenu}

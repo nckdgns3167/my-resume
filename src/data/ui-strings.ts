@@ -33,11 +33,36 @@ export interface UiStrings {
   switchToEn: string;
   switchToKo: string;
 
-  // CoachMark
-  coachGalleryTitle: string;
-  coachGalleryDesc: string;
-  coachImageTitle: string;
-  coachImageDesc: string;
+  // Welcome Dialog
+  welcomeTitle: string;
+  welcomeMessage: string;
+  welcomeStartTour: string;
+  welcomeSkip: string;
+  welcomeDontShow: string;
+
+  // Guide Tour Steps
+  tourProfileTitle: string;
+  tourProfileDesc: string;
+  tourIntroTitle: string;
+  tourIntroDesc: string;
+  tourSkillsTitle: string;
+  tourSkillsDesc: string;
+  tourSideProjectsTitle: string;
+  tourSideProjectsDesc: string;
+  tourExperienceTitle: string;
+  tourExperienceDesc: string;
+  tourGalleryTitle: string;
+  tourGalleryDesc: string;
+  tourGalleryOpenTitle: string;
+  tourGalleryOpenDesc: string;
+  tourStrengthsTitle: string;
+  tourStrengthsDesc: string;
+  tourFabTitle: string;
+  tourFabDesc: string;
+  tourTocTitle: string;
+  tourTocDesc: string;
+  tourMobileDrawerTitle: string;
+  tourMobileDrawerDesc: string;
 
   // ProjectGallery
   viewGallery: (count: number) => string;
@@ -109,10 +134,34 @@ export const uiStringsKo: UiStrings = {
   switchToEn: "Switch to English",
   switchToKo: "한국어로 전환",
 
-  coachGalleryTitle: "갤러리 열기",
-  coachGalleryDesc: "클릭하면 프로젝트 스크린샷을 볼 수 있어요.",
-  coachImageTitle: "이미지 클릭",
-  coachImageDesc: "이미지를 클릭하면 라이트박스로 크게 볼 수 있어요.",
+  welcomeTitle: "환영합니다.",
+  welcomeMessage: "정창훈의 경력기술서입니다.\n주요 섹션과 기능을 안내하는 가이드 투어를 제공하고 있어요.",
+  welcomeStartTour: "가이드 투어로 둘러보기",
+  welcomeSkip: "바로 보기",
+  welcomeDontShow: "다시 보지 않기",
+
+  tourProfileTitle: "프로필",
+  tourProfileDesc: "이름, 연락처, GitHub/LinkedIn 링크를 확인할 수 있어요. 연락처를 클릭하면 바로 복사돼요.",
+  tourIntroTitle: "자기소개",
+  tourIntroDesc: "개발 철학과 강점을 요약한 섹션이에요.",
+  tourSkillsTitle: "기술 스택",
+  tourSkillsDesc: "다뤄온 기술 스택을 확인할 수 있어요.",
+  tourSideProjectsTitle: "사이드 프로젝트",
+  tourSideProjectsDesc: "개인적으로 진행 중인 프로젝트를 소개해요.",
+  tourExperienceTitle: "경력 사항",
+  tourExperienceDesc: "회사별 프로젝트 경험과 성과를 확인할 수 있어요.",
+  tourGalleryTitle: "프로젝트 갤러리",
+  tourGalleryDesc: "각 프로젝트마다 스크린샷 갤러리가 있어요. 클릭하면 열 수 있어요.",
+  tourGalleryOpenTitle: "갤러리 미리보기",
+  tourGalleryOpenDesc: "이미지를 클릭하면 라이트박스로 크게 볼 수 있어요.",
+  tourStrengthsTitle: "핵심 역량",
+  tourStrengthsDesc: "핵심 역량을 정리한 섹션이에요.",
+  tourFabTitle: "빠른 도구",
+  tourFabDesc: "다크모드 전환, 언어 변경, PDF 저장 등을 할 수 있어요.",
+  tourTocTitle: "목차 네비게이션",
+  tourTocDesc: "우측 목차로 원하는 섹션으로 빠르게 이동할 수 있어요.",
+  tourMobileDrawerTitle: "메뉴",
+  tourMobileDrawerDesc: "목차 이동, 다크모드, 언어 변경, PDF 저장 등 모든 기능을 이용할 수 있어요.",
 
   viewGallery: (count) => `갤러리 보기 (${count}장)`,
   closeGallery: "갤러리 닫기",
@@ -172,10 +221,34 @@ export const uiStringsEn: UiStrings = {
   switchToEn: "Switch to English",
   switchToKo: "한국어로 전환",
 
-  coachGalleryTitle: "Open gallery",
-  coachGalleryDesc: "Click to view project screenshots.",
-  coachImageTitle: "Click image",
-  coachImageDesc: "Click an image to view it in the lightbox.",
+  welcomeTitle: "Welcome.",
+  welcomeMessage: "This is Changhoon Jung's resume.\nA guided tour of the key sections and features is available.",
+  welcomeStartTour: "Take a Guide Tour",
+  welcomeSkip: "Go Directly",
+  welcomeDontShow: "Don't show again",
+
+  tourProfileTitle: "Profile",
+  tourProfileDesc: "View name, contact info, and GitHub/LinkedIn links. Click contacts to copy instantly.",
+  tourIntroTitle: "Introduction",
+  tourIntroDesc: "A summary of my development philosophy and strengths.",
+  tourSkillsTitle: "Skills",
+  tourSkillsDesc: "Check out the tech stack I've worked with.",
+  tourSideProjectsTitle: "Side Projects",
+  tourSideProjectsDesc: "Personal projects I'm currently working on.",
+  tourExperienceTitle: "Experience",
+  tourExperienceDesc: "Project experiences and achievements by company.",
+  tourGalleryTitle: "Project Gallery",
+  tourGalleryDesc: "Each project has a screenshot gallery. Click to expand.",
+  tourGalleryOpenTitle: "Gallery Preview",
+  tourGalleryOpenDesc: "Click any image to view it in the lightbox.",
+  tourStrengthsTitle: "Strengths",
+  tourStrengthsDesc: "A summary of my core competencies.",
+  tourFabTitle: "Quick Tools",
+  tourFabDesc: "Toggle dark mode, switch language, save as PDF, and more.",
+  tourTocTitle: "Table of Contents",
+  tourTocDesc: "Jump to any section quickly using the sidebar navigation.",
+  tourMobileDrawerTitle: "Menu",
+  tourMobileDrawerDesc: "Access navigation, dark mode, language switch, PDF export, and all features.",
 
   viewGallery: (count) => `View gallery (${count})`,
   closeGallery: "Close gallery",

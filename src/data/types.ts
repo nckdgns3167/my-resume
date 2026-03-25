@@ -35,9 +35,14 @@ export interface Profile {
 }
 
 // --- Introduction ---
+export interface IntroBlock {
+  subtitle?: string;
+  body: string;
+}
+
 export interface Introduction {
   quote: string;
-  paragraphs: string[];
+  blocks: IntroBlock[];
 }
 
 // --- Skills ---

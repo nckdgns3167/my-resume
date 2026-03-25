@@ -15,7 +15,7 @@ export function FabStack() {
   if (!isDesktop) return null;
 
   return (
-    <div className="fixed bottom-6 right-6 z-50 flex flex-col gap-2 print:hidden">
+    <div data-tour="fab-stack" className="fixed bottom-6 right-6 z-50 flex flex-col gap-2 print:hidden">
       {showButton && (
         <button
           onClick={scrollToTop}
