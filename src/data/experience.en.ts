@@ -153,7 +153,7 @@ export const companies: Company[] = [
 				highlightBox: {
 					title: "Key Contribution",
 					content:
-						"Successfully ported the frontend architecture designed in the web project (IIFE modules, metadata routing, P-Edit-DataTable, etc.) to the Android app. Led initial load optimization from 9.9MB to ~2.5MB (75% reduction), resolved UI freezes via async WebView↔Native bridge conversion, and built SVG+CSS 11-state icon system for performance and UX optimization. Led a team of 3 developers by building 30 AI context documents enabling consistent development via Claude Code.",
+						"Successfully ported the frontend architecture designed in the web project (IIFE modules, metadata routing, P-Edit-DataTable, etc.) to the Android app. Led performance and UX improvements including initial load optimization, async WebView bridge conversion, and offline UX feedback system. Led a team of 3 developers by building 30 AI context documents enabling consistent development via Claude Code.",
 				},
 				gallery: [],
 			},

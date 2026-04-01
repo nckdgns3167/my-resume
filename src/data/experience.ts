@@ -152,7 +152,7 @@ export const companies: Company[] = [
         highlightBox: {
           title: "기여 포인트",
           content:
-            "웹 프로젝트에서 설계한 프론트엔드 아키텍처(IIFE 모듈, 메타데이터 라우팅, P-Edit-DataTable 등)를 Android 앱에 성공적으로 이식. 초기 로드 9.9MB→~2.5MB(75% 경량화), WebView↔Native 브릿지 비동기 전환으로 UI 프리징 해결, SVG+CSS 기반 11상태 아이콘 시스템 등 성능·UX 최적화를 주도. 3명의 팀원을 리딩하며 30개 AI 컨텍스트 문서를 구축하여 팀 전원이 Claude Code로 일관된 개발을 수행할 수 있는 AI 협업 체계를 설계.",
+            "웹 프로젝트에서 설계한 프론트엔드 아키텍처(IIFE 모듈, 메타데이터 라우팅, P-Edit-DataTable 등)를 Android 앱에 성공적으로 이식. 초기 로드 경량화·WebView 브릿지 비동기화·오프라인 UX 피드백 시스템 등 성능과 사용자 경험 전반을 주도적으로 개선. 3명의 팀원을 리딩하며 30개 AI 컨텍스트 문서 기반 AI 협업 체계를 설계.",
         },
         gallery: [],
       },
