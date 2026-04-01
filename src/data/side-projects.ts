@@ -26,7 +26,7 @@ export const sideProjects: SideProject[] = [
     ],
     description:
       `"그려서 물어보고, 시나리오로 답한다." ` +
-      "바이비트 수준의 차트 드로잉·기술 지표 모듈과 Claude Code/ChatGPT 스타일의 세션별 대화 관리를 결합한 AI 암호화폐 분석 플랫폼. " +
+      "금융 차트 도메인에서 바이비트 수준의 차트 드로잉·기술 지표 모듈과 Claude Code/ChatGPT 스타일의 세션별 대화 관리를 결합한 AI 암호화폐 분석 플랫폼. " +
       "캔들스틱·RSI·MACD 등 차트 도메인을 직접 학습하며 개발하고, WebSocket 경쟁 상태·Canvas 곡선 보간·다중 타임프레임 전환 등 " +
       "실전 엣지케이스를 해결하며 재사용 가능한 모듈로 체계화. " +
       "OpenAI GPT-4o API를 활용해 사용자 드로잉과 시장 데이터를 결합한 AI 분석 파이프라인을 구축하고, " +

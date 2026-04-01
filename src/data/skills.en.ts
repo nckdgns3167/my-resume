@@ -19,6 +19,8 @@ export const skillGroups: SkillGroup[] = [
 			"Compound Component Pattern",
 			"Declarative UI Pattern",
 			"Modular Component Architecture",
+			"Frontend Performance Optimization",
+			"Cross-Browser Compatibility",
 			"SSR / SSG Architecture",
 		],
 	},
@@ -42,6 +44,15 @@ export const skillGroups: SkillGroup[] = [
 			"Ant Design",
 			"PrimeVue",
 			"Framer Motion",
+			"SVG / CSS Animation",
+		],
+	},
+	{
+		title: "Mobile & WebView",
+		skills: [
+			"Android WebView Integration",
+			"Mobile Web Optimization",
+			"Touch Gesture Engineering",
 		],
 	},
 	{

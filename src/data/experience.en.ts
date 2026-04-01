@@ -44,6 +44,14 @@ export const companies: Company[] = [
 						items: [
 							"Real-time VPN connection monitoring via NetworkManager; on disconnection, custom error page with auto-retry countdown (10s) and offline mode button after 3 failures",
 							"Offline mode entry with locally stored credential authentication; on reconnection, cookie reset + server reconnection + automatic upload of queued data",
+							"Unified native 2-step login (VPN→OTP) into a single WebView screen, resolving VPN tunnel timing race conditions with polling+retry pattern (WebViewCookieJar for automatic OkHttp↔WebView session sharing)",
+						],
+					},
+					{
+						title: "WebView ↔ Native Bridge Performance Optimization",
+						items: [
+							"Traced root cause of [metric]multi-second UI freezes[/metric] to @JavascriptInterface synchronous calls conflicting with SQLite write locks; resolved by converting to async dispatch pattern to restore UI responsiveness",
+							"Analyzed threading model and DB lock contention during parallel downloads, redesigning all @JavascriptInterface methods under I/O-free principle",
 						],
 					},
 					{
@@ -52,6 +60,7 @@ export const companies: Company[] = [
 							"OfflineDataSyncManager orchestrating [metric]18+[/metric] sync services, SyncQueueHelper ensuring atomic transactions for inspection result saving and upload queue registration",
 							"Three-phase auto-upload on reconnection (SYNC_QUEUE → Canvas → PDF) with exponential backoff retry on failure",
 							"Incremental sync downloading only changed data, with facility-scoped batching of [metric]50+ tables[/metric] of related data for offline field access",
+							"Adopted [metric]table-level partial-failure-tolerant[/metric] download strategy instead of atomic bulk processing for mobile network instability; preserving completed data on mid-failure and retrying only failed tables",
 						],
 					},
 					{
@@ -67,6 +76,21 @@ export const companies: Company[] = [
 							"Tracking edit status and sync state when PDF signatures/annotations are edited offline, with automatic server sync on reconnection",
 							"Dual upload pipeline for Canvas JSON and markup PDF separately, with image compression to reduce upload traffic",
 							"Persistent download tracking for PDF and scan images in local DB, restoring download status after app restart",
+						],
+					},
+					{
+						title: "Initial Load Performance Optimization (Gzip + Lazy Load + Splash)",
+						items: [
+							"Identified initial load bottleneck of 109 requests / [metric]9.9MB / 15-second blank screen[/metric]; applied Gzip compression + OpenLayers (747KB) lazy loading + unused library Defer strategy to [metric]reduce transfer size to ~2.5MB (~75% reduction)[/metric]",
+							"Applied inline splash screen during WebView loading to eliminate perceived wait time; extended ScriptLoader (loadCssOnce, loadOpenLayers) for dynamic bundle loading on first menu entry",
+						],
+					},
+					{
+						title: "Offline UX Feedback System",
+						items: [
+							"Designed [metric]4-layer visual feedback[/metric] for field workers to instantly recognize online/offline status: body background color, badge, SpeedDial color, and disabled menu styling",
+							"Visualized [metric]11 download/sync states[/metric] with pure SVG + CSS animations (stroke-dasharray circular progress, checkmark drawing animation, shimmer ripple effects)",
+							"Implemented floating session timer based on Normal→Warning→Critical [metric]3-state machine[/metric], with touch threshold for drag/tap separation and security-compliant renewal logic",
 						],
 					},
 					{
@@ -129,7 +153,7 @@ export const companies: Company[] = [
 				highlightBox: {
 					title: "Key Contribution",
 					content:
-						"Successfully ported the frontend architecture designed in the web project (IIFE modules, metadata routing, P-Edit-DataTable, etc.) to the Android app. Led a team of 3 developers by building 30 AI context documents enabling consistent development via Claude Code, and automated Oracle→SQLite query porting and other repetitive tasks with AI. Designed VPN-based online/offline mode switching and bidirectional data flow for offline inspection forms and PDF markup synchronization.",
+						"Successfully ported the frontend architecture designed in the web project (IIFE modules, metadata routing, P-Edit-DataTable, etc.) to the Android app. Led initial load optimization from 9.9MB to ~2.5MB (75% reduction), resolved UI freezes via async WebView↔Native bridge conversion, and built SVG+CSS 11-state icon system for performance and UX optimization. Led a team of 3 developers by building 30 AI context documents enabling consistent development via Claude Code.",
 				},
 				gallery: [],
 			},
@@ -154,7 +178,7 @@ export const companies: Company[] = [
 					"Driver.js",
 				],
 				description:
-					"A project to fully modernize the gas inspector tablet work system. Completely rebuilt from legacy jQuery + Vue 1.x + jqGrid to a modern Vue 3 + PrimeVue architecture. A tablet system operating [metric]500+ work screens[/metric] in a government air-gapped network (no Node.js installation, no external CDN access).",
+					"A project to fully modernize the gas inspector tablet work system used by [metric]thousands of field inspectors[/metric]. Completely rebuilt from legacy jQuery + Vue 1.x + jqGrid to a modern Vue 3 + PrimeVue architecture, analyzing and refactoring existing business logic I/O structures for greater efficiency. A tablet system operating [metric]500+ work screens[/metric] in a government air-gapped network (no Node.js installation, no external CDN access).",
 				achievements: [
 					{
 						title: "Air-Gapped Frontend Architecture Design",

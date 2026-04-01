@@ -43,6 +43,14 @@ export const companies: Company[] = [
             items: [
               "NetworkManager로 VPN 연결 상태를 실시간 감지하고, 연결 끊김 시 커스텀 에러 페이지에서 자동 재연결 시도(10초 카운트다운) + 3회 실패 시 오프라인 모드 전환 버튼 노출",
               "오프라인 모드 진입 시 로컬 저장된 자격증명으로 인증 처리하고, 온라인 복귀 시 쿠키 초기화 후 서버 재접속 + 대기 데이터 자동 업로드",
+              "네이티브 2단계 로그인(VPN→OTP)을 WebView 단일 화면으로 통합, VPN 터널 타이밍 레이스컨디션을 폴링+재시도 패턴으로 해결 (WebViewCookieJar로 OkHttp↔WebView 세션 자동 공유)",
+            ],
+          },
+          {
+            title: "WebView ↔ Native 브릿지 성능 최적화",
+            items: [
+              "@JavascriptInterface의 동기 호출이 SQLite 쓰기 잠금과 충돌하여 [metric]수 초간 UI 프리징[/metric]이 발생하는 문제를 근본 원인까지 추적, 비동기 디스패치 패턴으로 전환하여 UI 응답성 확보",
+              "다운로드 병렬 처리 시 스레딩 모델과 DB 잠금 경합 문제를 분석하여, @JavascriptInterface 메서드 전체를 I/O-free 원칙으로 재설계",
             ],
           },
           {
@@ -51,6 +59,7 @@ export const companies: Company[] = [
               "OfflineDataSyncManager로 [metric]18+[/metric] 동기 서비스를 관리하고, SyncQueueHelper로 검사결과 저장과 업로드 큐 등록을 하나의 트랜잭션으로 처리",
               "온라인 전환 시 SYNC_QUEUE → Canvas → PDF 순서로 대기 항목을 자동 업로드하고, 실패 시 지수 백오프로 재시도",
               "증분 동기화로 변경분만 다운로드하고, 시설 단위로 [metric]50+ 테이블[/metric]의 연관 데이터를 일괄 포함하여 오프라인 현장 조회 지원",
+              "모바일 네트워크 불안정성을 고려하여 일괄(Atomic) 대신 [metric]테이블 단위 부분 실패 허용[/metric] 다운로드 전략을 채택, 중간 실패 시에도 완료된 데이터는 보존하고 실패 테이블만 재시도",
             ],
           },
           {
@@ -66,6 +75,21 @@ export const companies: Company[] = [
               "오프라인에서 PDF에 서명·주석을 편집하면 편집여부와 동기화 상태를 추적하고, 온라인 복귀 시 서버에 자동 반영",
               "Canvas JSON과 마크업 PDF를 각각 동기화하는 이중 업로드 파이프라인 구성, 이미지 압축으로 업로드 트래픽 절감",
               "PDF·스캔이미지 다운로드 이력을 로컬 DB에 기록하여, 앱 재시작 후에도 다운로드 상태를 복원",
+            ],
+          },
+          {
+            title: "초기 로드 성능 최적화 (Gzip + Lazy Load + Splash)",
+            items: [
+              "초기 로드 분석 결과 109개 리퀘스트 / [metric]9.9MB / 15초 빈 화면[/metric] 문제를 식별, Gzip 압축 + OpenLayers(747KB) 지연 로딩 + 미사용 라이브러리 Defer 전략으로 [metric]전송량 ~2.5MB로 약 75% 경량화[/metric]",
+              "WebView 로딩 중 인라인 스플래시 화면을 적용하여 체감 대기시간을 제거하고, ScriptLoader를 확장(loadCssOnce, loadOpenLayers)하여 메뉴 최초 진입 시 동적 번들 로딩 구현",
+            ],
+          },
+          {
+            title: "오프라인 UX 피드백 시스템",
+            items: [
+              "온/오프라인 상태를 현장 작업자가 즉각 인지할 수 있도록 Body 배경색·뱃지·SpeedDial·메뉴 비활성화 [metric]4계층 시각 피드백[/metric] 설계",
+              "다운로드·동기화 [metric]11가지 상태[/metric]를 순수 SVG + CSS 애니메이션으로 시각화 (stroke-dasharray 원형 프로그레스, 체크마크 드로잉, 시머 리플)",
+              "Normal→Warning→Critical [metric]3-상태 머신[/metric] 기반 플로팅 세션 타이머 구현, 터치 임계값으로 드래그/탭 분리 및 보안 요구사항에 맞춘 갱신 로직 설계",
             ],
           },
           {
@@ -128,7 +152,7 @@ export const companies: Company[] = [
         highlightBox: {
           title: "기여 포인트",
           content:
-            "웹 프로젝트에서 설계한 프론트엔드 아키텍처(IIFE 모듈, 메타데이터 라우팅, P-Edit-DataTable 등)를 Android 앱에 성공적으로 이식. 3명의 팀원을 리딩하며 30개 AI 컨텍스트 문서를 구축하여 팀 전원이 Claude Code로 일관된 개발을 수행할 수 있는 AI 협업 체계를 설계하고, Oracle→SQLite 쿼리 포팅 등 반복 작업을 AI로 자동화. VPN 감지 기반 온오프라인 모드 전환과 오프라인 검사표·PDF 마크업의 서버 동기화 데이터 흐름을 설계.",
+            "웹 프로젝트에서 설계한 프론트엔드 아키텍처(IIFE 모듈, 메타데이터 라우팅, P-Edit-DataTable 등)를 Android 앱에 성공적으로 이식. 초기 로드 9.9MB→~2.5MB(75% 경량화), WebView↔Native 브릿지 비동기 전환으로 UI 프리징 해결, SVG+CSS 기반 11상태 아이콘 시스템 등 성능·UX 최적화를 주도. 3명의 팀원을 리딩하며 30개 AI 컨텍스트 문서를 구축하여 팀 전원이 Claude Code로 일관된 개발을 수행할 수 있는 AI 협업 체계를 설계.",
         },
         gallery: [],
       },
@@ -153,7 +177,7 @@ export const companies: Company[] = [
           "Driver.js",
         ],
         description:
-          "가스 현장검사원의 태블릿 업무 시스템을 전면 고도화하는 프로젝트. 기존 jQuery + Vue 1.x + jqGrid 레거시를 Vue 3 + PrimeVue 기반 현대적 아키텍처로 완전 재구축. 관공서 폐쇄망(Node.js 설치 불가, 외부 CDN 접근 차단) 환경에서 [metric]500+ 업무 화면[/metric]을 운영하는 태블릿 시스템.",
+          "[metric]수천 명[/metric]의 현장검사원이 사용하는 태블릿 업무 시스템을 전면 고도화하는 프로젝트. 기존 jQuery + Vue 1.x + jqGrid 레거시를 Vue 3 + PrimeVue 기반 현대적 아키텍처로 완전 재구축하면서, 기존 비즈니스 로직의 입출력 구조를 분석하여 더 효율적으로 리팩터링. 관공서 폐쇄망(Node.js 설치 불가, 외부 CDN 접근 차단) 환경에서 [metric]500+ 업무 화면[/metric]을 운영하는 태블릿 시스템.",
         achievements: [
           {
             title: "폐쇄망 프론트엔드 아키텍처 설계",

@@ -4,7 +4,7 @@ export const strengths: Strength[] = [
 	{
 		title: "제약을 설계 기회로 전환하는 아키텍처 엔지니어",
 		description:
-			"폐쇄망에서 [metric]500+ 업무 화면[/metric]을 운영하는 태블릿 시스템의 프론트엔드 아키텍처를 설계했습니다. npm/번들러 없이 [tip=iife]IIFE 기반 모듈 스코핑[/tip]과 [tip=scriptloader]Promise 기반 ScriptLoader[/tip]로 화면별 JS를 동적 로드하는 [tip=islands,metric]Islands Architecture[/tip]를 구현하여, 초기 로딩 시간을 [metric]약 50% 단축[/metric]했습니다.\n\n이 아키텍처를 Android 오프라인 앱으로 확장하여, 내장 [tip=nanohttp]LocalWebServer(NanoHTTPD)[/tip] 위에서 동일한 웹 프론트엔드를 구동하고 [tip=oracle-sqlite,metric]128개 테이블[/tip]의 Oracle→SQLite 자동 변환 레이어를 설계했습니다. 하나의 아키텍처가 웹과 앱 두 플랫폼을 관통하는 [metric]재사용 가능한 설계 자산[/metric]으로 확장된 사례입니다.\n\n[tip=meta-routing]메타데이터 기반 자동 라우팅[/tip]으로 새 메뉴 추가 시 [metric]프론트엔드 코드 수정 제로[/metric]를 달성하여, 제약 환경에서도 확장성을 확보하는 아키텍처를 설계합니다.",
+			"폐쇄망에서 [metric]500+ 업무 화면[/metric]을 운영하는 태블릿 시스템의 프론트엔드 아키텍처를 설계했습니다. npm/번들러 없이 [tip=iife]IIFE 기반 모듈 스코핑[/tip]과 [tip=scriptloader]Promise 기반 ScriptLoader[/tip]로 화면별 JS를 동적 로드하는 [tip=islands,metric]Islands Architecture[/tip]를 구현하여, 초기 로딩 시간을 [metric]약 50% 단축[/metric]했습니다.\n\n이 아키텍처를 Android 오프라인 앱으로 확장하여, 내장 [tip=nanohttp]LocalWebServer(NanoHTTPD)[/tip] 위에서 동일한 웹 프론트엔드를 구동하고 [tip=oracle-sqlite,metric]128개 테이블[/tip]의 Oracle→SQLite 자동 변환 레이어를 설계했습니다. 앱 초기 로드 [metric]9.9MB → ~2.5MB(약 75% 경량화)[/metric]를 Gzip + 지연 로딩 + Defer 전략으로 달성했습니다. 하나의 아키텍처가 웹과 앱 두 플랫폼을 관통하는 [metric]재사용 가능한 설계 자산[/metric]으로 확장된 사례입니다.\n\n[tip=meta-routing]메타데이터 기반 자동 라우팅[/tip]으로 새 메뉴 추가 시 [metric]프론트엔드 코드 수정 제로[/metric]를 달성하여, 제약 환경에서도 확장성을 확보하는 아키텍처를 설계합니다.",
 		tipPopovers: [
 			{
 				id: "iife",
@@ -170,7 +170,7 @@ export const strengths: Strength[] = [
 	{
 		title: "요구사항 너머의 UX를 설계하는 엔지니어",
 		description:
-			"SI 환경에서 주어진 요구사항만 구현하지 않습니다. 스마트온 2.0에서 탭의 오터치·되돌리기 불가 문제를 고객 요구 이전에 식별하고, [tip=tab-edit,metric]iOS 홈 화면 앱 정리 UX에서 착안한 Tab Edit Mode[/tip]를 자발적으로 제안·구현했습니다. 롱프레스 시간 분기(빠른 탭→전환, 롱프레스+드래그→정렬, 롱프레스+릴리스→편집모드)를 [tip=threshold,metric]500ms 임계값[/tip]으로 정밀 설계했습니다.\n\n입사 첫 프로젝트(LabelOn)부터 SSR 환경의 새로고침 문제에 의문을 품고 [tip=labelon-ajax]AJAX 부분 갱신 패턴[/tip]을 스스로 학습·적용했고, 스마트공장 PMS에서는 협약 변경 시 [tip=change-vis,metric]연노랑 배경 강조 + 원본값 팝오버[/tip]를 띄우는 공간 효율적 전후 비교 UX를 독자 설계했습니다.\n\n동료들이 [metric]'솔루션을 개발해야 한다'[/metric]고 평가할 만큼, 사용자 인지 부하를 줄이는 데 집착하며 요구사항 이면의 실제 문제를 찾아 해결합니다.",
+			"SI 환경에서 주어진 요구사항만 구현하지 않습니다. 스마트온 2.0에서 탭의 오터치·되돌리기 불가 문제를 고객 요구 이전에 식별하고, [tip=tab-edit,metric]iOS 홈 화면 앱 정리 UX에서 착안한 Tab Edit Mode[/tip]를 자발적으로 제안·구현했습니다. 롱프레스 시간 분기(빠른 탭→전환, 롱프레스+드래그→정렬, 롱프레스+릴리스→편집모드)를 [tip=threshold,metric]500ms 임계값[/tip]으로 정밀 설계했습니다.\n\n입사 첫 프로젝트(LabelOn)부터 SSR 환경의 새로고침 문제에 의문을 품고 [tip=labelon-ajax]AJAX 부분 갱신 패턴[/tip]을 스스로 학습·적용했고, 스마트공장 PMS에서는 협약 변경 시 [tip=change-vis,metric]연노랑 배경 강조 + 원본값 팝오버[/tip]를 띄우는 공간 효율적 전후 비교 UX를 독자 설계했습니다.\n\n스마트온 오프라인 앱에서는 현장 작업자를 위한 온/오프라인 [metric]4계층 시각 피드백[/metric](Body 배경색·뱃지·SpeedDial·메뉴 비활성화)과, 세션 만료를 단계적으로 경고하는 [metric]3-상태 머신 기반 플로팅 타이머[/metric]를 자발적으로 설계했습니다.\n\n동료들이 [metric]'솔루션을 개발해야 한다'[/metric]고 평가할 만큼, 사용자 인지 부하를 줄이는 데 집착하며 요구사항 이면의 실제 문제를 찾아 해결합니다.",
 		tipPopovers: [
 			{
 				id: "tab-edit",

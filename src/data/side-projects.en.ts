@@ -29,7 +29,7 @@ export const sideProjects: SideProject[] = [
 		],
 		description:
 			'"Draw to ask, answer with scenarios." ' +
-			"An AI cryptocurrency analysis platform combining Bybit-level chart drawing and technical indicator modules with Claude Code/ChatGPT-style session-based conversation management. " +
+			"An AI cryptocurrency analysis platform in the financial chart domain, combining Bybit-level chart drawing and technical indicator modules with Claude Code/ChatGPT-style session-based conversation management. " +
 			"Self-studied and developed chart domains including candlestick, RSI, and MACD, and systematized reusable modules by solving real-world edge cases such as WebSocket race conditions, Canvas curve interpolation, and multi-timeframe switching. " +
 			"Built an AI analysis pipeline combining user drawings with market data using OpenAI GPT-4o API, " +
 			"and designed a Freemium subscription-based revenue model (Free/Pro), evolving it into a product with real business value. " +

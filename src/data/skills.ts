@@ -12,6 +12,8 @@ export const skillGroups: SkillGroup[] = [
       "합성 컴포넌트 패턴",
       "선언적 UI 패턴",
       "모듈 컴포넌트 아키텍처",
+      "프론트엔드 성능 최적화",
+      "크로스 브라우징",
       "SSR / SSG 아키텍처",
     ],
   },
@@ -21,7 +23,11 @@ export const skillGroups: SkillGroup[] = [
   },
   {
     title: "UI Engineering",
-    skills: ["Tailwind CSS", "Emotion", "Vanilla Extract", "Radix UI", "Ant Design", "PrimeVue", "Framer Motion"],
+    skills: ["Tailwind CSS", "Emotion", "Vanilla Extract", "Radix UI", "Ant Design", "PrimeVue", "Framer Motion", "SVG / CSS Animation"],
+  },
+  {
+    title: "Mobile & WebView",
+    skills: ["Android WebView 연동", "모바일 웹 최적화", "터치 제스처 엔지니어링"],
   },
   {
     title: "Backend Integration",

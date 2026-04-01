@@ -4,11 +4,11 @@ export const introduction: Introduction = {
 	quote: "No compromise on the experience users see, or the structure behind it",
 	blocks: [
 		{
-			body: "Because users face these screens every day, I never stop at 'good enough.' I treat visible UX polish and invisible architectural solidity with equal weight. No matter the constraints, [metric]finding a way to make it work[/metric] is how I build software.",
+			body: "Because users face these screens every day, I never stop at 'good enough.' I treat visible UX polish and invisible architectural solidity with equal weight. From web to mobile WebView to air-gapped networks — no matter the constraints, [metric]finding a way to make it work[/metric] is how I build software.",
 		},
 		{
 			subtitle: "Cross-Layer Architecture & Radical Team Productivity",
-			body: "In complex business domains, I've [metric]single-handedly designed frontend architecture spanning 500+ screens[/metric], establishing a solid foundation where even junior developers can ship at consistent quality. I don't stop at the UI layer — from user flows to backend API and DB design when needed, I pursue [metric]optimal structures that cut across every layer[/metric]. By abstracting repetitive CRUD patterns into a single shared component, I've [metric]dramatically reduced development effort[/metric], always obsessing over structural improvements that boost team productivity.",
+			body: "In complex business domains, I've [metric]single-handedly designed frontend architecture spanning 500+ screens[/metric], establishing a solid foundation where even junior developers can ship at consistent quality. I don't stop at the UI layer — from user flows to backend API and DB design when needed, I pursue [metric]optimal structures that cut across every layer[/metric], and take responsibility for perceived performance through [metric]performance bottleneck analysis and loading strategy design[/metric]. By abstracting repetitive CRUD patterns into a single shared component, I've [metric]dramatically reduced development effort[/metric], always obsessing over structural improvements that boost team productivity.",
 		},
 		{
 			subtitle: "UX Detail Beyond the Spec",
