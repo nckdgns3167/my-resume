@@ -232,18 +232,19 @@ export const companies: Company[] = [
 				id: "project-smarton-offline",
 				name: "SmartOn 2.0 APP — Gas Inspection Offline Tablet App",
 				client: "Korea Gas Safety Corporation (KGS)",
-				period: "2026.02 ~ 2026.04",
+				period: "2026.02 ~ Present",
 				role: "App Development Lead (Leading 3 Developers)",
 				stack: [
 					"Android (Java/Kotlin)",
 					"Vue 3 (IIFE)",
 					"NanoHTTPD",
 					"SQLite 3",
+					"EncryptedSharedPreferences",
 					"Claude Code",
-					"MCP",
+					"Custom MCP Server",
 				],
 				description:
-					"Building an Android tablet app based on the SmartOn 2.0 web system that operates independently without VPN/internet in the field. Locally replicates [metric]128 tables[/metric] via embedded LocalWebServer (NanoHTTPD) + SQLite offline DB, serving [metric]150+ REST API[/metric] endpoints within the app. Built [metric]30 AI context documents[/metric] (CLAUDE.md, architecture, porting guides) enabling the entire team to develop on a consistent context via Claude Code. Automatically switches between online/offline modes based on VPN connection state, and synchronizes inspection forms and PDF markups created offline to the server upon reconnection.",
+					"Building an Android tablet app based on the SmartOn 2.0 web system that operates independently without VPN/internet in the field. Locally replicates [metric]128 tables[/metric] via embedded LocalWebServer (NanoHTTPD) + SQLite offline DB, serving [metric]150+ REST API[/metric] endpoints within the app. Built [metric]30 AI context documents[/metric] (CLAUDE.md, architecture, porting guides) enabling the entire team to develop on a consistent context via Claude Code. Automatically switches between online/offline modes based on VPN connection state, and synchronizes inspection forms and PDF markups created offline to the server upon reconnection. Continued post-launch to strengthen operational stability and security — multi-process isolation, chunked save, server-side flatten, user-PDF isolation, security audit.",
 				achievements: [
 					{
 						title: "Hybrid Online/Offline Architecture Design",
@@ -318,6 +319,73 @@ export const companies: Company[] = [
 						items: [
 							"Automated Oracle→SQLite query porting and schema translation via Claude Code + MCP, maximizing productivity for [metric]128-table[/metric] migration",
 							"Designed offline app structure, delegated domain-specific tasks to team members, and maintained quality through code reviews. Covering [metric]150+ APIs[/metric] and [metric]8 business domains[/metric]",
+							"[metric]Built custom MCP server[/metric] (`mcp-servers/db-schema/`) — parses Oracle DDL files for 4 schemas (CMORA01·HRORA01·SAORA01·SMART) and exposes 5 tools (`get_table_schema`·`search_tables`·`search_columns`·`list_schema_tables`·`get_table_for_query`), enabling Claude to query the original Oracle columns/types accurately when writing SQL — preempts 'guessing from DDL.sql' regressions",
+							"Self-implemented Gradle plugin [metric]`ControllerRegistryPlugin`[/metric] — regex-scans `@RestController` Java sources, auto-generates package-based aliases for multi-parameter constructors + duplicate Service name imports, and recreates Spring-style conventions on NanoHTTPD via `ServiceContainer` reflection-based DI (prefer `(Context, SqlMapper)`, fallback to `(SqlMapper)`)",
+							"Established a [metric]7-Phase offline porting methodology[/metric] (`docs/25_OfflinePorting/OFFLINE_PORTING_METHODOLOGY.md`) — documented failure patterns and preventive checklists for subtleties like 'Oracle NULL → SmartHashMap → SQLite empty string' compatibility traps, `COALESCE/IFNULL` empty-string pass-through pitfalls, and `INSERT OR REPLACE` vs `MERGE INTO` semantic differences",
+						],
+					},
+					{
+						title: "PdfViewer Multi-Process Isolation + Overlay WebView Pooling",
+						description:
+							"Isolated the PDF viewer into a separate process so OOM incidents wouldn't take down the main app. But isolation created a new problem — main-process PrimeVue UI (Drawer/SpeedDial) couldn't layer on top of PdfViewer. Solved with a direct workaround architecture.",
+						items: [
+							"`android:process=\":pdfviewer\"` in `AndroidManifest.xml` isolated PdfViewerActivity into a separate process → blocked regressions where A0-blueprint zoom OOM took down the main app + VPN together",
+							"[metric]Full-screen transparent WebView OverlayActivity[/metric] + per-widget HTML separation (`widget-drawer.html` / `widget-speeddial.html`) routed around the main-process UI occlusion problem — PrimeVue components stack on top of PdfViewer via a separate Activity",
+							"[metric]`OverlayWebViewPool` static pool[/metric] — preloads 200~400ms of WebView instance + page load right after mainPage load, achieving [metric]zero first-click cost[/metric]. Auto-rebuild cycle on close maintains the pool",
+						],
+					},
+					{
+						title: "Large PDF Chunked Save + Tab Lifecycle Restoration",
+						items: [
+							"Workaround for memory/Intent 1MB limits on 1000+ page PDF markup save — [metric]chunked accumulation pattern[/metric]: each `onSaveChunk(seqId, pageNum, json)` call accumulates per-page JSON in `Map<String, TreeMap<Integer, String>>`, then `onSaveCommit(seqId, totalPages, partialUpdate)` merges into a single object reusing the existing save pipeline",
+							"Pre-save [metric]`/cmm/session/keepAlive.do`[/metric] verifies session → blocks the regression of saving as `anonymousUser` on expiry; on expiry, Svelte `window.pdfv.showAlert` + Activity finish enforces re-login (Native AlertDialog deprecated, unified to Svelte dialog)",
+							"PdfViewerActivity that was finished due to tab deactivation auto-relaunches on tab restore with cached unsaved canvas — [metric]`EXTRA_RESTORE_FROM_STATE`[/metric] one-shot restoration via Intent extras, linking mainPage tab system lifecycle with the separate-process PdfViewer instance",
+						],
+					},
+					{
+						title: "Server-Side PDF Flatten Transition + Distributed Concurrency Guards",
+						items: [
+							"[metric]Deprecated local PDF flatten + multipart upload path[/metric] — migrated `MarkupPdfFlattenManager` + `PdfUploadManager` to server-side PDFBox flatten call (`/cmm/pdfviewer/reflattenOnServer.do`), eliminating APP disk/bandwidth burden + removing the `pdf_upload_queue` table",
+							"Same (`ATCH_FILE_NO`, `SN`) cases where PdfViewerActivity's immediate reflatten and UploadManager's batch reflatten fire simultaneously are blocked by [metric]30s ConcurrentHashMap debounce[/metric] (`RECENT_FLATTEN`)",
+							"Concurrency lock promoted — `GLOBAL_UPLOADING` AtomicBoolean elevated from instance-level to [metric]JVM-global lock[/metric], blocking multi-trigger concurrent entry from Scheduler / MainActivity / NetworkManager",
+							"`callReflattenOnServer(serverUrl, maxVersion)` — passes `BAKED_MAX_VERSION` immediately after save to avoid STALE branching (optimistic version transmission)",
+						],
+					},
+					{
+						title: "Offline Sync Automation — 3-Trigger Guarantee + Failure-Cause Branching",
+						items: [
+							"[metric]3-trigger guarantee[/metric] — (1) 5-min `ScheduledExecutorService` (`CanvasAutoSyncScheduler`, INITIAL_DELAY reduced 2min→10s), (2) auto-fire 5s debounced on `NetworkCallback` recovery (`NetworkManager.scheduleSyncTriggerOnReconnect`), (3) immediate fire right after VPN+OTP success (`MainActivity.checkAndStartPendingUpload`)",
+							"[metric]`UploadOutcome` enum 3-branch[/metric] (SUCCESS / FAILED_RETRY / FAILED_AUTH_SKIP) — 401/403 auth expiry doesn't increment retry_count, allowing natural recovery after user re-login; only ordinary transient errors are counted against max_retry",
+							"Resilience — max_retry raised 5 → 20, [metric]auto-recover 24h-elapsed FAILED to NOT_SYNCED[/metric] (`recoverStaleFailedCanvas`), JVM-global `GLOBAL_UPLOADING` blocks multi-trigger duplication",
+						],
+					},
+					{
+						title: "Per-User PDF Isolation + Magic-Byte Diagnosis",
+						items: [
+							"Resolved a security issue where, on sequential login on shared tablets (inspector A → B), B could see A's inspection PDFs — PK extension to [metric](`atch_file_no`, `sn`, `user_id`)[/metric] + per-user directory separation `pdfDirectory/{userId}/` for complete isolation",
+							"SQLite PK migration — lossless migration via [metric]temp table + INSERT + DROP + RENAME transaction[/metric] pattern + backup",
+							"Diagnosed an on-disk file as 'display name `.pdf` but magic byte HWP ([metric]`D0 CF 11 E0`[/metric])' → routed around the gas safety PDF conversion solution (`TRANS_*.pdf` / `PDF_CHG_SCS_YN`) via a dedicated new endpoint `/offline/getInspectionPdfFile.do` (Option C — zero regression on existing `getPdfFile.do` callers)",
+						],
+					},
+					{
+						title: "WebView Security Audit — 10 Items Addressed + Risk·Side-Effect Assessment",
+						description:
+							"Documented WebView-based hybrid app security vulnerabilities not as a flat list but with explicit risk levels (High/Medium/Low), side-effect scenarios, and preconditions. 10 immediate items + 4 future-review items (`docs/51_Security/SECURITY_AUDIT_REPORT.md`).",
+						items: [
+							"VPN password plaintext → AndroidX [metric]`EncryptedSharedPreferences` AES256-GCM[/metric] + auto-migration from plaintext (`LoginPreferences.kt`)",
+							"WebView policy hardening — `setAllowUniversalAccessFromFileURLs` / `setAllowFileAccessFromFileURLs` / `setAllowFileAccess` all set to false, `MIXED_CONTENT_ALWAYS_ALLOW` → `COMPATIBILITY_MODE`, DevTools conditionally enabled",
+							"[metric]JS injection prevention[/metric] — escape `'`, `\"` in callbacks `callJavaScriptCameraCallback` · `onReturnDate` · `notifyNetworkStateChanged`",
+							"[metric]Path traversal prevention[/metric] — URL scheme whitelist + `File.getName()` + special-character substitution on `showPdfFromBase64` · `showPdfOnline` · `showEtcUrlPOP`",
+							"Wrapped sensitive logging (cookies, response body, POST body, GET params) in `BuildConfig.DEBUG` conditions — blocks logcat exposure in Release builds",
+							"4 future-review items (HTTP plaintext, lingering temporary PDFs, FileProvider path openness, callback name un-validation) tracked separately as *consciously deferred* judgments",
+						],
+					},
+					{
+						title: "GPS Dual Mode + Indoor Limitation Technical Report",
+						items: [
+							"`GpsManager` operates [metric]3 independent modes[/metric] — single shot (`requestCurrentLocation`, 60s timeout / 5min cache), continuous tracking (`startLocationTracking`, idempotent · `onPause/onResume` auto-pause · 30m accuracy filter), fresh single shot (`requestFreshLocation`, runs alongside tracking · rejects fix from before requestTime - 1500ms · 15s / 100m)",
+							"Responded to 'GPS not working indoors' user inquiry with a technical report analyzing [metric]satellite signal attenuation (concrete 99%+) + VPN routing blocking Google location servers[/metric], proposing [metric]4 alternatives[/metric] (VPN whitelist / corporate WiFi DB / BLE beacons / manual input)",
+							"`ConnectivityManager.NetworkCallback` for real-time VPN/WIFI/MOBILE/ETHERNET transport + validated capability monitoring; on recovery, 5s debounce then auto-fires unsynced data upload",
 						],
 					},
 				],
@@ -362,11 +430,27 @@ export const companies: Company[] = [
 							"By building CLAUDE.md and porting guides as shared team context, and [metric]automating repetitive tasks with custom skills (front-sync, svn-commit-msg)[/metric], all team members could produce code of consistent quality regardless of experience differences. Future team leadership requires designing not only 'what to assign to people' but also 'what to delegate to AI and what people should focus on.'",
 						],
 					},
+					{
+						topic:
+							"Process Isolation — Separation Is Both Isolation and a New Integration Problem",
+						paragraphs: [
+							"After watching a PDF viewer OOM incident take down both the main app + VPN, I isolated PdfViewerActivity into a [metric]`android:process=\":pdfviewer\"`[/metric] separate process. Isolation successfully blocked the cascade of failures, but simultaneously created [metric]a new integration problem where the main process's PrimeVue UI (Drawer/SpeedDial) could no longer layer over PdfViewer[/metric].",
+							"The honest approach was not to escape it. I designed a workaround architecture — full-screen transparent WebView [metric]`OverlayActivity`[/metric] + per-widget HTML separation + static `OverlayWebViewPool` of WebView instances — and pushed first-click cost to zero. I learned that isolation always creates a new cost of integration, and system design is choosing where to receive that cost.",
+						],
+					},
+					{
+						topic:
+							"Security Audit — Not a Flat List, but Risk·Side-Effect·Preconditions Too",
+						paragraphs: [
+							"I could have ended the WebView-based hybrid app's security review with a flat 'these were fixed' list. But in SI environments, security items aren't single lines of code — they're matters of [metric]operational side-effects + preconditions[/metric]. For example, adopting `EncryptedSharedPreferences` without simultaneously handling the plaintext SharedPreferences auto-migration scenario creates a regression that logs out existing users.",
+							"So I structured the security audit report explicitly with [metric]risk level (High/Medium/Low) + side-effect scenario + preconditions[/metric]. 10 immediate items + [metric]4 future-review items[/metric] (HTTP plaintext · lingering temp PDFs · FileProvider path openness · callback name un-validation) tracked separately as *consciously deferred* judgments. I established that security is ultimately not about 'what was fixed' but 'what is being consciously tracked'.",
+						],
+					},
 				],
 				highlightBox: {
 					title: "Key Contribution",
 					content:
-						"Successfully ported the frontend architecture designed in the web project (IIFE modules, metadata routing, P-Edit-DataTable, etc.) to the Android app. Led performance and UX improvements including initial load optimization, async WebView bridge conversion, and offline UX feedback system. Led a team of 3 developers by building 30 AI context documents enabling consistent development via Claude Code.",
+						"Successfully ported the frontend architecture designed in the web project (IIFE modules, metadata routing, P-Edit-DataTable, etc.) to the Android app. Led performance and UX improvements including initial load optimization, async WebView bridge conversion, and offline UX feedback system. Post-launch, strengthened operational stability and security through multi-process isolation, Overlay WebView pooling, server-side flatten, per-user PDF isolation, WebView security audit, and a custom MCP server. Led a team of 3 developers by building 30 AI context documents enabling consistent development via Claude Code.",
 				},
 				gallery: [],
 			},
@@ -378,20 +462,23 @@ export const companies: Company[] = [
 				id: "project-smarton",
 				name: "SmartOn 2.0 — Gas Inspector Tablet Work System",
 				client: "Korea Gas Safety Corporation (KGS)",
-				period: "2025.03 ~ 2026.01",
+				period: "2025.03 ~ Present",
 				role: "Frontend Architect / Tech Lead (Leading 4 Juniors)",
 				stack: [
 					"Vue 3",
 					"PrimeVue 4.x",
 					"Pinia",
 					"Tailwind CSS 4",
+					"Spring Boot",
+					"MyBatis",
+					"PDFBox",
 					"Sortable.js",
 					"Swiper.js",
 					"Hammer.js",
 					"Driver.js",
 				],
 				description:
-					"A project to fully modernize the gas inspector tablet work system used by [metric]thousands of field inspectors[/metric]. Completely rebuilt from legacy jQuery + Vue 1.x + jqGrid to a modern Vue 3 + PrimeVue architecture, analyzing and refactoring existing business logic I/O structures for greater efficiency. A tablet system operating [metric]500+ work screens[/metric] in a government air-gapped network (no Node.js installation, no external CDN access).",
+					"A project to fully modernize the gas inspector tablet work system used by [metric]thousands of field inspectors[/metric]. Completely rebuilt from legacy jQuery + Vue 1.x + jqGrid to a modern Vue 3 + PrimeVue architecture, analyzing and refactoring existing business logic I/O structures for greater efficiency. A tablet system operating [metric]500+ work screens[/metric] in a government air-gapped network (no Node.js installation, no external CDN access). Continued post-launch with full-stack improvements — PDF viewer integration, server-side rendering, offline sync consistency, and download performance.",
 				achievements: [
 					{
 						title: "Air-Gapped Frontend Architecture Design",
@@ -455,6 +542,73 @@ export const companies: Company[] = [
 							"Sortable.js & Swiper.js extensively used in Tab Edit Mode",
 						],
 					},
+					{
+						title: "External Svelte 5 PDF Viewer Full-Stack Integration — Absorbing into Company Systems",
+						description:
+							"Integrated an in-house Svelte 5 PDF viewer (10,500 LOC) across Gas-Pia SFTP, DRM, intranet legacy Chrome, multi-tabs, app, and web surfaces. Beyond simple library adoption — full-stack responsibility from data model agreement to external SQL contract fulfillment to coordinate normalization.",
+						items: [
+							"`MARKUP2_TRANS_*.pdf` filename separation preserves SmartOn 1.0 assets; [metric]Append-only `PDF_CANVAS_DATA` table[/metric] + [metric]4-tier fallback chain[/metric] (`MARKUP2_TRANS → MARKUP_TRANS → TRANS → original`) establishes a single source of truth",
+							"Achieved external system SQL contract compliance with Gas-Pia (KGSC) `STA00101MServiceImpl.getPdfDownload()` by unifying `/techdocu/...` paths — no external code changes needed",
+							"Recursively normalized Paper.js exportJSON array format (`[\"Path\", {segments:[[100,200]], strokeColor:[0,0,0]}]`) into object form (`normalizeRawItem` + `normalizeSegment` + `normalizeColor`), diagnosing and fixing [metric]triple silent failure[/metric] where shapes silently failed to render without errors",
+							"`__DocumentViewer.openPDF` single entry point + `customButtons` callback registry pattern resolved the non-serializable JS function → Activity transfer problem",
+						],
+					},
+					{
+						title: "PDF Metadata Response [metric]50s+ → 100ms[/metric] — Server Cache 3-Tier + Prewarm",
+						items: [
+							"948-page PDF first response [metric]50s+ (readTimeout)[/metric] → [metric]under 100ms[/metric]. Replaced an incident where the server was actually rendering every page at 36 DPI for metadata responses, with `PDPage.getCropBox()` + `getRotation()` metadata extraction",
+							"`PdfFileCache` [metric]3-tier cache[/metric] — PDF LRU+TTL (20min) / JPEG disk cache (500MB LRU+TTL 60min) / page metadata (20min) + temporary PDF token (30min TTL), per-key lock serializes concurrent requests",
+							"Differential JPEG quality by DPI (`PdfImageService.qualityForDpi()` — thumbnail 0.60 / low-res 0.75 / body 0.85) + first-page background prewarm + `getInitialBundle.do` combining metadata+first page into [metric]1 round-trip[/metric]",
+							"Eliminated 33% Base64 encoding overhead — direct binary `pageImage.jpg` response + Blob URL lifecycle management (`URL.revokeObjectURL`) leveraging browser HTTP cache",
+						],
+					},
+					{
+						title: "Offline Markup Sync Consistency — 11 Gaps Patched in 1 Cycle",
+						description:
+							"Diagnosed the field-reported 'sync not working' issue as actually being a UI display defect from `pdf_file.sync_status` not being updated. Systematically inspected and patched [metric]11 gaps[/metric] (P0/P1/P2/P3 priorities) in a single overnight deployment (APP r1577/r1578 + Web 7e8f349).",
+						items: [
+							"Replaced post-VPN+OTP `uploadPending(SYNC_QUEUE only)` gap with unified `uploadAllPending(SYNC_QUEUE + Canvas + reflatten)`; raised max_retry 5 → 20, auto-recover NOT_SYNCED after 24h (`recoverStaleFailedCanvas`)",
+							"Discovered a regression where offline delete/partial-update intent failed to reach the server, causing old markups to resurrect on reflatten — added [metric]`PDF_CANVAS_DELETE_QUEUE` / `PDF_CANVAS_UPDATE_QUEUE`[/metric] queue tables to capture intent",
+							"`UploadOutcome` [metric]enum 3-branch[/metric] (SUCCESS / FAILED_AUTH_SKIP / FAILED_RETRY) distinguishes 401/network/5xx failure causes — auth expiry doesn't increment retry count, enabling natural recovery after re-login",
+							"Concurrent invocation blocked — global `AtomicBoolean static` lock for Scheduler/MainActivity simultaneous triggers, 30s debounce on `requestServerFlatten` to dedupe PdfViewerActivity immediate calls + UploadManager batch calls",
+						],
+					},
+					{
+						title: "Oracle Offline Download Optimization — Full-Scan Elimination + Dependency Chain + COUNT(*) Hash",
+						items: [
+							"Diagnosed via JENNIFER APM 'TOO MANY FETCH' warnings: `getRelatedMasterDataTable.do` ([metric]6,099ms / 9 calls[/metric]) / `getGlobalReferenceCodes.do` ([metric]1,704ms / 14-table full scan[/metric])",
+							"[metric]Phase 1 — Server caching[/metric] — `OfflineDownloadService.getCachedOrLoad()` TTL 60min ConcurrentHashMap for 13 reference tables, SKB0101MV_01 precondition check on standalone assignment download",
+							"[metric]Phase 2 — Dependency chain IN-clause filter[/metric] — 5-step derivation `assignment(LAW_TC/STIC_LAG_TC/ROLE_TC/INSP_KIND_TC) → inspTableSns → inspItemLrclCds → inspItemSmclCds → msrmtItemMdclSns`, injected as IN clauses into 6 full-scan queries",
+							"[metric]Phase 3 — Hash change detection[/metric] — single DUAL select fetches row counts of 13 tables at once + category hash comparison, APP `SYNC_STATUS.table_hash` column migration with `COALESCE` backward compat, 2nd+ runs skip unchanged categories",
+							"Per SQLite WAL's no-concurrent-writes limitation, applied UI-level mutual exclusion via `isBasicDownloading ↔ isInspectionDownloading` computed locks — [metric]blocked SQLITE_BUSY at source[/metric] without native locks",
+						],
+					},
+					{
+						title: "Search Condition Auto-Persistence — Framework-Level Convention-Based Application",
+						items: [
+							"[metric]39 of 43 menus (91%) auto-applied[/metric] — `document` capture-phase click listener + `e.target.closest('.searchBtn')` + `contentPanel.getComponentInstance(tabId).vm.searchConditions` deep clone + `setTimeout 50ms` non-blocking save",
+							"Backend — `MenuController.updateUserOpenMenuProps.do` + `USER_MENU_INFO.MENU_PROPS` JSON column; on tab restore, `Object.assign(vm.searchConditions, saved)` after setup() triggers Vue reactive auto-refresh",
+							"[metric]Zero individual menu JS file modifications[/metric] — auto-applied as long as the `.searchBtn` convention is followed",
+						],
+					},
+					{
+						title: "Unified Session Management + GPS Pub/Sub Infrastructure",
+						items: [
+							"Unified VPN (~3h) + Web session (180min) `SessionManager` — single countdown, auto-reset only on successful API call (DOM event reset policy abandoned), optimistic updates + rollback on failure, `NetworkCallback` toast notifications, auto-detects offline environment (localhost:8080 + `conn.getConnectionStatus`) and stays silent",
+							"Floating session timer [metric]4-state machine[/metric] (normal/warning/critical/extended) + drag + localStorage position save + `font-variant-numeric: tabular-nums`",
+							"[metric]`GpsTrackerService` singleton Pub/Sub[/metric] — single native GPS listener even with multiple tab/popup subscribers, 100ms debounce reconciliation + `desiredState ↔ nativeState` separation + bidirectional `onPause/onResume` broadcast",
+							"`INativeAdapter` / `AndroidAdapter` / `DevAdapter` / `MockAdapter` adapter pattern, Vworld geocoding positive + negative caching reduces [metric]API calls by ~100×[/metric]",
+						],
+					},
+					{
+						title: "Static Resource Differential Cache + Server-Side PDF Flatten",
+						items: [
+							"Servlet Filter differential cache — `/js/vendor/**` 7-day · `/js/app/**` `no-cache` (304 validation), Gzip (min-response-size 2048, ~75% reduction), HTTP/2 (h2c), 4 preload essentials, `<script defer>` (nfilter 1.1MB + driver.js)",
+							"Initial load [metric]109 requests 9.9MB ~15s → 2.5MB ~5–8s[/metric]; cache-warm re-login down to [metric]500KB[/metric]",
+							"Migrated client-side pdf-lib flatten (brittle Paper.js JSON dependency + WebView OOM burden) to server-side PDFBox `PdfMarkupFlattenService` — `Matrix` rotation handling for 90/180/270° pages, CJK fallback `FontMappers` global registration",
+							"Unified external PDF Gateway (`PdfGatewayRestfullApiUtil.jobConv`) into single endpoint `ensureAttachmentConverted.do` — Lazy On-Demand conversion + DB-persistent cache + row-lock concurrency guard + 30s timeout polling",
+						],
+					},
 				],
 				learningPoints: [
 					{
@@ -469,6 +623,20 @@ export const companies: Company[] = [
 						paragraphs: [
 							"With 500+ screens sharing repetitive CRUD patterns but no budget for commercial solutions like AG Grid, I designed a custom 3-layer architecture (useEditGridFactory hook + p-edit-datatable wrapper + p-edit-column directive). The most important consideration wasn't technical sophistication but [metric]developer experience (DX)[/metric].",
 							"By hiding complexity behind a declarative API and [metric]letting junior developers focus solely on CRUD implementation[/metric], we achieved an [metric]80% code reduction[/metric]. I learned that a component's true impact is measured not by one person's technical excellence, but by how much redundant work it eliminates across the entire team.",
+						],
+					},
+					{
+						topic: "OOM Diagnostic Retrospective — Confusing Symptoms with Root Causes Leads to Long, Wrong Treatments",
+						paragraphs: [
+							"We encountered incidents where A3 blueprint PDF zoom would crash both the app and the VPN. The first diagnosis was 'pdf.js CPU overload'; the second was 'VPN network issue'. Both were [metric]misdiagnoses[/metric]. The actual cause was that 3 canvases per page (PDF / UserOverlay / Paper.js) occupied GPU memory, with old+new coexisting during zoom spiking to [metric]100MB+ peak[/metric] — exceeding Android WebView's GPU limit. App process death from OOM caused the closed sockets, which only looked like a VPN disconnect.",
+							"Only after two misdiagnoses did we shift to 'whatever the symptom, statically inspect GPU memory occupancy first'. Unified into a [metric]single canvas + paper.Layer N-stacking[/metric], fixing memory to 30MB regardless of page count. For the A0-page-10-user-accumulated scenario, recovery from [metric]1,820MB → 120MB (-93%)[/metric]. I wrote a retrospective document because the habit of suspecting 'am I seeing a symptom or a root cause' is the most expensive time-saver — worth sharing across the team for the next incident.",
+						],
+					},
+					{
+						topic: "Framework-Level Automation — 39 of 43 Menus, Zero Individual Modifications",
+						paragraphs: [
+							"Field feedback came in: 'search conditions reset every time, it's inconvenient'. The easiest fix was to embed save/restore logic in each menu, but that meant scattering identical code across 500+ screens. Instead I chose a [metric]convention + single handler[/metric] pattern — just by following the `.searchBtn` convention, capture-phase click listening + `vm.searchConditions` deep clone + JSON persistence run automatically.",
+							"Result: [metric]39 of 43 menus (91%) auto-applied / zero individual menu JS modifications[/metric]. Framework-level 'automation' isn't merely about reduced code — it means [metric]teammates no longer have to think about this feature when creating new menus[/metric]. The real value of convention isn't code reduction but cognitive load reduction.",
 						],
 					},
 				],

@@ -231,18 +231,19 @@ export const companies: Company[] = [
         id: "project-smarton-offline",
         name: "스마트온 2.0 APP — 가스 현장검사 오프라인 태블릿 앱",
         client: "한국가스안전공사(KGS)",
-        period: "2026.02 ~ 2026.04",
+        period: "2026.02 ~ 진행 중",
         role: "앱 개발 리드 (3명 리딩)",
         stack: [
           "Android (Java/Kotlin)",
           "Vue 3 (IIFE)",
           "NanoHTTPD",
           "SQLite 3",
+          "EncryptedSharedPreferences",
           "Claude Code",
-          "MCP",
+          "자체 MCP 서버",
         ],
         description:
-          "스마트온 2.0 웹 시스템을 기반으로 VPN/인터넷 없이 현장에서 독립 운용 가능한 Android 태블릿 앱을 구축하는 프로젝트. 내장형 LocalWebServer(NanoHTTPD) + SQLite 오프라인 DB로 [metric]128개 테이블[/metric]을 로컬 복제하고, [metric]150+ REST API[/metric] 엔드포인트를 앱 내부에서 제공. [metric]30개 AI 컨텍스트 문서[/metric](CLAUDE.md·아키텍처·포팅 가이드)를 구축하여 팀원 전원이 Claude Code로 일관된 컨텍스트 위에서 개발할 수 있는 AI 협업 체계를 설계. VPN 연결 상태에 따라 온오프라인 모드를 자동 전환하고, 오프라인에서 작성한 검사표와 PDF 마크업을 온라인 복귀 시 서버에 동기화하는 양방향 데이터 흐름을 구현.",
+          "스마트온 2.0 웹 시스템을 기반으로 VPN/인터넷 없이 현장에서 독립 운용 가능한 Android 태블릿 앱을 구축하는 프로젝트. 내장형 LocalWebServer(NanoHTTPD) + SQLite 오프라인 DB로 [metric]128개 테이블[/metric]을 로컬 복제하고, [metric]150+ REST API[/metric] 엔드포인트를 앱 내부에서 제공. [metric]30개 AI 컨텍스트 문서[/metric](CLAUDE.md·아키텍처·포팅 가이드)를 구축하여 팀원 전원이 Claude Code로 일관된 컨텍스트 위에서 개발할 수 있는 AI 협업 체계를 설계. VPN 연결 상태에 따라 온오프라인 모드를 자동 전환하고, 오프라인에서 작성한 검사표와 PDF 마크업을 온라인 복귀 시 서버에 동기화하는 양방향 데이터 흐름을 구현. 초기 출시 이후에도 멀티프로세스 격리·청크 저장·서버사이드 Flatten·사용자 PDF 격리·보안 감사 등 운영 안정성과 보안을 지속 강화.",
         achievements: [
           {
             title: "하이브리드 온/오프라인 아키텍처 설계",
@@ -317,6 +318,73 @@ export const companies: Company[] = [
             items: [
               "Claude Code + MCP 활용하여 Oracle→SQLite 쿼리 포팅·스키마 변환 작업을 AI로 자동화, [metric]128개 테이블[/metric] 포팅 생산성 극대화",
               "오프라인 앱 구조 설계 후 팀원에게 도메인별 업무를 분배하고, 코드 리뷰를 통해 품질 관리. [metric]150+ API[/metric]·[metric]8개 비즈니스 도메인[/metric] 커버",
+              "[metric]자체 MCP 서버 개발[/metric] (`mcp-servers/db-schema/`) — Oracle 4개 스키마(CMORA01·HRORA01·SAORA01·SMART) DDL 파일을 파싱하여 5종 도구 (`get_table_schema`·`search_tables`·`search_columns`·`list_schema_tables`·`get_table_for_query`) 노출, Claude 가 SQL 작성 시 Oracle 원본 컬럼·타입을 정확히 조회하도록 도구화 — \"DDL.sql 만 보고 추측\" 회귀 사전 차단",
+              "Gradle 플러그인 [metric]`ControllerRegistryPlugin`[/metric] 자체 구현 — `@RestController` Java 소스 정규식 스캔, 다중 파라미터 생성자 + 동명 Service 패키지 alias 자동 생성, `ServiceContainer` Reflection 기반 DI ([Context, SqlMapper] 우선 · [SqlMapper] fallback) 로 Spring 스타일 컨벤션을 NanoHTTPD 위에 재현",
+              "[metric]7 Phase 오프라인 포팅 방법론[/metric] 정립 (`docs/25_OfflinePorting/OFFLINE_PORTING_METHODOLOGY.md`) — \"Oracle NULL → SmartHashMap → SQLite 빈문자열\" 호환성 함정, `COALESCE/IFNULL` 빈 문자열 통과 함정, `INSERT OR REPLACE` vs `MERGE INTO` 동작 차이 등 실패 사례 + 예방 체크리스트 문서화",
+            ],
+          },
+          {
+            title: "PdfViewer 멀티프로세스 격리 + Overlay WebView 풀링",
+            description:
+              "PDF 뷰어를 별도 프로세스로 격리하여 OOM 사고가 메인 앱을 끌고 가지 않도록 분리. 그러나 격리는 새로운 문제를 만들었다 — 메인 프로세스의 PrimeVue UI(Drawer·SpeedDial)가 PdfViewer 위에 얹히지 못함. 정공법으로 우회 아키텍처를 설계.",
+            items: [
+              "`AndroidManifest.xml` 에 `android:process=\":pdfviewer\"` 별도 프로세스 분리 → A0 도면 줌 OOM 이 메인 앱 + VPN 동반 사망으로 전파되던 회귀 차단",
+              "[metric]풀스크린 투명 WebView OverlayActivity[/metric] + 위젯별 HTML 분리 (`widget-drawer.html` / `widget-speeddial.html`) 로 메인 프로세스 UI 차폐 문제 우회 — PrimeVue 컴포넌트를 별도 Activity 로 PdfViewer 위에 얹음",
+              "[metric]`OverlayWebViewPool` 정적 풀[/metric] — WebView 인스턴스 + 페이지 로드 200~400 ms 를 mainPage 로드 직후 preload, [metric]첫 클릭 비용 0[/metric] 달성. close 시 자동 재부팅 사이클로 풀 유지",
+            ],
+          },
+          {
+            title: "대용량 PDF 청크 저장 + 탭 라이프사이클 복원",
+            items: [
+              "1000+ 페이지 PDF 마크업 저장 시 메모리·Intent 1 MB 한계를 회피하는 [metric]청크 누적 패턴[/metric] — `onSaveChunk(seqId, pageNum, json)` 호출마다 `Map<String, TreeMap<Integer, String>>` 에 페이지별 JSON 누적, `onSaveCommit(seqId, totalPages, partialUpdate)` 시 단일 객체로 합쳐 기존 저장 경로 재사용",
+              "저장 직전 [metric]`/cmm/session/keepAlive.do`[/metric] 호출로 세션 검증 → 만료 시 `anonymousUser` 로 저장되던 회귀 차단, 만료 감지 시 Svelte `window.pdfv.showAlert` + Activity finish 로 강제 재로그인 유도 (Native AlertDialog 폐기, Svelte 다이얼로그로 통일)",
+              "탭 비활성화로 finish 된 PdfViewerActivity 를 사용자가 탭 복귀 시 캐시된 unsaved canvas 로 자동 재 launch — [metric]`EXTRA_RESTORE_FROM_STATE`[/metric] Intent extras 통한 1회성 복원, mainPage 탭 시스템과 별도 프로세스 PdfViewer 인스턴스 라이프사이클 연동",
+            ],
+          },
+          {
+            title: "서버사이드 PDF Flatten 전환 + 분산 동시성 가드",
+            items: [
+              "[metric]로컬 PDF flatten + 멀티파트 업로드 경로 폐기[/metric] — `MarkupPdfFlattenManager` + `PdfUploadManager` 를 서버사이드 PDFBox flatten 호출 (`/cmm/pdfviewer/reflattenOnServer.do`) 로 이관, APP 디스크·대역폭 부담 해소 + `pdf_upload_queue` 테이블 제거",
+              "동일 (`ATCH_FILE_NO`, `SN`) 에 대해 PdfViewerActivity 즉시 reflatten 과 UploadManager 배치 reflatten 이 동시 발화하는 케이스를 [metric]30초 ConcurrentHashMap 디바운스[/metric] (`RECENT_FLATTEN`) 로 차단",
+              "동시성 락 격상 — `GLOBAL_UPLOADING` AtomicBoolean 을 인스턴스 단위에서 [metric]JVM 전역 락[/metric]으로 격상, Scheduler / MainActivity / NetworkManager 다중 트리거 중복 동시 진입 차단",
+              "`callReflattenOnServer(serverUrl, maxVersion)` — 저장 직후 `BAKED_MAX_VERSION` 전달로 STALE 분기 회피 (낙관적 버전 전달)",
+            ],
+          },
+          {
+            title: "오프라인 동기화 자동화 — 3중 트리거 + 실패 사유 분기",
+            items: [
+              "[metric]3중 트리거 보장[/metric] — (1) 5분 주기 `ScheduledExecutorService` (`CanvasAutoSyncScheduler`, INITIAL_DELAY 2분→10초 단축) (2) `NetworkCallback` 회복 시 5초 디바운스 자동 발사 (`NetworkManager.scheduleSyncTriggerOnReconnect`) (3) VPN+OTP 성공 직후 즉시 발사 (`MainActivity.checkAndStartPendingUpload`)",
+              "[metric]`UploadOutcome` enum 3분기[/metric] (SUCCESS / FAILED_RETRY / FAILED_AUTH_SKIP) — 401·403 인증 만료는 retry_count 미증가로 사용자 재로그인 후 자연 복구, 일반 일시 오류만 max_retry 카운트",
+              "회복성 — max_retry 5 → 20 상향, [metric]24시간 경과 FAILED 자동 NOT_SYNCED 복구[/metric] (`recoverStaleFailedCanvas`), JVM 전역 `GLOBAL_UPLOADING` 으로 다중 트리거 중복 차단",
+            ],
+          },
+          {
+            title: "사용자별 PDF 격리 + 매직바이트 진단",
+            items: [
+              "공용 태블릿 순차 로그인(검사관 A→B) 시 검사관 A의 PDF 가 B 에게 노출되는 보안 이슈를 PK 확장 [metric](`atch_file_no`, `sn`, `user_id`)[/metric] + 사용자별 디렉토리 분리 `pdfDirectory/{userId}/` 로 완전 격리",
+              "SQLite PK 마이그레이션 — [metric]임시 테이블 + INSERT + DROP + RENAME 트랜잭션[/metric] 패턴 + 백업으로 무손실 마이그레이션",
+              "\"표시명은 `.pdf` 인데 매직바이트가 HWP ([metric]`D0 CF 11 E0`[/metric])\" 디스크 파일 진단 → 가스안전공사 PDF 변환 솔루션 (`TRANS_*.pdf` / `PDF_CHG_SCS_YN`) 우회 경로를 신규 전용 엔드포인트 `/offline/getInspectionPdfFile.do` 로 분리 (옵션 C — 기존 `getPdfFile.do` 회귀 0건)",
+            ],
+          },
+          {
+            title: "WebView 보안 감사 — 10건 조치 + 위험도·사이드이펙트 평가",
+            description:
+              "WebView 기반 하이브리드 앱의 보안 취약점을 단순 나열이 아닌 위험도(높음/중간/낮음) + 사이드이펙트 + 선행조건까지 명시한 감사 보고서로 정리. 즉시 조치 10건 + 향후 검토 4건 (`docs/51_Security/SECURITY_AUDIT_REPORT.md`).",
+            items: [
+              "VPN 비밀번호 평문 → AndroidX [metric]`EncryptedSharedPreferences` AES256-GCM[/metric] + 평문 자동 마이그레이션 (`LoginPreferences.kt`)",
+              "WebView 정책 강화 — `setAllowUniversalAccessFromFileURLs` / `setAllowFileAccessFromFileURLs` / `setAllowFileAccess` 3종 false, `MIXED_CONTENT_ALWAYS_ALLOW` → `COMPATIBILITY_MODE`, DevTools 조건부 활성화",
+              "[metric]JS Injection 방지[/metric] — `callJavaScriptCameraCallback` · `onReturnDate` · `notifyNetworkStateChanged` 콜백에 `'`, `\"` 이스케이프",
+              "[metric]경로 순회 방지[/metric] — `showPdfFromBase64` · `showPdfOnline` · `showEtcUrlPOP` URL 스킴 화이트리스트 + `File.getName()` + 특수문자 치환",
+              "민감정보 로깅 (쿠키·응답 body·POST body·GET params) 을 `BuildConfig.DEBUG` 조건부로 변경 — Release 빌드에서 로그캣 노출 차단",
+              "향후 검토 4건 (HTTP 평문·임시 PDF 잔류·FileProvider 경로 개방·콜백명 미검증) 은 *알면서 미루는* 의식적 판단으로 별도 우선순위 기록",
+            ],
+          },
+          {
+            title: "GPS 듀얼 모드 + 실내 한계 기술 보고서",
+            items: [
+              "`GpsManager` [metric]3개 독립 모드[/metric] 동시 운영 — 단발 조회 (`requestCurrentLocation`, 60초 타임아웃·5분 캐시), 연속 추적 (`startLocationTracking`, idempotent · `onPause/onResume` 자동 일시중지 · accuracy 30 m 필터), fresh 단발 (`requestFreshLocation`, 추적과 동시 진행 · requestTime - 1500 ms 이전 fix 거부 · 15초·100 m)",
+              "\"실내에서 GPS 안 됨\" 사용자 문의를 [metric]위성 신호 감쇠율 (콘크리트 99%+) + VPN 의 Google 위치 서버 차단 라우팅[/metric]까지 분석한 기술 보고서로 응답, VPN 화이트리스트 / 사내 WiFi DB / BLE 비콘 / 수동 입력 [metric]4가지 대안[/metric] 검토안 제시",
+              "`ConnectivityManager.NetworkCallback` 으로 VPN/WIFI/MOBILE/ETHERNET 트랜스포트 + validated capability 실시간 감지, 회복 시 5초 디바운스 후 미동기화 데이터 자동 업로드 발사",
             ],
           },
         ],
@@ -361,11 +429,27 @@ export const companies: Company[] = [
               "CLAUDE.md와 포팅 가이드를 팀 공유 컨텍스트로 구축하고, [metric]커스텀 스킬(front-sync, svn-commit-msg)로 반복 작업을 자동화[/metric]하자, 경험 차이와 관계없이 팀원 모두가 일관된 품질의 코드를 생산할 수 있었다. 앞으로의 팀 리딩은 '사람에게 무엇을 시킬 것인가'만이 아니라 'AI에게 무엇을 맡기고, 사람은 무엇에 집중할 것인가'를 함께 설계해야 한다는 것을 배웠다.",
             ],
           },
+          {
+            topic:
+              "별도 프로세스 격리 — 분리는 격리이자 새로운 통합 문제다",
+            paragraphs: [
+              "PDF 뷰어 OOM 사고가 메인 앱 + VPN 까지 끌고 가는 회귀를 본 뒤, PdfViewerActivity 를 [metric]`android:process=\":pdfviewer\"`[/metric] 별도 프로세스로 분리했다. 분리는 사고 전파 차단에는 성공했지만, 동시에 [metric]메인 프로세스의 PrimeVue UI(Drawer/SpeedDial)가 PdfViewer 위에 얹히지 못하는 새로운 통합 문제[/metric]를 만들어냈다.",
+              "정공법은 도망치지 않는 것이었다. 풀스크린 투명 WebView 를 띄우는 [metric]`OverlayActivity`[/metric] + 위젯별 HTML 분리 + WebView 인스턴스 정적 풀(`OverlayWebViewPool`) 로 우회 아키텍처를 설계하여 첫 클릭 비용 0 까지 끌어냈다. 격리(isolation)는 항상 통합(integration)의 새 비용을 만들고, 시스템 설계는 그 비용을 어디서 받을지를 선택하는 것이라는 것을 배웠다.",
+            ],
+          },
+          {
+            topic:
+              "보안 감사 — 단순 나열이 아니라 위험도·사이드이펙트·선행조건까지",
+            paragraphs: [
+              "WebView 기반 하이브리드 앱의 보안 점검을 단순 \"이거 고쳤음 리스트\" 로 끝낼 수도 있었다. 하지만 SI 환경에서 보안 항목은 코드 한 줄이 아니라 [metric]운영 사이드이펙트 + 선행조건[/metric] 까지 따져야 하는 사안이다. 예를 들어 `EncryptedSharedPreferences` 도입은 평문 SharedPreferences 자동 마이그레이션 시나리오를 동시에 처리하지 않으면 기존 사용자가 로그아웃되는 회귀를 만든다.",
+              "그래서 보안 감사 보고서를 [metric]위험도(높음/중간/낮음) + 사이드이펙트 시나리오 + 선행 조건[/metric] 까지 명시한 형태로 정리했다. 즉시 조치 10건 + [metric]향후 검토 4건[/metric](HTTP 평문·임시 PDF 잔류·FileProvider 경로 개방·콜백명 미검증) 은 *알면서 미루는* 의식적 판단으로 별도 트래킹. 보안은 결국 \"무엇을 수정했는가\" 가 아니라 \"무엇을 의식하고 있는가\" 의 문제라는 것을 정립한 작업이었다.",
+            ],
+          },
         ],
         highlightBox: {
           title: "기여 포인트",
           content:
-            "웹 프로젝트에서 설계한 프론트엔드 아키텍처(IIFE 모듈, 메타데이터 라우팅, P-Edit-DataTable 등)를 Android 앱에 성공적으로 이식. 초기 로드 경량화·WebView 브릿지 비동기화·오프라인 UX 피드백 시스템 등 성능과 사용자 경험 전반을 주도적으로 개선. 3명의 팀원을 리딩하며 30개 AI 컨텍스트 문서 기반 AI 협업 체계를 설계.",
+            "웹 프로젝트에서 설계한 프론트엔드 아키텍처(IIFE 모듈, 메타데이터 라우팅, P-Edit-DataTable 등)를 Android 앱에 성공적으로 이식. 초기 로드 경량화·WebView 브릿지 비동기화·오프라인 UX 피드백 시스템 등 성능과 사용자 경험 전반을 주도적으로 개선. 출시 이후 멀티프로세스 격리·Overlay WebView 풀링·서버사이드 Flatten·사용자 PDF 격리·WebView 보안 감사·자체 MCP 서버 등으로 운영 안정성과 보안을 지속 강화. 3명의 팀원을 리딩하며 30개 AI 컨텍스트 문서 기반 AI 협업 체계를 설계.",
         },
         gallery: [],
       },
@@ -377,20 +461,23 @@ export const companies: Company[] = [
         id: "project-smarton",
         name: "스마트온 2.0 구축 — 가스 현장검사원 태블릿 업무 시스템",
         client: "한국가스안전공사(KGS)",
-        period: "2025.03 ~ 2026.01",
+        period: "2025.03 ~ 진행 중",
         role: "프론트엔드 아키텍트 / 기술 리드 (4명 주니어 리딩)",
         stack: [
           "Vue 3",
           "PrimeVue 4.x",
           "Pinia",
           "Tailwind CSS 4",
+          "Spring Boot",
+          "MyBatis",
+          "PDFBox",
           "Sortable.js",
           "Swiper.js",
           "Hammer.js",
           "Driver.js",
         ],
         description:
-          "[metric]수천 명[/metric]의 현장검사원이 사용하는 태블릿 업무 시스템을 전면 고도화하는 프로젝트. 기존 jQuery + Vue 1.x + jqGrid 레거시를 Vue 3 + PrimeVue 기반 현대적 아키텍처로 완전 재구축하면서, 기존 비즈니스 로직의 입출력 구조를 분석하여 더 효율적으로 리팩터링. 관공서 폐쇄망(Node.js 설치 불가, 외부 CDN 접근 차단) 환경에서 [metric]500+ 업무 화면[/metric]을 운영하는 태블릿 시스템.",
+          "[metric]수천 명[/metric]의 현장검사원이 사용하는 태블릿 업무 시스템을 전면 고도화하는 프로젝트. 기존 jQuery + Vue 1.x + jqGrid 레거시를 Vue 3 + PrimeVue 기반 현대적 아키텍처로 완전 재구축하면서, 기존 비즈니스 로직의 입출력 구조를 분석하여 더 효율적으로 리팩터링. 관공서 폐쇄망(Node.js 설치 불가, 외부 CDN 접근 차단) 환경에서 [metric]500+ 업무 화면[/metric]을 운영하는 태블릿 시스템. 초기 구축 이후에도 PDF 뷰어 풀스택 통합·서버사이드 렌더링·오프라인 동기화 정합성·다운로드 성능 등 풀스택 영역의 후속 개선을 지속.",
         achievements: [
           {
             title: "폐쇄망 프론트엔드 아키텍처 설계",
@@ -452,6 +539,73 @@ export const companies: Company[] = [
               "Sortable.js·Swiper.js는 Tab Edit Mode에서 심층 활용",
             ],
           },
+          {
+            title: "외부 Svelte 5 PDF 뷰어 풀스택 통합 — 자사 시스템 표면으로 흡수",
+            description:
+              "자사 솔루션으로 개발 중인 Svelte 5 PDF 뷰어(10,500줄)를 가스피아 SFTP·DRM·내부망 구버전 Chrome·멀티탭·앱·웹 전 표면에 통합. 외부 데모 라이브러리 도입을 넘어 데이터 모델 합의 → 외부 시스템 SQL 약속 충족 → 좌표 규범 통일까지 풀스택 책임.",
+            items: [
+              "`MARKUP2_TRANS_*.pdf` 파일명 분리로 SmartOn 1.0 자산 보존, [metric]Append-only `PDF_CANVAS_DATA` 테이블[/metric] + [metric]4단 폴백 체인[/metric] (`MARKUP2_TRANS → MARKUP_TRANS → TRANS → 원본`) 으로 단일 진실의 원천 확보",
+              "가스피아(KGSC) `STA00101MServiceImpl.getPdfDownload()` 표준 약속을 위해 `/techdocu/...` 경로 일관화, 외부 시스템과의 SQL 약속을 코드 변경 없이 충족",
+              "Paper.js exportJSON 배열 형식(`[\"Path\", {segments:[[100,200]], strokeColor:[0,0,0]}]`) 을 객체 형식으로 재귀 정규화 (`normalizeRawItem` + `normalizeSegment` + `normalizeColor`) 하여 \"에러 없이 조용히 안 그려지는\" [metric]3중 silent failure[/metric] 진단·수정",
+              "`__DocumentViewer.openPDF` 단일 진입점 + `customButtons` 콜백 레지스트리 패턴으로 직렬화 불가 JS 함수의 Activity 전달 문제 해결",
+            ],
+          },
+          {
+            title: "PDF 메타데이터 응답 [metric]50초+ → 100 ms[/metric] — 서버 캐시 3계층 + prewarm",
+            items: [
+              "948페이지 PDF 첫 응답 [metric]50초+ (readTimeout)[/metric] → [metric]100 ms 내[/metric]. 서버 메타 응답이 36 DPI 로 전 페이지를 실제 렌더링하던 사고를 `PDPage.getCropBox()` + `getRotation()` 메타 추출로 교체",
+              "`PdfFileCache` [metric]3계층 캐시[/metric] — PDF LRU+TTL(20분) / JPEG 디스크 캐시(500 MB LRU+TTL 60분) / 페이지 메타(20분) + 임시 PDF 토큰(30분 TTL), key 별 lock 으로 동시 요청 직렬화",
+              "DPI 별 차등 JPEG 품질 (`PdfImageService.qualityForDpi()` — 썸네일 0.60 / 저해상도 0.75 / 본문 0.85) + 첫 페이지 백그라운드 prewarm + `getInitialBundle.do` 로 메타+첫 페이지 [metric]1 round-trip[/metric] 통합",
+              "Base64 인코딩 33% 오버헤드 제거 — `pageImage.jpg` 바이너리 직접 응답 + Blob URL 수명 관리 (`URL.revokeObjectURL`) 로 브라우저 HTTP 캐시 활용",
+            ],
+          },
+          {
+            title: "오프라인 마크업 동기화 정합성 — 11개 빈틈 1Cycle 보강",
+            description:
+              "검사원 제보 \"동기화 안 됨\" 의 실제 원인이 `pdf_file.sync_status` 미갱신으로 인한 UI 표시 결함임을 진단. P0/P1/P2/P3 [metric]11개 빈틈[/metric] 전수 점검 후 한 야간 배포로 일괄 보강 (APP r1577/r1578 + Web 7e8f349).",
+            items: [
+              "VPN+OTP 직후 `uploadPending(SYNC_QUEUE only)` 호출 빈틈을 `uploadAllPending(SYNC_QUEUE + Canvas + reflatten)` 통합으로 교체, max_retry 5 → 20 상향 + 24h 경과 시 자동 NOT_SYNCED 복구 (`recoverStaleFailedCanvas`)",
+              "오프라인 삭제·부분 업데이트 의도가 서버 미전달되어 reflatten 시 옛 마크업이 부활하던 회귀를 발견, [metric]`PDF_CANVAS_DELETE_QUEUE` / `PDF_CANVAS_UPDATE_QUEUE`[/metric] 별도 큐 테이블 2개 신설",
+              "`UploadOutcome` [metric]enum 3분기[/metric] (SUCCESS / FAILED_AUTH_SKIP / FAILED_RETRY) 로 401·네트워크·5xx 실패 사유 구분 — 인증 만료 시 retry 카운트 미증가로 자연 복구 보장",
+              "동시 발화 차단 — `AtomicBoolean static` 화로 Scheduler/MainActivity 동시 발화 전역 락, `requestServerFlatten` 30초 디바운스로 PdfViewerActivity 즉시 호출 + UploadManager 배치 호출 중복 제거",
+            ],
+          },
+          {
+            title: "Oracle 오프라인 다운로드 최적화 — 풀스캔 제거 + 의존성 체인 + COUNT(*) 해시",
+            items: [
+              "JENNIFER APM \"TOO MANY FETCH\" 워닝 진단 결과, `getRelatedMasterDataTable.do`([metric]6,099 ms / 9회 호출[/metric]) / `getGlobalReferenceCodes.do`([metric]1,704 ms / 14개 테이블 풀스캔[/metric]) 발견",
+              "[metric]Phase 1 — 서버 캐싱[/metric] — `OfflineDownloadService.getCachedOrLoad()` TTL 60분 ConcurrentHashMap (13개 참조 테이블), 배정건 단독 다운로드 시 SKB0101MV_01 사전 체크",
+              "[metric]Phase 2 — 의존성 체인 IN절 필터[/metric] — `배정건(LAW_TC/STIC_LAG_TC/ROLE_TC/INSP_KIND_TC) → inspTableSns → inspItemLrclCds → inspItemSmclCds → msrmtItemMdclSns` 5단 도출 후 6개 풀스캔 쿼리에 IN절 주입",
+              "[metric]Phase 3 — 해시 변경 감지[/metric] — 13 테이블 행 수를 단일 DUAL select 로 한 번에 조회 + 카테고리 해시 비교, APP `SYNC_STATUS.table_hash` 컬럼 마이그레이션 (`COALESCE` 후방 호환), 2회차+ 변경 없는 카테고리 스킵",
+              "SQLite WAL 동시 쓰기 미허용 특성에 따라 `isBasicDownloading ↔ isInspectionDownloading` computed 로 UI 레벨 상호 배타 잠금 — 네이티브 락 없이 [metric]SQLITE_BUSY 원천 차단[/metric]",
+            ],
+          },
+          {
+            title: "검색조건 자동 영속화 — 컨벤션 기반 프레임워크 레벨 자동 적용",
+            items: [
+              "[metric]43개 메뉴 중 39개(91%) 자동 적용[/metric] — `document` capture 단계 click 리스너 + `e.target.closest('.searchBtn')` + `contentPanel.getComponentInstance(tabId).vm.searchConditions` 딥 클론 + `setTimeout 50ms` 비블로킹 저장",
+              "백엔드 — `MenuController.updateUserOpenMenuProps.do` + `USER_MENU_INFO.MENU_PROPS` JSON 컬럼, 탭 복원 시 setup() 후 `Object.assign(vm.searchConditions, saved)` 로 Vue reactive 자동 갱신",
+              "[metric]개별 메뉴 JS 파일 수정 0건[/metric] — 단일 핸들러 + `.searchBtn` 컨벤션만 지키면 자동 적용",
+            ],
+          },
+          {
+            title: "세션 통합 관리 + GPS Pub/Sub 인프라",
+            items: [
+              "VPN(~3시간) + Web 세션(180분) 통합 [metric]`SessionManager`[/metric] — 단일 카운트다운, API 호출 성공 시에만 자동 reset (DOM 이벤트 reset 정책 폐기), 낙관적 업데이트 + 실패 시 롤백, `NetworkCallback` 토스트 알림, 오프라인 환경(localhost:8080 + `conn.getConnectionStatus`) 자동 감지로 무동작",
+              "플로팅 세션 타이머 [metric]4상태 머신[/metric] (normal/warning/critical/extended) + 드래그 + localStorage 위치 저장 + `font-variant-numeric: tabular-nums`",
+              "[metric]`GpsTrackerService` 싱글톤 Pub/Sub[/metric] — 여러 탭/팝업이 구독해도 네이티브 GPS 리스너 1개만 유지, 100 ms 디바운스 리컨실리에이션 + `desiredState ↔ nativeState` 분리 + `onPause/onResume` 양방향 브로드캐스트",
+              "`INativeAdapter` / `AndroidAdapter` / `DevAdapter` / `MockAdapter` 어댑터 패턴, Vworld 지오코딩 positive + negative caching 으로 [metric]API 호출 ~100배 절감[/metric]",
+            ],
+          },
+          {
+            title: "정적 리소스 차등 캐시 + 서버사이드 PDF Flatten",
+            items: [
+              "Servlet Filter 차등 캐시 — `/js/vendor/**` 7일·`/js/app/**` `no-cache`(304 검증), Gzip(min-response-size 2048, ~75% 감소), HTTP/2(h2c), preload 4개 핵심, `<script defer>` (nfilter 1.1 MB + driver.js)",
+              "초기 로드 [metric]109 요청 9.9 MB ~15s → 2.5 MB ~5–8s[/metric] 경량화, 재로그인 캐시 활용 시 [metric]500 KB[/metric]",
+              "클라이언트 pdf-lib flatten (brittle Paper.js JSON 의존 + WebView OOM 부담) 을 서버 PDFBox `PdfMarkupFlattenService` 로 이관 — 회전 페이지(90/180/270) `Matrix` 행렬 정합, CJK fallback `FontMappers` 전역 등록",
+              "외부 PDF Gateway (`PdfGatewayRestfullApiUtil.jobConv`) 를 `ensureAttachmentConverted.do` 단일 엔드포인트로 통합 — Lazy On-Demand 변환 + DB 영속 캐시 + 행 lock 동시성 가드 + 30초 timeout 폴링",
+            ],
+          },
         ],
         learningPoints: [
           {
@@ -466,6 +620,20 @@ export const companies: Company[] = [
             paragraphs: [
               "500+ 화면에 반복되는 CRUD 패턴을 해결해야 했지만 AG Grid 같은 유료 솔루션 도입 예산이 없었다. 3계층 아키텍처(useEditGridFactory 훅 + p-edit-datatable 래퍼 + p-edit-column 디렉티브)로 자체 설계하면서, 가장 중요하게 생각한 것은 기술적 정교함이 아니라 [metric]개발자 경험(DX)[/metric]이었다.",
               "선언적 API로 복잡성을 숨기고, [metric]주니어 개발자가 CRUD 구현에만 집중할 수 있게[/metric] 만든 결과 [metric]코드량 80% 감소[/metric]를 달성했다. 컴포넌트의 진짜 임팩트는 한 사람이 만든 기술적 우수성이 아니라, 팀 전체에 걸쳐 얼마나 많은 중복 작업을 제거했는지로 측정된다는 것을 배웠다.",
+            ],
+          },
+          {
+            topic: "OOM 진단 회고 — 증상과 원인을 혼동하면 엉뚱한 처방을 오래 한다",
+            paragraphs: [
+              "A3 도면 PDF 줌 반복 시 앱 + VPN 이 동반 사망하는 사고를 만났다. 첫 진단은 \"pdf.js CPU 과부하\" 였고, 두 번째 진단은 \"VPN 네트워크 문제\" 였다. 둘 다 [metric]오진[/metric]이었다. 실제 원인은 페이지당 캔버스 3개(PDF / UserOverlay / Paper.js) 가 GPU 메모리를 점유하면서 줌 시 구·신 동시 존재로 [metric]피크 100 MB+[/metric] 까지 치솟아 Android WebView GPU 한계를 초과한 것이었고, OOM 으로 앱 프로세스가 사망하면서 함께 종료된 소켓이 VPN 끊김으로 보였던 것뿐이다.",
+              "두 번 오진한 뒤에야 \"증상이 무엇이든 일단 정적으로 GPU 메모리 점유를 들여다보자\" 는 방향으로 전환했고, [metric]단일 캔버스 + paper.Layer N개 통합[/metric]으로 메모리를 페이지 수 무관 30 MB 고정으로 만들었다. A0 페이지 10명 누적 시나리오에서 [metric]1,820 MB → 120 MB (-93%)[/metric] 회복. 이 경험을 회고 문서로 남긴 이유는, 다음 사고에서 \"내가 보고 있는 게 증상인지 원인인지\" 를 의심하는 습관이 가장 비싼 시간 낭비를 막아준다는 것을 팀 전체에 공유하기 위해서였다.",
+            ],
+          },
+          {
+            topic: "프레임워크 레벨 자동화 — 개별 메뉴 수정 0건으로 39개에 적용",
+            paragraphs: [
+              "\"검색조건이 매번 초기화돼서 불편하다\" 는 현장 피드백이 들어왔다. 가장 쉬운 해법은 각 메뉴에 저장/복원 로직을 직접 심는 것이었지만, 500+ 화면에 같은 코드가 흩어지는 길이었다. 대신 [metric]컨벤션 + 단일 핸들러[/metric] 패턴을 선택했다 — `.searchBtn` 컨벤션만 지키면 capture 단계 click 리스너 + `vm.searchConditions` 딥 클론 + JSON 영속화가 자동으로 동작.",
+              "결과는 [metric]43개 메뉴 중 39개(91%) 자동 적용 / 개별 메뉴 JS 수정 0건[/metric]. 프레임워크 레벨에서 \"자동\" 이 동작한다는 것은 단순히 코드가 줄어드는 것이 아니라, [metric]팀원이 새 메뉴를 만들 때 더 이상 이 기능을 의식하지 않아도 된다[/metric]는 의미였다. 컨벤션의 진짜 가치는 코드 절감이 아니라 인지 부하 절감에 있다는 것을 체감했다.",
             ],
           },
         ],
