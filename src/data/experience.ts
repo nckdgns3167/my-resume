@@ -12,7 +12,220 @@ export const companies: Company[] = [
     description: "공공·기업 시스템 개발 SI 기업 · 프론트엔드 개발",
     projects: [
       // ----------------------------------------------------------
-      // 00. 스마트온 2.0 APP (오프라인)
+      // 00. PDF 마크업 뷰어 (Svelte 5 + Paper.js + PathKit)
+      // ----------------------------------------------------------
+      {
+        id: "project-pdf-viewer",
+        name: "Infinite Canvas PDF 마크업 뷰어 — 자사 솔루션",
+        client: "자사 솔루션 (스마트온 2.0 첫 적용)",
+        period: "2026.04 ~ 진행 중",
+        role: "1인 솔로 개발 (기획·설계·UI/UX·구현 전반)",
+        stack: [
+          "Svelte 5 (runes)",
+          "TypeScript",
+          "Vite 7",
+          "PDF.js",
+          "Paper.js",
+          "PathKit (Skia WASM)",
+          "lz-string",
+        ],
+        description:
+          "유클리드소프트 자사 솔루션으로 개발 중인 PDF 마크업 뷰어 모듈. Spring Boot iframe 과 Android WebView 두 호스트 환경에 [metric]단일 코드베이스[/metric]로 임베드되도록 설계되었으며, 현재 스마트온 2.0 웹·앱에 첫 적용 사례로 도입되어 솔루션과 적용이 병행 진행 중. PDF.js 로 페이지를 렌더링하고 Paper.js 가 마크업 객체를 직렬화하며, PathKit-WASM 으로 기존 paper.js 의 fragile 한 boolean 연산을 대체. [metric]1000+ 페이지 PDF[/metric] 도 페이지 가상화 + LRU 압축 캐시로 메모리 폭주 없이 처리하는 [metric]Infinite Canvas[/metric] 뷰어.",
+        achievements: [
+          {
+            title: "단일 viewStore 기반 Infinite Canvas 좌표계 설계",
+            items: [
+              "옛 모드의 분산 상태(zoomControl.scale + pinchZoom.currentScale + viewport scroll left/top)를 [metric]단일 viewStore[/metric] (translate(x,y) + scale + rotation)로 통합, 페이지 wrapper 에 CSS transform 한 번으로 적용",
+              "Paper.js 캔버스의 view.viewSize 를 PDF pt 단위 native 로 고정하여, 마크업 좌표가 줌·회전과 무관하게 항상 PDF pt 로 저장 → 줌 인/아웃, 회전 후에도 마크업 정렬 어긋남 0",
+              "isAnimating 토글로 transition 적용 여부 제어 — 페이지 전환 등 *수동 변경* 시에만 240ms 보간, 핀치·드래그 등 *능동 변환* 중에는 즉시 반응",
+              "Boundary 클램프 (MIN_VISIBLE_PX 80px) 로 페이지가 viewport 밖으로 완전히 사라지지 않도록 pan/zoom 결과 자동 보정",
+            ],
+          },
+          {
+            title: "페이지 가상화 + 압축 캐시 — 1000+ 페이지 PDF 대응",
+            items: [
+              "PdfPageViewer 가 visibility window 를 계산하여 [metric]현재 보이는 페이지 ± buffer[/metric] 만 렌더링, 페이지 전환 시 PageCanvasManager 가 마운트/언마운트되어 Paper.js scope 도 함께 정리",
+              "CompressedMap(hot LRU 100 슬롯 + cold lz-string compressToUTF16) 으로 페이지별 paper.js JSON 보관 — 압축 비율 [metric]8~12배[/metric] (1000 페이지 × 50KB = 50MB → 5MB cold + 5MB hot)",
+              "Adaptive DPI 렌더링(adaptiveDpi.ts) 으로 화면 폭에 따라 페이지 해상도 자동 조절, DPR-aware 렌더로 레티나·고배율 디스플레이 선명도 확보",
+            ],
+          },
+          {
+            title: "PathKit (Skia WASM) 기반 robust 지우개 재설계",
+            items: [
+              "paper.js 내장 boolean 연산의 fragile 함(centerline split·legacySubtract 등) 으로 인한 잔여 path / 깨진 도형 문제를 Skia 의 PathOps subtract 로 교체",
+              "드래그 중에는 시각 path(blendMode: destination-out) 로 [metric]GPU 합성 즉시 시각 erase[/metric], pointerup 시 PathKit subtract 로 실제 데이터 갱신하는 2단계 모델",
+              "[metric]공간 인덱스(grid hash)[/metric] 도입(CELL_SIZE 64px, GRID_THRESHOLD 50) — O(N) layer scan 을 eraser bounds 가 겹치는 cell 의 item 만 검사하는 O(local) 로 단축, [metric]100+ stroke 페이지[/metric] 에서도 지우개 stutter 0",
+            ],
+          },
+          {
+            title: "시그니처 UI — 액체 모핑 도구 탭 인디케이터",
+            description:
+              "상단 도구 버튼 *바로 아래* 로 슬라이드 다운하는 colored 탭(현재 색·두께/fontSize 숫자 표시) → 탭을 누르면 동일 DOM 박스가 풀 도구설정 팝오버로 *액체처럼* 부풀어 변형. 6개 속성(width / height / left / top / 4개 border-radius) 을 동시에 transition 하여 탭 ↔ 팝오버를 단일 컨테이너 모핑으로 표현.",
+            items: [
+              "[metric]cubic-bezier(.3, 1.4, .5, 1) 380ms[/metric] 탄성 over-shoot easing 으로 시그니처 모션 구현",
+              "::before(solid tab 색 base) + ::after(글래스 overlay) [metric]cross-fade[/metric] 로 배경 색이 회색 깜빡임 없이 자연스럽게 전환",
+              "WCAG relative luminance 계산으로 탭 배경색 명도 기준 흑/백 텍스트 자동 분기 — 사용자가 어떤 색을 골라도 두께 숫자 가독성 보장",
+              "{#key currentTool} 로 도구 전환 시 컴포넌트 재마운트 → Svelte transition:fly 가 *옛 탭 슬라이드 업* + *새 탭 슬라이드 다운* 동시 처리",
+            ],
+            metrics: ["6속성 동시 모핑", "380ms 탄성 over-shoot"],
+          },
+          {
+            title: "도구별 메모리 + 도구별 맞춤 팔레트",
+            items: [
+              "brushSettings 가 [metric]도구별 마지막 색·두께·fontSize[/metric] 를 colorByTool / widthByTool / fontSizeByTool Map 으로 보존, 도구 전환 시 applyToolDefault() 로 마지막 값 자동 복원",
+              "도구 성격에 맞는 차등 팔레트 설계 — pen=풀 팔레트(rainbow 7×6 + grayscale 1열 = 49색), highlighter/사각형/원/선=simplifiedPalette 5색(Tailwind 400~500 채도), text=textPalette 6색(검정+5색), eraser=색 섹션 없음",
+              "정합 정책 — 각 도구의 기본색은 *그 도구의 팝오버 팔레트* 안에 반드시 존재해야 함 (초기 active 표시 보장)",
+            ],
+          },
+          {
+            title: "페이지별 Undo/Redo 히스토리 매니저",
+            items: [
+              "페이지별 snapshot 스택([metric]페이지당 200, 전체 1000 cap[/metric]) 으로 형광펜·펜 100+ stroke 도 끝까지 undo 가능",
+              "[metric]300ms debounce[/metric] 로 연속 입력을 단일 스냅샷으로 압축, 마지막 스냅샷 중복 방지 Map 으로 동일 상태 push 차단",
+              "활성 페이지가 바뀌면 canUndo/canRedo 가 해당 페이지 스택을 derived 로 자동 반영",
+            ],
+          },
+          {
+            title: "이중 호스트 브리지 — Android WebView / iframe postMessage",
+            items: [
+              "[metric]window.pdfv.*[/metric] (호스트 → 뷰어 API) — loadPdf / loadPdfStreamUrl / loadPdfBase64, setVisibility(patch), setSaveIntent, setCustomButtons, setSideToolbarPosition, restoreEditCanvas, showFatalError, registerConfirmHandler / registerToastHandler",
+              "[metric]window.conn.*[/metric] (뷰어 → Android JsInterface) — onSaveComplete(json, deletedIds), closeViewer, retryPdfLoad, requestPageImage(pageNum, dpi, reqId)",
+              "iframe `postMessage` 채널로 Spring Boot 임베드 환경에서도 동일 API 사용 가능 — 호스트별 분기 코드 제거",
+              "Visibility 패치는 키 기반 다단계 patch (`overlay.popover.history` / `toolbar.side.rotate` 등) 로 [metric]UI 요소 단위 표시/숨김[/metric] 호스트 위임",
+            ],
+          },
+          {
+            title: "Svelte 5 runes + Factory Function 패턴 일관 적용",
+            items: [
+              "옛 `$:` reactive 구문 / writable store 폐기, [metric]$state / $derived / $effect[/metric] 일관 사용으로 반응성 추적이 컴포넌트와 lib 모듈을 동일 모델로 관통",
+              "모든 lib 모듈을 class 대신 `createXxx()` factory function 으로 노출 — `$state` 를 함수 내부에 자연스럽게 캡슐화, 인스턴스화 비용 낮음, 의존성을 명시적 인자(DI)로 받음",
+              "[metric]20+ factory[/metric] (pdfLoader / pdfRenderer / imageLoader / pageNavigation / viewStore / viewPinchZoom / viewWheelZoom / paperCanvas / pageCanvasManager / canvasState / brushSettings / drawingMode / highlighterMode / eraserMode / shapeTools / textMode / selectionMode / lassoMode / historyManager / lowResPreview / userOverlay …) 를 PdfViewer.svelte 가 단일 오케스트레이터로 조립",
+              "tsc --noEmit + svelte-check 통과 필수 컨벤션, 주석은 *왜(Why)* 중심 — *무엇(What)* 은 코드로 자명하면 생략",
+            ],
+          },
+          {
+            title: "글래스모픽 chrome 통일 디자인 시스템",
+            items: [
+              "상단 PdfToolbar / 사이드 toolbar / Popover / ConfirmDialog / SaveFab / ToolTabIndicator 모두 동일 글래스 패턴 — linear-gradient(135deg) 3-stop white α + backdrop-filter blur(10px) saturate(140%) + slate-tone shadow",
+              "`@supports not (backdrop-filter: blur())` 폴백 분기로 미지원 브라우저에서도 시각 일관성 확보",
+              "tab(solid 도구 색) ↔ popover(글래스) 전환을 ::before / ::after 두 layer 의 opacity cross-fade 로 처리, 단일 컨테이너에서 두 상태 시각이 자연스럽게 morph",
+            ],
+          },
+          {
+            title: "마크업 도구 8종 + 텍스트 inline 편집",
+            items: [
+              "[metric]선택 / 영역선택(lasso) / 펜 / 하이라이터 / 지우개 / 사각형 / 원 / 직선 / 텍스트[/metric] 9개 도구, 각각 createXxx 모드 모듈로 분리",
+              "펜 — Paper.js Path 에 [metric]Galaxy S Pen 압력[/metric] 반영 (pressure 0~1 → strokeWidth × (0.3 + p × 1.4))",
+              "하이라이터 — 반투명 stroke + butt linecap 으로 형광펜 메타포 재현",
+              "텍스트 — Paper.js PointText + inline 편집기 + TextEditMiniToolbar (색·폰트 크기 mini 툴바) 로 캔버스 위에서 바로 편집",
+              "선택 — selectionBox + 8-방향 selectionResize 핸들로 객체 이동·리사이즈, lasso 는 marquee 영역 선택",
+            ],
+          },
+          {
+            title: "저장 파이프라인 — chunked save + lz-string 압축",
+            items: [
+              "FAB Speed Dial 클릭 → 페이지별 canvasState.exportJSON() → [metric]lz-string 압축[/metric] → window.conn.notifySaveChunk(pageNum, chunk) chunked 전송 → 전체 페이지 완료 시 notifySaveCommit()",
+              "SaveProgressDialog 로 진행률을 실시간 시각화하고, 미저장 상태에서 닫기 시도 시 ConfirmDialog 로 사용자 의도 확인",
+              "호스트가 등록한 registerConfirmHandler / registerToastHandler 로 확인 UI 를 [metric]호스트 네이티브 UI 로 가로채기[/metric] 가능 — Android 다이얼로그 / iframe parent toast 와 시각 통일",
+            ],
+          },
+          {
+            title: "양손 핀치 줌 + 휠 줌 + 회전",
+            items: [
+              "viewPinchZoom — 두 손가락 핀치 시 viewStore.zoomAtPoint(scale, focal) 직접 호출하는 DOM 직접 조작 없는 새 모드, 검지+중지 *완전히 붙인* 채로 핀치인 시작 케이스도 정상 인식하도록 MIN_PINCH_DISTANCE_PX=0 + 거리 임계 100px 팜리젝션",
+              "viewWheelZoom — Ctrl + 휠 줌, 휠만 사용 시는 네이티브 스크롤로 위임",
+              "페이지별 회전(0/90/180/270°) — rotations Record<pageNum, deg> 로 *현재 보고 있는 페이지만* 적용, 회전된 4 모서리의 외접 사각형 계산으로 viewport bounding box 정확히 추적",
+            ],
+          },
+          {
+            title: "호스트 UI 위임 + Visibility 패치",
+            items: [
+              "사이드 툴바 위치를 호스트가 [metric]`right' | 'bottom'`[/metric] 으로 선택 가능 — 같은 뷰어가 데스크탑(오른쪽)·태블릿 가로(아래) 두 레이아웃으로 적응",
+              "registerConfirmHandler / registerToastHandler 로 호스트가 자체 UI 로 가로채기 — Android 네이티브 다이얼로그, Spring 모달 등과 시각 통일",
+              "setSaveIntent('save' | 'mail' | 'approval' | 'custom') 로 FAB 라벨·아이콘을 호스트 워크플로우에 맞춰 동적 변경",
+              "setCustomButtons(json) 로 Save FAB Speed Dial 에 호스트별 sub-action 주입",
+            ],
+          },
+        ],
+        learningPoints: [
+          {
+            topic:
+              "Svelte 5 runes — 컴포넌트와 비즈니스 로직을 동일 반응성 모델로 통일",
+            paragraphs: [
+              "이번 프로젝트가 첫 Svelte 5 도입이었다. 옛 `$:` reactive 구문이나 writable store 도구를 폐기하고 [metric]$state / $derived / $effect[/metric] 만으로 작성한 결과, 컴포넌트(.svelte)와 비즈니스 로직(.svelte.ts)이 *동일 반응성 모델* 위에서 동작했다. React + Zustand 처럼 컴포넌트 안과 밖에 서로 다른 반응성 시스템을 두는 패턴과 달리, 코드를 옮길 때 발생하는 mental switching cost 가 거의 0 이었다.",
+              "특히 factory function 패턴(`createXxx()` 가 `$state` 를 캡슐화한 객체 반환)은 [metric]class 가 가지는 this 바인딩 문제와 상속 복잡도를 회피[/metric]하면서도 DI 가 자연스럽게 표현되는 구조였다. 20+ factory 가 PdfViewer.svelte 단일 오케스트레이터에 조립되는 구조는 한 화면당 의존성 그래프가 명시적으로 드러나서 후속 유지보수자가 진입 비용 없이 코드를 읽을 수 있게 만들었다.",
+            ],
+          },
+          {
+            topic:
+              "Infinite Canvas — 좌표계를 통합하면 기능이 자동으로 따라온다",
+            paragraphs: [
+              "초기에는 DOM `transform: scale()` 으로 페이지를 줌하고, 별도로 scroll 위치를 보정하는 옛 패턴이었다. 핀치 줌·휠 줌·페이지 전환·회전 등 각 인터랙션이 *자기만의 좌표 상태* 를 만들면서 결국 \"이 도구를 켜면 줌이 깨진다\" 같은 회귀가 끝없이 발생했다.",
+              "전환점은 [metric]단일 viewStore(translate + scale + rotation)[/metric] 를 카메라로 두고 CSS transform 한 번으로 적용한 것이었다. Paper.js view 는 PDF pt 단위 native 로 고정하여 마크업 좌표가 *카메라와 독립* 되도록 분리한 순간, 줌·회전·팬이 마크업 좌표에 어떤 영향도 주지 않는 깨끗한 모델이 됐다. [metric]좌표계의 단일 source of truth[/metric] 는 단순한 코드 정리가 아니라, 새 기능이 자동으로 따라오게 만드는 아키텍처 선택이라는 것을 체감했다.",
+            ],
+          },
+          {
+            topic:
+              "라이브러리의 fragile 한 영역을 다른 도구로 대체하는 결정 — paper.js boolean → PathKit",
+            paragraphs: [
+              "지우개 도구를 paper.js 내장 boolean(subtract / centerline split / legacySubtract) 으로 구현했지만, [metric]잔여 path / 깨진 도형 / PointText 인식 실패[/metric] 등 fragile 한 케이스가 끝없이 나왔다. 라이브러리 안에서 워크어라운드를 쌓는 길과, 핵심 연산만 다른 도구로 갈아끼우는 길 두 가지 중 후자를 선택했다.",
+              "Skia 의 [metric]PathKit-WASM[/metric] 으로 boolean subtract 만 위임하고, paper.js 는 그대로 시각 렌더링 + 상태 직렬화 책임으로 두는 분리 설계로 지우개를 재구축했다. 모든 도구를 한 라이브러리로 강제하지 않고, 각 도구의 *가장 신뢰성 있는 도구* 를 조합하는 것이 결과적으로 가장 robust 한 구조라는 것을 배웠다. [metric]라이브러리 선택은 단일 선택이 아니라 책임 분할이다[/metric].",
+            ],
+          },
+          {
+            topic:
+              "1인 솔로 개발에서 UI/UX 디테일에 시간을 쓰는 이유",
+            paragraphs: [
+              "프로젝트 후반부의 절반 가까운 시간을 [metric]도구 탭 ↔ 팝오버 모핑 / 글래스모픽 chrome / 도구별 팔레트 정합 / WCAG luminance 자동 흑백 텍스트[/metric] 같은 \"기능 외\" 디테일에 썼다. 객관적으로 이런 디테일이 없어도 PDF 마크업은 동작한다.",
+              "그럼에도 시간을 쓴 이유는, 사용자가 매 작업마다 마주하는 도구 전환 모션이 [metric]제품이 \"잘 만들어졌다\"는 인상을 결정[/metric]하기 때문이다. 1인 솔로 개발의 장점은 의사결정 단계를 거치지 않고 즉시 디테일을 다듬을 수 있다는 것이고, [metric]자사 솔루션[/metric]으로서 외부 발주처의 요구사항에 묶이지 않은 만큼 \"이건 좀 다르다\"는 평가를 받게 만드는 디테일을 끝까지 다듬을 수 있었다.",
+            ],
+          },
+          {
+            topic:
+              "호스트 위임형 API — \"호스트가 무엇을 결정하게 할 것인가\"",
+            paragraphs: [
+              "동일 뷰어 모듈이 Android WebView 와 Spring Boot iframe 두 환경에 동시 임베드되어야 했다. 처음에는 호스트별 분기 코드를 뷰어 내부에 두었지만, 그 결과 [metric]뷰어가 호스트의 종류를 알아야 하는 의존성 역전[/metric] 이 발생했다.",
+              "전환점은 뷰어가 호스트에게 묻지 않고 [metric]API 형태로 위임할 수 있는 모든 결정을 외부화[/metric] 한 것이었다 — setVisibility(patch) 로 UI 요소 표시/숨김, setSideToolbarPosition 으로 레이아웃 모드, registerConfirmHandler / registerToastHandler 로 확인·토스트 UI, setSaveIntent / setCustomButtons 로 저장 워크플로우 변형까지. 뷰어는 단지 *어떤 호스트와도 동일하게* 동작하면 되고, 호스트는 자신의 컨텍스트(태블릿 가로/데스크탑/모바일 web)에 맞춰 뷰어를 패치한다. [metric]좋은 임베드 가능 모듈은 호스트의 종류를 모른다[/metric] 는 것을 배웠다.",
+            ],
+          },
+        ],
+        highlightBox: {
+          title: "기여 포인트",
+          content:
+            "기획·설계·UI/UX·구현 전체를 1인 솔로 개발. 첫 Svelte 5 runes 도입과 factory function 패턴 일관 적용으로 컴포넌트와 비즈니스 로직을 동일 반응성 모델로 통일. PathKit-WASM 으로 paper.js boolean 의 fragile 한 영역을 대체하여 robust 한 지우개 재구축. 단일 viewStore + Paper.js PDF pt native 좌표계로 줌·회전·팬과 마크업 좌표의 의존성 제거. 호스트 위임형 API(setVisibility / registerConfirmHandler / setSideToolbarPosition 등) 로 Android WebView 와 Spring Boot iframe 두 환경을 분기 코드 없이 동시 지원. 도구 탭 ↔ 팝오버 액체 모핑·글래스모픽 chrome 통일 등 시그니처 UI 디테일을 자발적으로 설계.",
+        },
+        gallery: [
+          {
+            layout: "default",
+            items: [
+              {
+                src: `${IMG}/08-pdf-viewer/main-viewer.png`,
+                alt: "PDF 마크업 뷰어 메인 화면",
+                caption: "메인 뷰어",
+                subCaption:
+                  "상단 도구 탭 인디케이터(highlighter 5색 팔레트) + 좌측 썸네일 + 우측 사이드 툴바",
+              },
+              {
+                src: `${IMG}/08-pdf-viewer/pen-palette-history.png`,
+                alt: "펜 풀 팔레트 + 작업 이력 팝오버",
+                caption: "펜 팔레트 · 작업 이력",
+                subCaption:
+                  "rainbow 7×6 + grayscale 1열 풀 팔레트 + 다른 사용자 마크업 토글 popover",
+              },
+              {
+                src: `${IMG}/08-pdf-viewer/landscape-highlighter.png`,
+                alt: "가로 페이지 + 하이라이터 stroke",
+                caption: "가로 페이지 · 하이라이터",
+                subCaption:
+                  "페이지별 회전(Landscape) + 반투명 butt linecap 하이라이터 stroke",
+              },
+            ],
+          },
+        ],
+      },
+
+      // ----------------------------------------------------------
+      // 01. 스마트온 2.0 APP (오프라인)
       // ----------------------------------------------------------
       {
         id: "project-smarton-offline",

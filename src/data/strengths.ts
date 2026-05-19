@@ -4,7 +4,7 @@ export const strengths: Strength[] = [
 	{
 		title: "제약을 설계 기회로 전환하는 아키텍처 엔지니어",
 		description:
-			"폐쇄망에서 [metric]500+ 업무 화면[/metric]을 운영하는 태블릿 시스템의 프론트엔드 아키텍처를 설계했습니다. npm/번들러 없이 [tip=iife]IIFE 기반 모듈 스코핑[/tip]과 [tip=scriptloader]Promise 기반 ScriptLoader[/tip]로 화면별 JS를 동적 로드하는 [tip=islands,metric]Islands Architecture[/tip]를 구현하여, 초기 로딩 시간을 [metric]약 50% 단축[/metric]했습니다.\n\n이 아키텍처를 Android 오프라인 앱으로 확장하여, 내장 [tip=nanohttp]LocalWebServer(NanoHTTPD)[/tip] 위에서 동일한 웹 프론트엔드를 구동하고 [tip=oracle-sqlite,metric]128개 테이블[/tip]의 Oracle→SQLite 자동 변환 레이어를 설계했습니다. Gzip·지연 로딩·Defer 전략을 조합하여 앱 초기 로드 전송량을 [metric]약 75% 경량화[/metric]하고, WebView↔Native 브릿지 비동기화로 UI 응답성을 확보했습니다. 하나의 아키텍처가 웹과 앱 두 플랫폼을 관통하는 [metric]재사용 가능한 설계 자산[/metric]으로 확장된 사례입니다.\n\n[tip=meta-routing]메타데이터 기반 자동 라우팅[/tip]으로 새 메뉴 추가 시 [metric]프론트엔드 코드 수정 제로[/metric]를 달성하여, 제약 환경에서도 확장성을 확보하는 아키텍처를 설계합니다.",
+			"폐쇄망에서 [metric]500+ 업무 화면[/metric]을 운영하는 태블릿 시스템의 프론트엔드 아키텍처를 설계했습니다. npm/번들러 없이 [tip=iife]IIFE 기반 모듈 스코핑[/tip]과 [tip=scriptloader]Promise 기반 ScriptLoader[/tip]로 화면별 JS를 동적 로드하는 [tip=islands,metric]Islands Architecture[/tip]를 구현하여, 초기 로딩 시간을 [metric]약 50% 단축[/metric]했습니다.\n\n이 아키텍처를 Android 오프라인 앱으로 확장하여, 내장 [tip=nanohttp]LocalWebServer(NanoHTTPD)[/tip] 위에서 동일한 웹 프론트엔드를 구동하고 [tip=oracle-sqlite,metric]128개 테이블[/tip]의 Oracle→SQLite 자동 변환 레이어를 설계했습니다. Gzip·지연 로딩·Defer 전략을 조합하여 앱 초기 로드 전송량을 [metric]약 75% 경량화[/metric]하고, WebView↔Native 브릿지 비동기화로 UI 응답성을 확보했습니다. 하나의 아키텍처가 웹과 앱 두 플랫폼을 관통하는 [metric]재사용 가능한 설계 자산[/metric]으로 확장된 사례입니다.\n\nPDF 마크업 뷰어 모듈에서는 한 단계 더 나아가, [tip=dual-host,metric]단일 코드베이스가 Android WebView 와 Spring Boot iframe 두 호스트[/tip]에 동시 임베드되는 구조를 설계했습니다. 뷰어 내부에 호스트 분기 코드를 두지 않고, [tip=host-delegation,metric]호스트 위임형 API[/tip](setVisibility 패치·registerConfirmHandler·setSideToolbarPosition·setSaveIntent 등)로 호스트가 자신의 컨텍스트(태블릿 가로·데스크탑·모바일 web)에 맞춰 뷰어를 패치하도록 외부화. 임베드 가능한 모듈은 호스트의 종류를 몰라야 한다는 원칙을 [metric]분기 코드 0[/metric]으로 구현했습니다.\n\n[tip=meta-routing]메타데이터 기반 자동 라우팅[/tip]으로 새 메뉴 추가 시 [metric]프론트엔드 코드 수정 제로[/metric]를 달성하여, 제약 환경에서도 확장성을 확보하는 아키텍처를 설계합니다.",
 		tipPopovers: [
 			{
 				id: "iife",
@@ -41,6 +41,18 @@ export const strengths: Strength[] = [
 				title: "메타데이터 기반 자동 라우팅",
 				content:
 					"DB 메뉴 테이블(MENU_INFO)에서 화면 ID·JS 경로·권한 정보를 읽어, 프론트엔드 코드 수정 없이 메뉴를 동적으로 생성하는 구조. 새 화면 추가 시 DB에 메뉴 레코드만 INSERT하면 자동 반영됩니다.",
+			},
+			{
+				id: "dual-host",
+				title: "단일 모듈 · 이중 호스트 임베드",
+				content:
+					"동일한 PDF 마크업 뷰어 산출물(dist/)이 Android 앱(WebView assets)과 Spring Boot 웹(iframe)에 동시 임베드. 호스트 통신은 Android WebView 의 window.conn JsInterface 와 iframe postMessage 채널 두 경로로 일관된 API 를 제공합니다.",
+			},
+			{
+				id: "host-delegation",
+				title: "호스트 위임형 API",
+				content:
+					"뷰어가 호스트 종류를 알지 않도록 외부화한 API 집합 — setVisibility(patch) 로 UI 요소 단위 표시/숨김, setSideToolbarPosition('right'|'bottom') 로 레이아웃, registerConfirmHandler / registerToastHandler 로 확인·토스트 UI 위임, setSaveIntent / setCustomButtons 로 저장 워크플로우 변형. 호스트가 자신의 컨텍스트로 뷰어를 패치합니다.",
 			},
 		],
 	},
@@ -170,7 +182,7 @@ export const strengths: Strength[] = [
 	{
 		title: "요구사항 너머의 UX를 설계하는 엔지니어",
 		description:
-			"SI 환경에서 주어진 요구사항만 구현하지 않습니다. 스마트온 2.0에서 탭의 오터치·되돌리기 불가 문제를 고객 요구 이전에 식별하고, [tip=tab-edit,metric]iOS 홈 화면 앱 정리 UX에서 착안한 Tab Edit Mode[/tip]를 자발적으로 제안·구현했습니다. 롱프레스 시간 분기(빠른 탭→전환, 롱프레스+드래그→정렬, 롱프레스+릴리스→편집모드)를 [tip=threshold,metric]500ms 임계값[/tip]으로 정밀 설계했습니다.\n\n입사 첫 프로젝트(LabelOn)부터 SSR 환경의 새로고침 문제에 의문을 품고 [tip=labelon-ajax]AJAX 부분 갱신 패턴[/tip]을 스스로 학습·적용했고, 스마트공장 PMS에서는 협약 변경 시 [tip=change-vis,metric]연노랑 배경 강조 + 원본값 팝오버[/tip]를 띄우는 공간 효율적 전후 비교 UX를 독자 설계했습니다.\n\n스마트온 오프라인 앱에서는 현장 작업자가 시스템 상태를 즉각 인지할 수 있는 [metric]다층 시각 피드백[/metric]과, 세션 만료를 단계적으로 경고하는 [metric]상태 머신 기반 플로팅 타이머[/metric]를 요구사항 없이 자발적으로 설계했습니다.\n\n동료들이 [metric]'솔루션을 개발해야 한다'[/metric]고 평가할 만큼, 사용자 인지 부하를 줄이는 데 집착하며 요구사항 이면의 실제 문제를 찾아 해결합니다.",
+			"SI 환경에서 주어진 요구사항만 구현하지 않습니다. 스마트온 2.0에서 탭의 오터치·되돌리기 불가 문제를 고객 요구 이전에 식별하고, [tip=tab-edit,metric]iOS 홈 화면 앱 정리 UX에서 착안한 Tab Edit Mode[/tip]를 자발적으로 제안·구현했습니다. 롱프레스 시간 분기(빠른 탭→전환, 롱프레스+드래그→정렬, 롱프레스+릴리스→편집모드)를 [tip=threshold,metric]500ms 임계값[/tip]으로 정밀 설계했습니다.\n\n입사 첫 프로젝트(LabelOn)부터 SSR 환경의 새로고침 문제에 의문을 품고 [tip=labelon-ajax]AJAX 부분 갱신 패턴[/tip]을 스스로 학습·적용했고, 스마트공장 PMS에서는 협약 변경 시 [tip=change-vis,metric]연노랑 배경 강조 + 원본값 팝오버[/tip]를 띄우는 공간 효율적 전후 비교 UX를 독자 설계했습니다.\n\n스마트온 오프라인 앱에서는 현장 작업자가 시스템 상태를 즉각 인지할 수 있는 [metric]다층 시각 피드백[/metric]과, 세션 만료를 단계적으로 경고하는 [metric]상태 머신 기반 플로팅 타이머[/metric]를 요구사항 없이 자발적으로 설계했습니다.\n\nPDF 마크업 뷰어에서는 1인 솔로 개발의 장점을 살려 UX 디테일에 후반부 시간의 절반을 투자했습니다. 도구를 선택하면 colored 탭이 슬라이드 다운으로 나타나고, 그 탭을 누르면 [tip=liquid-morph,metric]동일 DOM 박스가 6속성 동시 transition 으로 풀 도구설정 팝오버로 액체처럼 부풀어 변형[/tip]되는 시그니처 모션을 cubic-bezier(.3, 1.4, .5, 1) 380ms 탄성 over-shoot 로 설계. [tip=glass-chrome,metric]상단 툴바·사이드 툴바·팝오버·다이얼로그·FAB 모두 동일 글래스모픽 패턴[/tip]으로 통일하여 모듈 전체의 시각 일관성을 확보했고, [tip=wcag-luminance,metric]WCAG relative luminance 계산[/tip]으로 탭 배경색의 명도에 따라 두께 숫자의 흑/백 텍스트를 자동 분기 — 사용자가 어떤 색을 골라도 가독성이 깨지지 않도록 했습니다.\n\n동료들이 [metric]'솔루션을 개발해야 한다'[/metric]고 평가할 만큼, 사용자 인지 부하를 줄이는 데 집착하며 요구사항 이면의 실제 문제를 찾아 해결합니다.",
 		tipPopovers: [
 			{
 				id: "tab-edit",
@@ -195,6 +207,24 @@ export const strengths: Strength[] = [
 				title: "협약변경 시각화 UX",
 				content:
 					"기존 협약과 변경 협약을 나란히 보여주면 화면 공간을 많이 차지하므로, 변경된 셀만 연노랑 배경으로 강조하고 hover 시 원본값을 팝오버로 표시하는 공간 효율적 비교 UX를 독자 설계했습니다.",
+			},
+			{
+				id: "liquid-morph",
+				title: "도구 탭 ↔ 팝오버 액체 모핑",
+				content:
+					"상단 도구 버튼 아래로 슬라이드 다운하는 colored 탭과 풀 도구설정 팝오버가 동일한 DOM 박스. width / height / left / top / 4개 border-radius 6개 속성을 cubic-bezier(.3, 1.4, .5, 1) 380ms 탄성 over-shoot 로 동시 transition 하여 탭이 액체처럼 부풀어 팝오버로 변형. ::before(solid 도구 색) + ::after(글래스) 두 레이어의 opacity cross-fade 로 배경 색이 회색 깜빡임 없이 자연 전환됩니다.",
+			},
+			{
+				id: "glass-chrome",
+				title: "글래스모픽 chrome 통일",
+				content:
+					"상단 PdfToolbar / 사이드 toolbar / Popover / ConfirmDialog / SaveFab / ToolTabIndicator 모두 동일 글래스 패턴 — linear-gradient(135deg) 3-stop white α + backdrop-filter blur(10px) saturate(140%) + slate-tone shadow. @supports not (backdrop-filter) 폴백으로 미지원 브라우저에서도 시각 일관성을 확보했습니다.",
+			},
+			{
+				id: "wcag-luminance",
+				title: "WCAG luminance 자동 흑/백 텍스트",
+				content:
+					"탭에 표시되는 두께·fontSize 숫자가 사용자가 고른 색 위에서도 항상 잘 보이도록, WCAG relative luminance 공식(0.2126R + 0.7152G + 0.0722B with sRGB linearization)으로 배경 명도 L 을 계산. L > 0.5 이면 검정(#0f172a), 그 외에는 흰색(#ffffff)을 자동 선택합니다.",
 			},
 		],
 	},

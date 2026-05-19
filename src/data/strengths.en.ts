@@ -4,7 +4,7 @@ export const strengths: Strength[] = [
 	{
 		title: "An Architect Who Turns Constraints into Design Opportunities",
 		description:
-			"I designed the frontend architecture for a tablet system running [metric]500+ business screens[/metric] in an air-gapped network. Without npm or bundlers, I implemented an [tip=islands,metric]Islands Architecture[/tip] using [tip=iife]IIFE-based module scoping[/tip] and [tip=scriptloader]Promise-based ScriptLoader[/tip] for on-demand JS loading per screen, [metric]reducing initial load time by ~50%[/metric].\n\nI extended this architecture to an Android offline app, running the same web frontend on an embedded [tip=nanohttp]LocalWebServer (NanoHTTPD)[/tip] and designing an Oracle→SQLite auto-translation layer for [tip=oracle-sqlite,metric]128 tables[/tip]. Combined Gzip, lazy loading, and Defer strategies to [metric]reduce app initial load by ~75%[/metric], and secured UI responsiveness through async WebView↔Native bridge conversion. A single architectural decision became a [metric]reusable design asset[/metric] spanning both web and app platforms.\n\n[tip=meta-routing]Metadata-driven auto-routing[/tip] achieves [metric]zero frontend code changes[/metric] when adding new menus — designing for extensibility even under constraints.",
+			"I designed the frontend architecture for a tablet system running [metric]500+ business screens[/metric] in an air-gapped network. Without npm or bundlers, I implemented an [tip=islands,metric]Islands Architecture[/tip] using [tip=iife]IIFE-based module scoping[/tip] and [tip=scriptloader]Promise-based ScriptLoader[/tip] for on-demand JS loading per screen, [metric]reducing initial load time by ~50%[/metric].\n\nI extended this architecture to an Android offline app, running the same web frontend on an embedded [tip=nanohttp]LocalWebServer (NanoHTTPD)[/tip] and designing an Oracle→SQLite auto-translation layer for [tip=oracle-sqlite,metric]128 tables[/tip]. Combined Gzip, lazy loading, and Defer strategies to [metric]reduce app initial load by ~75%[/metric], and secured UI responsiveness through async WebView↔Native bridge conversion. A single architectural decision became a [metric]reusable design asset[/metric] spanning both web and app platforms.\n\nIn the PDF markup viewer module, I took this one step further — designing a structure where [tip=dual-host,metric]a single codebase is embedded simultaneously into both Android WebView and Spring Boot iframe hosts[/tip]. Rather than placing host-branching code inside the viewer, I externalized every decision via a [tip=host-delegation,metric]host-delegation API[/tip] (setVisibility patches, registerConfirmHandler, setSideToolbarPosition, setSaveIntent, etc.) so the host patches the viewer to its own context (tablet landscape, desktop, mobile web). The principle that 'an embeddable module shouldn't know its host type' was implemented with [metric]zero branching code[/metric].\n\n[tip=meta-routing]Metadata-driven auto-routing[/tip] achieves [metric]zero frontend code changes[/metric] when adding new menus — designing for extensibility even under constraints.",
 		tipPopovers: [
 			{
 				id: "iife",
@@ -41,6 +41,18 @@ export const strengths: Strength[] = [
 				title: "Metadata-driven Auto Routing",
 				content:
 					"Reads screen ID, JS path, and permission info from the DB menu table (MENU_INFO) to dynamically generate menus without frontend code changes. Adding a new screen only requires an INSERT into the DB.",
+			},
+			{
+				id: "dual-host",
+				title: "Single Module · Dual Host Embed",
+				content:
+					"The same PDF markup viewer build output (dist/) is embedded simultaneously into the Android app (WebView assets) and Spring Boot web (iframe). Host communication is unified through two channels — Android WebView's window.conn JsInterface and iframe postMessage — exposing the same API surface.",
+			},
+			{
+				id: "host-delegation",
+				title: "Host-Delegation API",
+				content:
+					"An API surface externalized so the viewer doesn't know its host type — setVisibility(patch) for per-UI-element show/hide, setSideToolbarPosition('right'|'bottom') for layout, registerConfirmHandler / registerToastHandler for confirm/toast UI delegation, setSaveIntent / setCustomButtons for save-workflow variants. The host patches the viewer to its own context.",
 			},
 		],
 	},
@@ -170,7 +182,7 @@ export const strengths: Strength[] = [
 	{
 		title: "An Engineer Who Designs UX Beyond Requirements",
 		description:
-			"I don't just implement given requirements in SI environments. In SmartOn 2.0, I identified tab mis-touch and irreversible-close issues before client requests, and voluntarily proposed and implemented [tip=tab-edit,metric]Tab Edit Mode inspired by iOS home screen app management UX[/tip]. I precisely designed long-press time branching (quick tap→switch, long-press+drag→reorder, long-press+release→edit mode) with a [tip=threshold,metric]500ms threshold[/tip].\n\nFrom my very first project (LabelOn), I questioned SSR environment refresh issues and self-taught [tip=labelon-ajax]AJAX partial rendering patterns[/tip]. In Smart Factory PMS, I independently designed a space-efficient before/after comparison UX with [tip=change-vis,metric]light-yellow background highlighting + original-value popovers[/tip] for agreement changes.\n\nIn the SmartOn offline app, I voluntarily designed [metric]multi-layer visual feedback[/metric] for field workers to instantly recognize system status, and a [metric]state-machine-based floating timer[/metric] that progressively warns of session expiration — all without requirements.\n\nColleagues have said I [metric]'should be building products, not project work'[/metric] — I obsess over reducing user cognitive load and solving the real problems behind requirements.",
+			"I don't just implement given requirements in SI environments. In SmartOn 2.0, I identified tab mis-touch and irreversible-close issues before client requests, and voluntarily proposed and implemented [tip=tab-edit,metric]Tab Edit Mode inspired by iOS home screen app management UX[/tip]. I precisely designed long-press time branching (quick tap→switch, long-press+drag→reorder, long-press+release→edit mode) with a [tip=threshold,metric]500ms threshold[/tip].\n\nFrom my very first project (LabelOn), I questioned SSR environment refresh issues and self-taught [tip=labelon-ajax]AJAX partial rendering patterns[/tip]. In Smart Factory PMS, I independently designed a space-efficient before/after comparison UX with [tip=change-vis,metric]light-yellow background highlighting + original-value popovers[/tip] for agreement changes.\n\nIn the SmartOn offline app, I voluntarily designed [metric]multi-layer visual feedback[/metric] for field workers to instantly recognize system status, and a [metric]state-machine-based floating timer[/metric] that progressively warns of session expiration — all without requirements.\n\nIn the PDF markup viewer, leveraging solo development, I invested nearly half of the latter project phase into UX details. When a tool is selected, a colored tab slides down; tapping it makes [tip=liquid-morph,metric]the same DOM box swell liquid-like into the full tool settings popover via 6-property simultaneous transition[/tip] — a signature motion designed with cubic-bezier(.3, 1.4, .5, 1) 380ms elastic over-shoot. I [tip=glass-chrome,metric]unified the top toolbar, side toolbar, popover, dialog, and FAB under a single glassmorphic pattern[/tip] for module-wide visual consistency, and used [tip=wcag-luminance,metric]WCAG relative luminance calculation[/tip] to automatically branch the thickness number's black/white text based on tab background luminance — preserving readability regardless of the user's color choice.\n\nColleagues have said I [metric]'should be building products, not project work'[/metric] — I obsess over reducing user cognitive load and solving the real problems behind requirements.",
 		tipPopovers: [
 			{
 				id: "tab-edit",
@@ -195,6 +207,24 @@ export const strengths: Strength[] = [
 				title: "Agreement Change Visualization UX",
 				content:
 					"Instead of showing old and new agreements side-by-side (consuming too much screen space), highlights only changed cells with a light-yellow background and shows original values via hover popovers — a space-efficient comparison UX I designed independently.",
+			},
+			{
+				id: "liquid-morph",
+				title: "Tool Tab ↔ Popover Liquid Morphing",
+				content:
+					"A colored tab that slides down below the top tool button and the full tool-settings popover share the same DOM box. 6 properties (width / height / left / top / 4 border-radius) transition simultaneously via cubic-bezier(.3, 1.4, .5, 1) 380ms elastic over-shoot, so the tab swells liquid-like into the popover. Opacity cross-fade between ::before (solid tool color) and ::after (glass) layers transitions the background without gray flickering.",
+			},
+			{
+				id: "glass-chrome",
+				title: "Glassmorphic Chrome Unification",
+				content:
+					"Top PdfToolbar / side toolbar / Popover / ConfirmDialog / SaveFab / ToolTabIndicator all share the same glass pattern — linear-gradient(135deg) 3-stop white α + backdrop-filter blur(10px) saturate(140%) + slate-tone shadow. @supports not (backdrop-filter) fallback preserves visual consistency on unsupported browsers.",
+			},
+			{
+				id: "wcag-luminance",
+				title: "WCAG Luminance Auto Black/White Text",
+				content:
+					"To keep the thickness / fontSize number on the tab readable over any user-chosen color, background luminance L is computed via the WCAG relative luminance formula (0.2126R + 0.7152G + 0.0722B with sRGB linearization). L > 0.5 → black (#0f172a), otherwise white (#ffffff) is selected automatically.",
 			},
 		],
 	},

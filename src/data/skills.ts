@@ -3,7 +3,7 @@ import type { SkillGroup } from "./types";
 export const skillGroups: SkillGroup[] = [
   {
     title: "Frontend Engineering",
-    skills: ["React", "Next.js", "Vue 3", "TypeScript", "JavaScript (ES6+)", "Vite"],
+    skills: ["React", "Next.js", "Vue 3", "Svelte 5 (runes)", "TypeScript", "JavaScript (ES6+)", "Vite"],
   },
   {
     title: "Frontend Architecture",
@@ -23,11 +23,15 @@ export const skillGroups: SkillGroup[] = [
   },
   {
     title: "UI Engineering",
-    skills: ["Tailwind CSS", "Emotion", "Vanilla Extract", "Radix UI", "Ant Design", "PrimeVue", "Framer Motion", "SVG / CSS Animation"],
+    skills: ["Tailwind CSS", "Emotion", "Vanilla Extract", "Radix UI", "Ant Design", "PrimeVue", "Framer Motion", "SVG / CSS Animation", "Glassmorphism"],
+  },
+  {
+    title: "Canvas & Graphics",
+    skills: ["PDF.js", "Paper.js", "PathKit (Skia WASM)", "Canvas API", "Infinite Canvas 좌표계 설계", "벡터 마크업 직렬화", "lz-string 압축 캐시"],
   },
   {
     title: "Mobile & WebView",
-    skills: ["Android WebView 연동", "모바일 웹 최적화", "터치 제스처 엔지니어링"],
+    skills: ["Android WebView 연동", "iframe 임베드 / postMessage 채널", "호스트 위임 API 설계", "모바일 웹 최적화", "터치 제스처 엔지니어링"],
   },
   {
     title: "Backend Integration",

@@ -13,7 +13,220 @@ export const companies: Company[] = [
 			"Public/Enterprise System Development SI Company · Frontend Development",
 		projects: [
 			// ----------------------------------------------------------
-			// 00. SmartOn 2.0 APP (Offline)
+			// 00. PDF Markup Viewer (Svelte 5 + Paper.js + PathKit)
+			// ----------------------------------------------------------
+			{
+				id: "project-pdf-viewer",
+				name: "Infinite Canvas PDF Markup Viewer — In-house Solution",
+				client: "In-house Solution (First Adoption: SmartOn 2.0)",
+				period: "2026.04 ~ Present",
+				role: "Solo Development (Planning · Architecture · UI/UX · Implementation)",
+				stack: [
+					"Svelte 5 (runes)",
+					"TypeScript",
+					"Vite 7",
+					"PDF.js",
+					"Paper.js",
+					"PathKit (Skia WASM)",
+					"lz-string",
+				],
+				description:
+					"A PDF markup viewer module being developed as Euclid Soft's in-house solution. Designed from the start to be embedded in two host environments — Spring Boot iframe and Android WebView — from a [metric]single codebase[/metric], and currently being applied to SmartOn 2.0 web/app as the first adoption case (solution development and field application proceed in parallel). PDF.js renders pages, Paper.js serializes markup objects, and PathKit-WASM replaces paper.js's fragile boolean operations. An [metric]Infinite Canvas[/metric] viewer that handles [metric]1000+ page PDFs[/metric] without memory blowup via page virtualization + LRU compressed cache.",
+				achievements: [
+					{
+						title: "Single viewStore-based Infinite Canvas Coordinate System",
+						items: [
+							"Unified legacy scattered state (zoomControl.scale + pinchZoom.currentScale + viewport scroll left/top) into a [metric]single viewStore[/metric] (translate(x,y) + scale + rotation), applied via single CSS transform on the page wrapper",
+							"Fixed Paper.js view.viewSize to PDF pt native units so markup coordinates are always stored in PDF pt regardless of zoom/rotation → zero markup misalignment after zoom in/out and rotation",
+							"isAnimating toggle controls transition application — 240ms interpolation only on *manual changes* (page navigation), instant response during *active transforms* (pinch/drag)",
+							"Boundary clamp (MIN_VISIBLE_PX 80px) auto-corrects pan/zoom results so pages never completely disappear from viewport",
+						],
+					},
+					{
+						title: "Page Virtualization + Compressed Cache — Handling 1000+ Page PDFs",
+						items: [
+							"PdfPageViewer calculates a visibility window to render [metric]only visible pages ± buffer[/metric]; on page transition, PageCanvasManager mounts/unmounts and Paper.js scope is cleaned up together",
+							"CompressedMap (hot LRU 100 slots + cold lz-string compressToUTF16) stores per-page paper.js JSON — [metric]8~12× compression ratio[/metric] (1000 pages × 50KB = 50MB → 5MB cold + 5MB hot)",
+							"Adaptive DPI rendering (adaptiveDpi.ts) adjusts page resolution based on screen width; DPR-aware rendering ensures sharpness on Retina and high-density displays",
+						],
+					},
+					{
+						title: "Robust Eraser Redesigned with PathKit (Skia WASM)",
+						items: [
+							"Replaced paper.js's built-in boolean (centerline split/legacySubtract, etc.) — fragile cases like leftover paths/broken shapes — with Skia's PathOps subtract",
+							"During drag, a visual path (blendMode: destination-out) provides [metric]GPU-composited instant visual erase[/metric]; at pointerup, PathKit subtract performs actual data update in a 2-stage model",
+							"Introduced [metric]spatial grid hash index[/metric] (CELL_SIZE 64px, GRID_THRESHOLD 50) — reduced O(N) layer scan to O(local) by inspecting only items in cells overlapping eraser bounds, achieving zero eraser stutter even on [metric]100+ stroke pages[/metric]",
+						],
+					},
+					{
+						title: "Signature UI — Liquid Morphing Tool Tab Indicator",
+						description:
+							"A colored tab (showing current color + thickness/fontSize number) slides down *right below* the top tool button → tapping the tab makes the same DOM box swell *liquid-like* into a full tool settings popover. Single-container morphing transitions 6 properties (width / height / left / top / 4 border-radius) simultaneously to express tab ↔ popover.",
+						items: [
+							"Signature motion implemented with [metric]cubic-bezier(.3, 1.4, .5, 1) 380ms[/metric] elastic over-shoot easing",
+							"::before (solid tab color base) + ::after (glass overlay) [metric]cross-fade[/metric] for seamless background color transition without gray flickering",
+							"WCAG relative luminance calculation auto-branches black/white text based on tab background luminance — thickness number readability guaranteed regardless of user's color choice",
+							"{#key currentTool} remounts component on tool switch → Svelte transition:fly handles *old tab slide up* + *new tab slide down* simultaneously",
+						],
+						metrics: ["6-property simultaneous morphing", "380ms elastic over-shoot"],
+					},
+					{
+						title: "Per-tool Memory + Tool-tailored Palettes",
+						items: [
+							"brushSettings preserves [metric]per-tool last color/thickness/fontSize[/metric] in colorByTool / widthByTool / fontSizeByTool Maps; on tool switch, applyToolDefault() restores the last value automatically",
+							"Differential palettes designed for each tool's character — pen=full palette (rainbow 7×6 + grayscale column = 49 colors), highlighter/rect/circle/line=simplifiedPalette 5 colors (Tailwind 400~500 saturation), text=textPalette 6 colors (black + 5), eraser=no color section",
+							"Consistency policy — each tool's default color *must exist* within that tool's popover palette (guarantees initial active indicator alignment)",
+						],
+					},
+					{
+						title: "Per-page Undo/Redo History Manager",
+						items: [
+							"Per-page snapshot stacks ([metric]200 per page, 1000 global cap[/metric]) enable undo all the way through 100+ highlighter/pen strokes",
+							"[metric]300ms debounce[/metric] collapses consecutive input into single snapshots; duplicate-prevention Map blocks pushing identical states",
+							"Active page change automatically reflects canUndo/canRedo via derived state on the corresponding page's stack",
+						],
+					},
+					{
+						title: "Dual Host Bridge — Android WebView / iframe postMessage",
+						items: [
+							"[metric]window.pdfv.*[/metric] (host → viewer API) — loadPdf / loadPdfStreamUrl / loadPdfBase64, setVisibility(patch), setSaveIntent, setCustomButtons, setSideToolbarPosition, restoreEditCanvas, showFatalError, registerConfirmHandler / registerToastHandler",
+							"[metric]window.conn.*[/metric] (viewer → Android JsInterface) — onSaveComplete(json, deletedIds), closeViewer, retryPdfLoad, requestPageImage(pageNum, dpi, reqId)",
+							"iframe `postMessage` channel enables the same API in Spring Boot embed environment — eliminates host-specific branching code",
+							"Visibility patches use key-based multi-level patch (`overlay.popover.history` / `toolbar.side.rotate`, etc.) delegating [metric]per-UI-element show/hide[/metric] to the host",
+						],
+					},
+					{
+						title: "Consistent Application of Svelte 5 Runes + Factory Function Pattern",
+						items: [
+							"Discarded legacy `$:` reactive syntax / writable stores, using [metric]$state / $derived / $effect[/metric] consistently so reactivity tracking spans components and lib modules under the same model",
+							"All lib modules exposed as `createXxx()` factory functions instead of classes — `$state` naturally encapsulated inside functions, low instantiation cost, dependencies received as explicit arguments (DI)",
+							"[metric]20+ factories[/metric] (pdfLoader / pdfRenderer / imageLoader / pageNavigation / viewStore / viewPinchZoom / viewWheelZoom / paperCanvas / pageCanvasManager / canvasState / brushSettings / drawingMode / highlighterMode / eraserMode / shapeTools / textMode / selectionMode / lassoMode / historyManager / lowResPreview / userOverlay …) assembled by PdfViewer.svelte as the single orchestrator",
+							"tsc --noEmit + svelte-check required convention; comments focus on *Why* — *What* omitted when self-evident from code",
+						],
+					},
+					{
+						title: "Glassmorphic Chrome Unified Design System",
+						items: [
+							"Top PdfToolbar / side toolbar / Popover / ConfirmDialog / SaveFab / ToolTabIndicator all share the same glass pattern — linear-gradient(135deg) 3-stop white α + backdrop-filter blur(10px) saturate(140%) + slate-tone shadow",
+							"`@supports not (backdrop-filter: blur())` fallback branch preserves visual consistency on unsupported browsers",
+							"Tab (solid tool color) ↔ popover (glass) transition handled by opacity cross-fade between ::before / ::after layers — two states morph naturally within a single container",
+						],
+					},
+					{
+						title: "8 Markup Tools + Inline Text Editing",
+						items: [
+							"[metric]select / lasso / pen / highlighter / eraser / rectangle / circle / line / text[/metric] 9 tools, each split into its own createXxx mode module",
+							"Pen — Paper.js Path with [metric]Galaxy S Pen pressure[/metric] (pressure 0~1 → strokeWidth × (0.3 + p × 1.4))",
+							"Highlighter — semi-transparent stroke + butt linecap reproduces the highlighter metaphor",
+							"Text — Paper.js PointText + inline editor + TextEditMiniToolbar (color/font-size mini toolbar) for direct editing on canvas",
+							"Selection — selectionBox + 8-direction selectionResize handles for object move/resize; lasso for marquee area selection",
+						],
+					},
+					{
+						title: "Save Pipeline — Chunked Save + lz-string Compression",
+						items: [
+							"FAB Speed Dial click → per-page canvasState.exportJSON() → [metric]lz-string compression[/metric] → window.conn.notifySaveChunk(pageNum, chunk) chunked transmission → notifySaveCommit() on all pages complete",
+							"SaveProgressDialog visualizes progress in real-time; ConfirmDialog confirms user intent on close attempt with unsaved changes",
+							"Host-registered registerConfirmHandler / registerToastHandler allow the host to [metric]intercept confirmation UI with native UI[/metric] — visually unified with Android dialogs / iframe parent toasts",
+						],
+					},
+					{
+						title: "Two-finger Pinch Zoom + Wheel Zoom + Rotation",
+						items: [
+							"viewPinchZoom — DOM-direct-manipulation-free new mode that calls viewStore.zoomAtPoint(scale, focal) directly during two-finger pinch; handles even pinch-in starting with index+middle finger *fully pressed together* via MIN_PINCH_DISTANCE_PX=0 + 100px palm-rejection threshold",
+							"viewWheelZoom — Ctrl + wheel zoom; wheel-only delegates to native scroll",
+							"Per-page rotation (0/90/180/270°) — rotations Record<pageNum, deg> applies only to *the currently viewed page*; viewport bounding box accurately tracked by computing the circumscribed rectangle of the rotated 4 corners",
+						],
+					},
+					{
+						title: "Host UI Delegation + Visibility Patch",
+						items: [
+							"Host can select side toolbar position as [metric]`right' | 'bottom'`[/metric] — same viewer adapts to two layouts: desktop (right) / tablet landscape (bottom)",
+							"registerConfirmHandler / registerToastHandler allow the host to intercept with its own UI — visually unified with Android native dialogs, Spring modals, etc.",
+							"setSaveIntent('save' | 'mail' | 'approval' | 'custom') dynamically changes FAB label/icon to match host workflow",
+							"setCustomButtons(json) injects host-specific sub-actions into the Save FAB Speed Dial",
+						],
+					},
+				],
+				learningPoints: [
+					{
+						topic:
+							"Svelte 5 Runes — Unifying Components and Business Logic Under One Reactivity Model",
+						paragraphs: [
+							"This project was my first Svelte 5 adoption. Discarding the legacy `$:` reactive syntax and writable store tools, writing everything with just [metric]$state / $derived / $effect[/metric] resulted in components (.svelte) and business logic (.svelte.ts) operating on the *same reactivity model*. Unlike React + Zustand where different reactivity systems exist inside and outside components, the mental switching cost when moving code between layers was nearly zero.",
+							"In particular, the factory function pattern (`createXxx()` returning an object encapsulating `$state`) [metric]avoided this binding and inheritance complexity that classes carry[/metric] while naturally expressing DI. The structure of 20+ factories being assembled into PdfViewer.svelte as a single orchestrator made per-screen dependency graphs explicit — future maintainers can read the code without any entry cost.",
+						],
+					},
+					{
+						topic:
+							"Infinite Canvas — Unifying the Coordinate System Brings Features for Free",
+						paragraphs: [
+							"Initially I used the legacy pattern of zooming pages via DOM `transform: scale()` and separately correcting scroll position. Each interaction — pinch zoom, wheel zoom, page transition, rotation — created *its own coordinate state*, leading to endless regressions like \"turning on this tool breaks zoom\".",
+							"The turning point was establishing a [metric]single viewStore (translate + scale + rotation)[/metric] as the camera and applying it via a single CSS transform. The moment I fixed Paper.js view to PDF pt native units so markup coordinates remained *independent of the camera*, zoom/rotation/pan had zero impact on markup coordinates — a clean model emerged. I experienced firsthand that [metric]a single source of truth for the coordinate system[/metric] is not just code cleanup but an architectural choice that makes new features come for free.",
+						],
+					},
+					{
+						topic:
+							"Replacing a Library's Fragile Area with Another Tool — paper.js boolean → PathKit",
+						paragraphs: [
+							"I implemented the eraser tool with paper.js's built-in boolean (subtract / centerline split / legacySubtract), but [metric]leftover paths / broken shapes / PointText recognition failures[/metric] and other fragile cases kept emerging. Between piling workarounds inside the library and swapping out only the core operation for a different tool, I chose the latter.",
+							"I rebuilt the eraser by delegating only the boolean subtract to Skia's [metric]PathKit-WASM[/metric], keeping paper.js responsible for visual rendering + state serialization. Not forcing all tools into one library but composing each tool's *most reliable instrument* produced the most robust structure in the end. I learned that [metric]library choice is not a single selection but a responsibility split[/metric].",
+						],
+					},
+					{
+						topic:
+							"Why I Spend Time on UI/UX Details as a Solo Developer",
+						paragraphs: [
+							"Nearly half the time in the project's latter half went into \"non-functional\" details — [metric]tool tab ↔ popover morphing / glassmorphic chrome / per-tool palette consistency / WCAG luminance auto black-white text[/metric]. Objectively, PDF markup works fine without these details.",
+							"Still, I invested the time because the tool transition motion users face every action [metric]determines the impression that the product is \"well-made\"[/metric]. The advantage of solo development is being able to refine details immediately without going through decision layers; as an [metric]in-house solution[/metric] not tied to external client requirements, I could polish the details that earn the evaluation \"this is different\" all the way through.",
+						],
+					},
+					{
+						topic:
+							"Host-Delegation API — \"What Should the Host Decide?\"",
+						paragraphs: [
+							"The same viewer module had to be embedded simultaneously in Android WebView and Spring Boot iframe. Initially I put host-specific branching code inside the viewer, which resulted in [metric]a dependency inversion where the viewer had to know the host type[/metric].",
+							"The turning point was [metric]externalizing every decision that could be delegated as an API[/metric] instead of having the viewer ask the host — setVisibility(patch) for UI element show/hide, setSideToolbarPosition for layout mode, registerConfirmHandler / registerToastHandler for confirmation/toast UI, setSaveIntent / setCustomButtons for save workflow variants. The viewer simply needs to behave *identically with any host*, and the host patches the viewer to its own context (tablet landscape / desktop / mobile web). I learned that [metric]a good embeddable module doesn't know the host type[/metric].",
+						],
+					},
+				],
+				highlightBox: {
+					title: "Contribution",
+					content:
+						"Solo-developed the entire project — planning, architecture, UI/UX, and implementation. First Svelte 5 runes adoption with consistent factory function pattern unified components and business logic under one reactivity model. Replaced paper.js boolean's fragile areas with PathKit-WASM for a robust eraser redesign. Single viewStore + Paper.js PDF pt native coordinate system removed dependency between zoom/rotation/pan and markup coordinates. Host-delegation APIs (setVisibility / registerConfirmHandler / setSideToolbarPosition, etc.) enabled simultaneous support of Android WebView and Spring Boot iframe environments without branching code. Voluntarily designed signature UI details like tool tab ↔ popover liquid morphing and glassmorphic chrome unification.",
+				},
+				gallery: [
+					{
+						layout: "default",
+						items: [
+							{
+								src: `${IMG}/08-pdf-viewer/main-viewer.png`,
+								alt: "PDF Markup Viewer main screen",
+								caption: "Main Viewer",
+								subCaption:
+									"Top tool tab indicator (highlighter 5-color palette) + left thumbnail + right side toolbar",
+							},
+							{
+								src: `${IMG}/08-pdf-viewer/pen-palette-history.png`,
+								alt: "Pen full palette + user canvas history popover",
+								caption: "Pen Palette · User Canvas History",
+								subCaption:
+									"Rainbow 7×6 + grayscale column full palette + other-user markup toggle popover",
+							},
+							{
+								src: `${IMG}/08-pdf-viewer/landscape-highlighter.png`,
+								alt: "Landscape page + highlighter stroke",
+								caption: "Landscape Page · Highlighter",
+								subCaption:
+									"Per-page rotation (Landscape) + semi-transparent butt-linecap highlighter stroke",
+							},
+						],
+					},
+				],
+			},
+
+			// ----------------------------------------------------------
+			// 01. SmartOn 2.0 APP (Offline)
 			// ----------------------------------------------------------
 			{
 				id: "project-smarton-offline",
