@@ -9,7 +9,7 @@
 
 ```yaml
 project: my-resume
-path: C:\Users\jch\my-resume\
+path: C:\Users\user\Desktop\smarton_workspace\my-resume\
 github: https://github.com/nckdgns3167/my-resume.git
 branch: master
 deploy_url: https://resume-changhoon.vercel.app
@@ -62,11 +62,28 @@ git push origin master
 
 - `master` 브랜치에 push하면 Vercel이 자동 빌드 & 배포
 - 커밋 메시지 타입: `feat`, `fix`, `style`, `chore`, `refactor`, `docs`
-- Co-Author: `Co-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>`
+- Co-Author: `Co-Authored-By: Claude Opus 4.7 (1M context) <noreply@anthropic.com>`
+- 한국어 다중 라인 본문 권장 (`feat: 요약\n\n- 변경 1\n- 변경 2\n\nCo-Authored-By: ...`)
 
-### 주의사항
-- Windows 환경에서 `cd C:\Users\jch\my-resume` 가 bash에서 작동하지 않을 수 있음
-- Task agent (Bash 타입)를 사용하여 git 명령어 실행 권장
+### Windows + bash 운영 주의사항
+
+**셸 정책 — PowerShell 절대 금지 (사용자 정책)**
+- CP949 인코딩 사고 전력 있음 → git bash + Python 만 사용
+- 한글 출력이 깨지면 셸을 바꿔서 워크어라운드하지 말고 명령 자체를 다른 도구(Read/Glob/Grep/Edit/Write)로 우회
+
+**`cd` 대신 `--prefix` 사용**
+- Windows bash 에서 `cd C:\Users\user\...` 가 종종 실패함
+- 대신 도구별 절대경로 옵션 사용:
+  ```bash
+  npm --prefix "C:/Users/user/Desktop/smarton_workspace/my-resume" run build
+  git -C "C:/Users/user/Desktop/smarton_workspace/my-resume" status
+  ```
+
+**⚠️ `npm install --prefix` 자가참조 trap**
+- `npm install --prefix "<path>"` 실행 시 `package.json` 에 `"my-resume": "file:"` 자기참조 의존성이 무단 추가됨 (npm 10.x 버그성 동작)
+- `package-lock.json` 도 함께 오염됨
+- **대응**: 커밋 전 반드시 `git status` 로 의도하지 않은 파일 확인, 발생 시 `git restore package.json package-lock.json` 으로 즉시 복원
+- 이미 두 번 만난 trap, 다음 세션도 동일하게 만날 가능성 높음
 
 ---
 
@@ -152,7 +169,16 @@ public/
 ├── images/
 │   ├── profile/photo.jpg      # 프로필 사진
 │   ├── profile/thumb.jpg      # OG/Twitter 썸네일 (512x512)
-│   └── projects/              # 프로젝트 스크린샷 62장
+│   └── projects/              # 프로젝트 스크린샷
+│       ├── 00-chartsage/      # ChartSage (사이드 프로젝트)
+│       ├── 01-smarton/        # 스마트온 2.0 web
+│       ├── 02-satellite/      # 위성망 분배도표
+│       ├── 03-pms/            # 스마트공장 PMS
+│       ├── 04-certificate/    # 온라인 검사서류
+│       ├── 05-ai-drug/        # AI 신약개발
+│       ├── 06-lime-dqm/       # LIME-DQM
+│       ├── 07-labelon/        # LabelOn 어드민
+│       └── 08-pdf-viewer/     # Infinite Canvas PDF 마크업 뷰어 (자사 솔루션)
 ```
 
 ---
@@ -367,31 +393,24 @@ ThemeProvider          → theme: "light" | "dark", toggleTheme()
 
 ## 관련 프로젝트 & 참고 자료
 
-### workspace_root (경력기술서 관리 시스템)
+> ⚠️ 아래 절대 경로는 *다른 PC* 기준. 이 PC(`C:\Users\user\Desktop\smarton_workspace\`)에는 my-resume·demo1·APP·pdf_viewer_svelte 만 존재. 다른 자산은 GitHub/Vercel URL 로만 참조 가능.
+
+### 현재 PC 워크스페이스 (`smarton_workspace/`)
 ```yaml
-path: C:\Users\jch\workspace_root\
-projects_dir: projects/           # 프로젝트별 상세 기록 (*.md)
-templates: projects/templates/    # 프로젝트/경력기술서 템플릿
-resume_html: 경력기술서.html      # 바닐라 HTML 버전
+my-resume/           # 본 프로젝트 (Next.js 경력기술서)
+demo1/               # 스마트온 2.0 web (Spring Boot + Vue 3 IIFE) — github: nckdgns3167/smarton2-web
+APP/                 # 스마트온 2.0 APP (Android) — SVN 관리
+pdf_viewer_svelte/   # PDF 마크업 뷰어 자사 솔루션 (Svelte 5 + Paper.js)
 ```
 
-### 바닐라 HTML 버전 (GitHub Pages)
+### 외부 자산 (이 PC 미존재)
 ```yaml
-path: C:\Users\jch\resume\
-deploy: https://nckdgns3167.github.io/resume/
-```
-
-### GitHub 프로필 README
-```yaml
-path: C:\Users\jch\nckdgns3167\README.md
-branch: main
-```
-
-### ChartSage (사이드 프로젝트)
-```yaml
-path: C:\Users\jch\chartsage\
-deploy: https://chartsage.vercel.app
-resume_doc: workspace_root/projects/00_chartsage.md
+workspace_root:      # 경력기술서 관리 시스템 (이전 PC 만 존재)
+  resume_html:       # 바닐라 HTML 버전 (이전 PC 만 존재, GitHub Pages 배포 중)
+                     # deploy: https://nckdgns3167.github.io/resume/
+github_profile:      # nckdgns3167/nckdgns3167 (이전 PC 만 존재, GitHub 에서만 편집 가능)
+chartsage:           # 사이드 프로젝트 (이전 PC 만 존재)
+                     # deploy: https://chartsage.vercel.app
 ```
 
 ---
@@ -405,6 +424,8 @@ resume_doc: workspace_root/projects/00_chartsage.md
 | 갤러리 닫기 버튼 뷰포트 초과 | `-right-18` 고정 | `right-2 xl:-right-18` 반응형 |
 | 갤러리 캡션 오버플로우 | CSS Grid `min-width: auto` | `min-w-0 overflow-hidden` + `break-words` |
 | 바텀시트 드래그 시 페이지 스크롤 | React synthetic 이벤트 passive | 네이티브 리스너 `passive: false` + `preventDefault()` |
+| `npm install --prefix` 후 package.json 오염 | npm 10.x 가 자가참조 `"my-resume": "file:"` 추가 | 커밋 전 `git restore package.json package-lock.json` |
+| 빌드 시 `cd` 실패 | Windows bash `cd C:\Users\...` 불안정 | `npm --prefix "<absolute path>" run build` 형태 사용 |
 
 ---
 
@@ -436,4 +457,4 @@ resume_doc: workspace_root/projects/00_chartsage.md
 
 ---
 
-*마지막 업데이트: 2026-03-06*
+*마지막 업데이트: 2026-05-19*
